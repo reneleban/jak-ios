@@ -37,10 +37,13 @@ class JsonConnection {
     
     func send(completionHandler: (object: AnyObject?, statusCode: Int) -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+        print("------- Connecting to \(self.url) ---------")
         let url = NSURL(string: self.url)
         let request = NSMutableURLRequest(URL: url!)
         let session = NSURLSession.sharedSession()
         let parameterString = parameters.stringFromHttpParameters()
+        
+        print("\(parameterString)")
         
         request.HTTPMethod = httpMethod
         request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)

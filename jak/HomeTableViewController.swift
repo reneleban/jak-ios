@@ -17,16 +17,11 @@ class HomeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        actionsButton.title = NSString(string: "\u{2699}") as String
-        if let font = UIFont(name: "Helvetica", size: 18.0) {
-            actionsButton.setTitleTextAttributes([NSFontAttributeName: font], forState: .Normal)
-        }
-        
         loadBoards()
     }
     
     @IBAction func actions(sender: AnyObject) {
-        let actionMenu = UIAlertController(title: nil, message: "Choose an action", preferredStyle: .ActionSheet)
+        let actionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
         
         let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (alert: UIAlertAction) in
             self.logout()
@@ -59,11 +54,15 @@ class HomeTableViewController: UITableViewController {
     }
     
     private func logout() {
+        let keychain = KeychainSwift()
+        keychain.delete("service-token")
+        keychain.delete("touchid-enabled")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     private func newBoard(title: String) {
-        let jsonConn = JsonConnection(url: Services.BOARD.rawValue + "board/" + token + "/" + title, httpMethod: "PUT")
+        let jsonConn = JsonConnection(url: Services.BOARD.rawValue + "board/" + token, httpMethod: "PUT")
+        jsonConn.addParameter("name", value: title)
         jsonConn.send { (object, statusCode) in
             if statusCode == 200 {
                 self.reload()
@@ -80,7 +79,11 @@ class HomeTableViewController: UITableViewController {
                 }
                 
                 for board in boards {
-                    let b = Board(name: board["name"] as! String, board_id: board["board_id"] as! String)
+                    var boardName = board["name"] as! String
+                    boardName = boardName.stringByRemovingPercentEncoding!
+                    
+                    print("\(boardName)")
+                    let b = Board(name: boardName, board_id: board["board_id"] as! String)
                     self.boards.append(b)
                 }
                 
@@ -121,7 +124,6 @@ class HomeTableViewController: UITableViewController {
             let board = boards[indexPath.row]
             let jsonConn = JsonConnection(url: Services.BOARD.rawValue + "board/" + token + "/" + board.board_id, httpMethod: "DELETE")
             jsonConn.send { (object, statusCode) in
-                // Just delete it out of table view data to get animations
                 if statusCode == 200 {
                     dispatch_async(dispatch_get_main_queue(), {
                         self.boards.removeAtIndex(indexPath.row)
@@ -148,6 +150,7 @@ class HomeTableViewController: UITableViewController {
         let name = boards[index].name
         
         cell.textLabel?.text = name
+        cell.textLabel?.textColor = UIColor.whiteColor()
         cell.board_id = board_id
         
         return cell
