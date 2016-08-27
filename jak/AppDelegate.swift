@@ -18,14 +18,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         
-        let green = UIColor(red: 129.0/255.0, green: 199.0/255.0, blue: 132.0/255.0, alpha: 0.8)
-        let orange = UIColor(red: 245.0/255.0, green: 124.0/255.0, blue: 0.0/255.0, alpha: 1)
+        let blue = UIColor(red: 120.0/255.0, green: 144.0/255.0, blue: 156.0/255.0, alpha: 0.8)
+        let yellow = UIColor(red: 255.0/255.0, green: 213.0/255.0, blue: 79.0/255.0, alpha: 0.8)
         
-        UINavigationBar.appearance().barTintColor = green
-        UINavigationBar.appearance().tintColor = orange
+        UINavigationBar.appearance().barTintColor = blue
+        UINavigationBar.appearance().tintColor = yellow
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
         
-        UIBarButtonItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: orange], forState: .Normal)
-        UIBarButtonItem.appearance().tintColor = orange
+        UIPageControl.appearance().backgroundColor = blue
+        UIPageControl.appearance().currentPageIndicatorTintColor = yellow
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor.blackColor()
+        
+        let blueWOAlpha = UIColor(red: 120.0/255.0, green: 144.0/255.0, blue: 156.0/255.0, alpha: 1)
+        
+        UITableView.appearance().backgroundColor = blueWOAlpha
+        UITableView.appearance().backgroundView?.backgroundColor = blueWOAlpha
+        
+        UITableViewCell.appearance().backgroundColor = blueWOAlpha
         
         return true
     }
