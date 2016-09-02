@@ -61,19 +61,16 @@ class HomeTableViewController: UITableViewController {
     }
     
     private func newBoard(title: String) {
-        let jsonConn = JsonConnection(url: Services.BOARD.rawValue + "board/" + token, httpMethod: "PUT")
-        jsonConn.addParameter("name", value: title)
-        jsonConn.send { (object, statusCode) in
-            if statusCode == 200 {
+        JakBoard.addBoard(title, token: token, handler: { (response: JakResponse) in
+            if response.statusCode == 200 {
                 self.reload()
             }
-        }
+        })
     }
     
     private func loadBoards() {
-        let jsonConn = JsonConnection(url: Services.BOARD.rawValue + "board/" + token, httpMethod: "GET")
-        jsonConn.send { (object, statusCode) in
-            if let boards = object as? NSArray {
+        JakBoard.loadBoards(token, handler: { (response: JakResponse) in
+            if let boards = response.object as? NSArray {
                 if boards.count == 0 {
                     self.noBoards()
                 }
@@ -81,8 +78,6 @@ class HomeTableViewController: UITableViewController {
                 for board in boards {
                     var boardName = board["name"] as! String
                     boardName = boardName.stringByRemovingPercentEncoding!
-                    
-                    print("\(boardName)")
                     let b = Board(name: boardName, board_id: board["board_id"] as! String)
                     self.boards.append(b)
                 }
@@ -93,7 +88,7 @@ class HomeTableViewController: UITableViewController {
             } else {
                 self.noBoards()
             }
-        }
+        })
     }
     
     private func noBoards() {
@@ -122,15 +117,40 @@ class HomeTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
             let board = boards[indexPath.row]
-            let jsonConn = JsonConnection(url: Services.BOARD.rawValue + "board/" + token + "/" + board.board_id, httpMethod: "DELETE")
-            jsonConn.send { (object, statusCode) in
-                if statusCode == 200 {
-                    dispatch_async(dispatch_get_main_queue(), {
-                        self.boards.removeAtIndex(indexPath.row)
-                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
-                    })
-                }
-            }
+            let deleteAlert = UIAlertController(title: "Warning", message: "This will delete your board \(board.name) including its lists and cards.", preferredStyle: .Alert)
+            
+            deleteAlert.addAction(UIAlertAction(title: "Proceed", style: .Destructive, handler: { (action) -> Void in
+                let board_id = board.board_id
+                var list_ids:[String] = []
+                
+                JakList.loadLists(board_id, token: self.token, handler: { (response) in
+                    if response.statusCode == 200 {
+                        if let lists = response.object as? NSArray {
+                            for list in lists {
+                                let list_id = list["list_id"] as! String
+                                list_ids.append(list_id)
+                                
+                                JakList.deleteList(list_id, token: self.token, handler: { (response) in })
+                                JakCard.deleteCards(list_id, token: self.token, handler: { (response) in })
+                            }
+                            
+                            JakBoard.deleteBoard(board.board_id, token: self.token, handler: { (response) in
+                                if response.statusCode == 200 {
+                                    dispatch_async(dispatch_get_main_queue(), {
+                                        self.boards.removeAtIndex(indexPath.row)
+                                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                                    })
+                                }
+                            })
+                        }
+                    }
+
+                })
+            }))
+            
+            deleteAlert.addAction(UIAlertAction(title: "Abort", style: .Default, handler: nil))
+            
+            self.presentViewController(deleteAlert, animated: true, completion: nil)
         }
     }
     

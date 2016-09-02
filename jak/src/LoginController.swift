@@ -38,9 +38,9 @@ class LoginController : UIViewController {
         }
     }
     
-    private func validateToken(token: String) -> Bool {
-        let jsonConn = JsonConnection(url: Services.LOGIN.rawValue + "/validate/" + token, httpMethod: "GET")
-        jsonConn.send { (object, statusCode) in
+    private func validateToken(token: String) {
+        JakLogin.validate(token, handler: { (response: JakResponse) in
+            let statusCode = response.statusCode
             if statusCode == 200 {
                 UserData.token = token
                 
@@ -56,9 +56,7 @@ class LoginController : UIViewController {
                     keychain.delete("service-token")
                 })
             }
-        }
-        
-        return false
+        })
     }
     
     @IBAction func touchIdToggled(sender: AnyObject) {
@@ -119,11 +117,8 @@ class LoginController : UIViewController {
     }
     
     private func performLogin() {
-        let jsonConn = JsonConnection(url: Services.LOGIN.rawValue, httpMethod: "GET")
-        jsonConn.basicAuth(self.emailAddress.text!, password: self.password.text!)
-        jsonConn.send({
-            (object, statusCode) -> Void in
-            
+        JakLogin.login(self.emailAddress.text!, password: self.password.text!, handler: { (response: JakResponse) in
+            let statusCode = response.statusCode
             dispatch_async(dispatch_get_main_queue(), {
                 if statusCode != 200 {
                     let alert:UIAlertController = UIAlertController(title: "Error logging in", message: "Your credentials were incorrect. Please try again!", preferredStyle: .Alert)
@@ -131,7 +126,7 @@ class LoginController : UIViewController {
                     self.presentViewController(alert, animated: true, completion: nil)
                 } else {
                     self.password.text = ""
-                    let token = (object as! NSDictionary)["token"] as! String
+                    let token = (response.object as! NSDictionary)["token"] as! String
                     print("Received token for \(self.emailAddress.text!): \(token)")
                     UserData.token = token
                     self.storeTokenInKeychain(token)

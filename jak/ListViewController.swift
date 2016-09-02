@@ -34,9 +34,8 @@ class ListViewController : UITableViewController {
     }
     
     func reloadCards() {
-        let jsonConn = JsonConnection(url: Services.CARD.rawValue + UserData.token! + "/" + (list?.list_id)!, httpMethod: "GET")
-        jsonConn.send { (object, statusCode) in
-            if let arr = object as? NSArray {
+        JakCard.loadCards((list?.list_id)!, token: UserData.token!) { (response) in
+            if let arr = response.object as? NSArray {
                 self.cards.removeAll()
                 for c in arr {
                     let card = Card(title: c["name"] as! String, desc: c["description"] as! String, card_id: c["card_id"] as! String, owner: c["owner"] as! String, list_id: c["list_id"] as! String)
@@ -51,8 +50,7 @@ class ListViewController : UITableViewController {
     }
     
     func deleteCard(card_id: String) {
-        let jsonConn = JsonConnection(url: Services.CARD.rawValue + UserData.token! + "/" + card_id, httpMethod: "DELETE")
-        jsonConn.send { (object, statusCode) in
+        JakCard.deleteCard(card_id, token: UserData.token!) { (response) in
             self.reloadCards()
         }
     }

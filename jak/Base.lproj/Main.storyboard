@@ -274,6 +274,7 @@ This means everytime you reopen this application, you will be logged in instantl
                         <outlet property="actionButton" destination="Q3k-x8-5qD" id="Xfa-VD-2yP"/>
                         <outlet property="addNewCard" destination="AqT-ne-yRs" id="p4L-pX-OCk"/>
                         <segue destination="0Hv-PH-Aob" kind="show" id="B1B-cV-9ej"/>
+                        <segue destination="oQS-Wb-VLh" kind="presentation" identifier="availablelists" id="0B3-lU-u5h"/>
                     </connections>
                 </pageViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oMm-r2-4T9" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -315,6 +316,41 @@ you can add new cards with this button!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWF-kJ-zly" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1778" y="1678"/>
+        </scene>
+        <!--Available lists-->
+        <scene sceneID="OuQ-XR-3hX">
+            <objects>
+                <tableViewController id="SIk-xV-1h4" customClass="AvailableListsController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="N7O-aB-ud8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="listcell" id="Fxw-bO-W1m">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fxw-bO-W1m" id="IsQ-iD-sm1">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="SIk-xV-1h4" id="jbL-La-vT1"/>
+                            <outlet property="delegate" destination="SIk-xV-1h4" id="NtW-cZ-yMq"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Available lists" id="iCR-1f-kB9">
+                        <barButtonItem key="leftBarButtonItem" title="Back" id="gfJ-el-pTw">
+                            <connections>
+                                <action selector="backButton:" destination="SIk-xV-1h4" id="ngv-Ec-bTU"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L1F-oK-C01" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3140" y="1678"/>
         </scene>
         <!--You'll never see me!-->
         <scene sceneID="d6T-7d-6bP">
@@ -463,6 +499,24 @@ you can add new cards with this button!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dzX-XB-zIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3140" y="1004"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="SBL-nU-P4l">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oQS-Wb-VLh" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ia3-Yb-NsQ">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="SIk-xV-1h4" kind="relationship" relationship="rootViewController" id="zIj-qC-6CO"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0nR-D9-laf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2452" y="1678"/>
         </scene>
     </scenes>
 </document>
