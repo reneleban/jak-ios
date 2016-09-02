@@ -2,12 +2,11 @@ import Foundation
 import UIKit
 
 class ListViewController : UITableViewController {
-    private var index:Int?
-    private var list:List?
+    var index:Int?
+    var list:List?
+    var useStoryboard: UIStoryboard?
     
     private var cards:[Card] = []
-    
-    private var useStoryboard: UIStoryboard?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -21,7 +20,7 @@ class ListViewController : UITableViewController {
     }
     
     override func viewDidLoad() {
-        self.tableView.registerClass(CardTableViewCell.self, forCellReuseIdentifier: "cardcell")
+        //self.tableView.registerClass(CardTableViewCell.self, forCellReuseIdentifier: "cardcell")
         self.tableView.contentInset = UIEdgeInsetsMake(65,0,0,0)
     }
     
@@ -66,8 +65,17 @@ class ListViewController : UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cardcell", forIndexPath: indexPath) as! CardTableViewCell
         let index = indexPath.row
-        cell.textLabel?.text = cards[index].title!
-        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.title.text = cards[index].title!
+        cell.title.textColor = UIColor.whiteColor()
+        
+        if cards[index].desc!.characters.count != 0 {
+            cell.desc.text = cards[index].desc!
+            cell.desc.textColor = UIColor.whiteColor()
+        } else {
+            cell.desc.text = "No description"
+            cell.desc.textColor = UIColor.lightGrayColor()
+        }
+        
         cell.accessoryType = .DisclosureIndicator
         return cell
     }
@@ -77,6 +85,10 @@ class ListViewController : UITableViewController {
             let card_id = self.cards[indexPath.row].card_id
             deleteCard(card_id!)
         }
+    }
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 80
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
