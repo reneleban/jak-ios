@@ -55,9 +55,8 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func loadAllLists() {
-        let jsonConn = JsonConnection(url: Services.LIST.rawValue + "list/" + token + "/" + boardId, httpMethod: "GET")
-        jsonConn.send { (object, statusCode) -> Void in
-            if let rows = object as? NSArray {
+        JakList.loadLists(boardId, token: token) { (response) in
+            if let rows = response.object as? NSArray {
                 self.lists.removeAll()
                 
                 for row in rows {
@@ -94,7 +93,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             }))
             
             actionSheet.addAction(UIAlertAction(title: "Available lists of '" + UserData.selectedBoard!.name + "'", style: .Default, handler: { (UIAlertAction) in
-                self.addListPrompt()
+                self.performSegueWithIdentifier("availablelists", sender: self)
             }))
             
             actionSheet.addAction(UIAlertAction(title: "Delete '" + selectedlist!.name + "'", style: .Destructive, handler: { (alert) in
@@ -111,6 +110,13 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         self.presentViewController(actionSheet, animated: true, completion: nil)
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let navController = segue.destinationViewController as? UINavigationController
+        if let viewController = navController?.topViewController as? AvailableListsController {
+            viewController.pageViewController = self
+        }
+    }
+    
     private func switchEditMode() {
         let viewController = getSelectedListController()
         if viewController != nil {
@@ -121,6 +127,13 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
                 self.navigationItem.setRightBarButtonItems([UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(finishButtonClicked))], animated: true)
             }
         }
+    }
+    
+    func selectList(list: List) {
+        self.selectedlist = list
+        let listController = getListController(list, index: 0)
+        self.title = list.name
+        self.setViewControllers([listController], direction: .Forward, animated: true, completion: nil)
     }
     
     func finishButtonClicked() {
@@ -173,27 +186,21 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func addCard(title: String, desc: String) {
-        let jsonConn = JsonConnection(url: Services.CARD.rawValue + token + "/" + selectedlist!.list_id, httpMethod: "POST")
-        jsonConn.addParameter("name", value: title)
-        jsonConn.addParameter("description", value: desc)
-        jsonConn.send { (object, statusCode) in
+        JakCard.addCard(title, description: description, list_id: selectedlist!.list_id, token: token) { (response) in
             self.reloadCards()
         }
     }
     
     func deleteList() {
         if selectedlist != nil {
-            let deleteCards = JsonConnection(url: Services.CARD.rawValue + "list/" + token + "/" + selectedlist!.list_id, httpMethod: "DELETE")
-            deleteCards.send { (object, statusCode) in
-                print("Cards have been removed")
-                if statusCode == 200 {
-                    let deleteList = JsonConnection(url: Services.LIST.rawValue + "list/" + self.token + "/" + self.selectedlist!.list_id, httpMethod: "DELETE")
-                    deleteList.send { (object, statusCode) in
+            JakCard.deleteCards(selectedlist!.list_id, token: token, handler: { (response) in
+                if response.statusCode == 200 {
+                    JakList.deleteList(self.selectedlist!.list_id, token: self.token, handler: { (response) in
                         self.loadAllLists()
                         self.selectedlist = nil
-                    }
+                    })
                 }
-            }
+            })
         }
     }
     
@@ -203,7 +210,6 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         let listPrompt = UIAlertController(title: nil, message: "Enter a list name", preferredStyle: .Alert)
         listPrompt.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
         listPrompt.addAction(UIAlertAction(title: "Add", style: .Default, handler: { (action) -> Void in
-            print("Adding list \(inputTextField?.text)")
             self.addList(inputTextField!.text!)
         }))
         
@@ -216,9 +222,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func addList(name: String) {
-        let jsonConn = JsonConnection(url: Services.LIST.rawValue + "board/" + token + "/" + boardId, httpMethod: "POST")
-        jsonConn.addParameter("name", value: name)
-        jsonConn.send { (object, statusCode) -> Void in
+        JakList.addList(name, board_id: boardId, token: token) { (response) in
             self.loadAllLists()
         }
     }

@@ -21,6 +21,7 @@
 		F7B908BA1D6F0408006E8267 /* ListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908B91D6F0408006E8267 /* ListPageViewController.swift */; };
 		F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908BC1D6F0C79006E8267 /* ListViewController.swift */; };
 		F7B908BF1D6F1172006E8267 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908BE1D6F1172006E8267 /* List.swift */; };
+		F7D3772B1D7997280068716D /* AvailableListsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D3772A1D7997280068716D /* AvailableListsController.swift */; };
 		F7D89C5C1D6C2B9200BB6BAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */; };
 		F7D89C611D6C2B9200BB6BAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7D89C5F1D6C2B9200BB6BAC /* Main.storyboard */; };
 		F7D89C641D6C2B9200BB6BAC /* jak.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C621D6C2B9200BB6BAC /* jak.xcdatamodeld */; };
@@ -30,6 +31,8 @@
 		F7D89C7F1D6C2B9200BB6BAC /* jakUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C7E1D6C2B9200BB6BAC /* jakUITests.swift */; };
 		F7D89C8D1D6C2D1100BB6BAC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */; };
 		F7F51C861D6EF6C600174CE9 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F51C851D6EF6C600174CE9 /* Board.swift */; };
+		F7F899501D78442E007F0479 /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F8994F1D78442E007F0479 /* UrlBuilder.swift */; };
+		F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F899511D7845BF007F0479 /* JsonHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +67,7 @@
 		F7B908B91D6F0408006E8267 /* ListPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPageViewController.swift; sourceTree = "<group>"; };
 		F7B908BC1D6F0C79006E8267 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		F7B908BE1D6F1172006E8267 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		F7D3772A1D7997280068716D /* AvailableListsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableListsController.swift; sourceTree = "<group>"; };
 		F7D89C581D6C2B9100BB6BAC /* jak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7D89C601D6C2B9200BB6BAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -79,6 +83,8 @@
 		F7D89C801D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = src/LoginController.swift; sourceTree = "<group>"; };
 		F7F51C851D6EF6C600174CE9 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		F7F8994F1D78442E007F0479 /* UrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
+		F7F899511D7845BF007F0479 /* JsonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +154,8 @@
 				F73B67B91D6DCA1100EBD7C2 /* Services.swift */,
 				F73B67B71D6DAE4F00EBD7C2 /* JsonConnection.swift */,
 				F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */,
+				F7F8994F1D78442E007F0479 /* UrlBuilder.swift */,
+				F7F899511D7845BF007F0479 /* JsonHelper.swift */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -168,6 +176,7 @@
 				F7B908BE1D6F1172006E8267 /* List.swift */,
 				B46F49661D721AFB002C61D6 /* Card.swift */,
 				B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */,
+				F7D3772A1D7997280068716D /* AvailableListsController.swift */,
 			);
 			name = list;
 			sourceTree = "<group>";
@@ -384,11 +393,14 @@
 				F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */,
 				F7B908BF1D6F1172006E8267 /* List.swift in Sources */,
 				F75AA2A61D6EFA5700175563 /* BoardTableCell.swift in Sources */,
+				F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */,
 				F7B908BA1D6F0408006E8267 /* ListPageViewController.swift in Sources */,
 				F73B67B51D6D836100EBD7C2 /* RegisterController.swift in Sources */,
 				F7ABF6DD1D7448B500187FB6 /* CardViewController.swift in Sources */,
+				F7F899501D78442E007F0479 /* UrlBuilder.swift in Sources */,
 				F7D89C8D1D6C2D1100BB6BAC /* LoginController.swift in Sources */,
 				B46F49671D721AFB002C61D6 /* Card.swift in Sources */,
+				F7D3772B1D7997280068716D /* AvailableListsController.swift in Sources */,
 				B46F49691D721EC0002C61D6 /* CardTableViewCell.swift in Sources */,
 				F724F5451D6EB7BC00E0B3BB /* HomeTableViewController.swift in Sources */,
 				F7D89C641D6C2B9200BB6BAC /* jak.xcdatamodeld in Sources */,

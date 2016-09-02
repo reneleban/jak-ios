@@ -12,8 +12,13 @@ class JsonConnection {
     
     // Mutable variables which can be set by class which uses JsonConnection
     var parameters : [String : String] = Dictionary()
-    var basicAuth: Bool = false
+    private var basicAuth: Bool = false
     var base64LoginString:String = ""
+    
+    init(jakUrl: JakUrl) {
+        self.url = jakUrl.getUrl()
+        self.httpMethod = jakUrl.getMethod()
+    }
     
     init(url: String, httpMethod: String) {
         self.url = url
@@ -35,15 +40,12 @@ class JsonConnection {
         basicAuth = false
     }
     
-    func send(completionHandler: (object: AnyObject?, statusCode: Int) -> ()) {
+    func send(completionHandler: (response: JakResponse) -> ()) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        print("------- Connecting to \(self.url) ---------")
         let url = NSURL(string: self.url)
         let request = NSMutableURLRequest(URL: url!)
         let session = NSURLSession.sharedSession()
         let parameterString = parameters.stringFromHttpParameters()
-        
-        print("\(parameterString)")
         
         request.HTTPMethod = httpMethod
         request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
@@ -57,13 +59,19 @@ class JsonConnection {
             
             do {
                 let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableLeaves)
-                completionHandler(object: json, statusCode: (response as! NSHTTPURLResponse).statusCode)
+                let jakResponse = JakResponse(object: json, statusCode: (response as! NSHTTPURLResponse).statusCode)
+                completionHandler(response: jakResponse)
             } catch {
-                let body = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                print("\(error)")
-                print("Unparsable JSON: \(response)")
-                print("Data: \(body)")
-                completionHandler(object: nil, statusCode: (response as! NSHTTPURLResponse).statusCode)
+                let jakResponse = JakResponse(object: nil, statusCode: (response as! NSHTTPURLResponse).statusCode)
+                
+                if jakResponse.statusCode != 200 {
+                    let body = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
+                    print("\(error)")
+                    print("Unparsable JSON: \(response)")
+                    print("Data: \(body)")
+                }
+                
+                completionHandler(response: jakResponse)
             }
         })
         

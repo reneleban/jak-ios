@@ -19,12 +19,9 @@ class RegisterController : UIViewController {
             let alertController = UIAlertController(title: "Passwords do not match", message: "Please enter the same passwords into each text field!", preferredStyle: .Alert)
             showAlertController(alertController)
         } else {
-            let jsonConn = JsonConnection(url: Services.LOGIN.rawValue, httpMethod: "POST")
-            jsonConn.addParameter("username", value: emailAddress.text!)
-            jsonConn.addParameter("password", value: password1.text!)
-            jsonConn.send({ (object, statusCode) -> Void in
+            JakLogin.register(emailAddress.text!, password: password1.text!, handler: { (response) in
                 dispatch_async(dispatch_get_main_queue(), {
-                    if statusCode != 200 {
+                    if response.statusCode != 200 {
                         let alertController = UIAlertController(title: "Account already exists", message: "It seems your account already exists. Try to login with given credentials!", preferredStyle: .Alert)
                         self.showAlertController(alertController)
                     } else {
