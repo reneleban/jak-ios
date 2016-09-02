@@ -20,7 +20,6 @@ class ListViewController : UITableViewController {
     }
     
     override func viewDidLoad() {
-        //self.tableView.registerClass(CardTableViewCell.self, forCellReuseIdentifier: "cardcell")
         self.tableView.contentInset = UIEdgeInsetsMake(65,0,0,0)
     }
     
@@ -32,7 +31,7 @@ class ListViewController : UITableViewController {
         return self.list!
     }
     
-    func reloadCards() {
+    func reloadCards(scrollToLast: Bool = false) {
         JakCard.loadCards((list?.list_id)!, token: UserData.token!) { (response) in
             if let arr = response.object as? NSArray {
                 self.cards.removeAll()
@@ -43,6 +42,12 @@ class ListViewController : UITableViewController {
                 
                 dispatch_async(dispatch_get_main_queue(), {
                     self.tableView.reloadData()
+                    
+                    if scrollToLast {
+                        let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: 0)
+                        //self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
+                        self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Top)
+                    }
                 })
             }
         }
@@ -88,7 +93,7 @@ class ListViewController : UITableViewController {
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 80
+        return 65
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

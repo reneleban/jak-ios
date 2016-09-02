@@ -75,10 +75,10 @@
 		F7D89C651D6C2B9200BB6BAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7D89C681D6C2B9200BB6BAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F7D89C6A1D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F7D89C6F1D6C2B9200BB6BAC /* jakTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jakTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7D89C6F1D6C2B9200BB6BAC /* jak.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jak.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D89C731D6C2B9200BB6BAC /* jakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jakTests.swift; sourceTree = "<group>"; };
 		F7D89C751D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F7D89C7A1D6C2B9200BB6BAC /* jakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7D89C7A1D6C2B9200BB6BAC /* jak.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jak.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D89C7E1D6C2B9200BB6BAC /* jakUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jakUITests.swift; sourceTree = "<group>"; };
 		F7D89C801D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = src/LoginController.swift; sourceTree = "<group>"; };
@@ -195,8 +195,8 @@
 			isa = PBXGroup;
 			children = (
 				F7D89C581D6C2B9100BB6BAC /* jak.app */,
-				F7D89C6F1D6C2B9200BB6BAC /* jakTests.xctest */,
-				F7D89C7A1D6C2B9200BB6BAC /* jakUITests.xctest */,
+				F7D89C6F1D6C2B9200BB6BAC /* jak.xctest */,
+				F7D89C7A1D6C2B9200BB6BAC /* jak.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -290,7 +290,7 @@
 			);
 			name = jakTests;
 			productName = jakTests;
-			productReference = F7D89C6F1D6C2B9200BB6BAC /* jakTests.xctest */;
+			productReference = F7D89C6F1D6C2B9200BB6BAC /* jak.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F7D89C791D6C2B9200BB6BAC /* jakUITests */ = {
@@ -308,7 +308,7 @@
 			);
 			name = jakUITests;
 			productName = jakUITests;
-			productReference = F7D89C7A1D6C2B9200BB6BAC /* jakUITests.xctest */;
+			productReference = F7D89C7A1D6C2B9200BB6BAC /* jak.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -323,7 +323,7 @@
 				TargetAttributes = {
 					F7D89C571D6C2B9100BB6BAC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = 7X96N4FYXB;
+						DevelopmentTeam = EZJPELY9FH;
 					};
 					F7D89C6E1D6C2B9200BB6BAC = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -555,7 +555,7 @@
 				INFOPLIST_FILE = jak/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jak;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
@@ -569,7 +569,7 @@
 				INFOPLIST_FILE = jak/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jak;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
 				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
@@ -581,7 +581,7 @@
 				INFOPLIST_FILE = jakTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jakTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/jak.app/jak";
 			};
 			name = Debug;
@@ -593,7 +593,7 @@
 				INFOPLIST_FILE = jakTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jakTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/jak.app/jak";
 			};
 			name = Release;
@@ -604,7 +604,7 @@
 				INFOPLIST_FILE = jakUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jakUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
 				TEST_TARGET_NAME = jak;
 			};
 			name = Debug;
@@ -615,7 +615,7 @@
 				INFOPLIST_FILE = jakUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jakUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
 				TEST_TARGET_NAME = jak;
 			};
 			name = Release;
