@@ -165,7 +165,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             let currentController = getListController(selectedlist!, index: 0)
             
             dispatch_async(dispatch_get_main_queue(), {
-                currentController.reloadCards()
+                currentController.reloadCards(true)
             })
         }
     }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bZD-EJ-vYz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bZD-EJ-vYz">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -369,25 +369,24 @@ you can add new cards with this button!</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ej-X3-PfG">
-                                            <rect key="frame" x="28" y="8" width="539" height="34"/>
+                                            <rect key="frame" x="18" y="8" width="549" height="34"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFP-MP-q2I">
-                                            <rect key="frame" x="28" y="50" width="531" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFP-MP-q2I">
+                                            <rect key="frame" x="18" y="41" width="541" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="2Ej-X3-PfG" firstAttribute="leading" secondItem="Mxc-uS-gap" secondAttribute="leadingMargin" constant="20" id="H07-8V-y7e"/>
                                         <constraint firstAttribute="trailingMargin" secondItem="2Ej-X3-PfG" secondAttribute="trailing" id="LAM-5h-5Ae"/>
                                         <constraint firstItem="VFP-MP-q2I" firstAttribute="trailing" secondItem="Mxc-uS-gap" secondAttribute="trailingMargin" id="OiW-j2-xPu"/>
+                                        <constraint firstItem="2Ej-X3-PfG" firstAttribute="leading" secondItem="Mxc-uS-gap" secondAttribute="leadingMargin" constant="10" id="Xgb-cL-bQG"/>
                                         <constraint firstItem="2Ej-X3-PfG" firstAttribute="top" secondItem="Mxc-uS-gap" secondAttribute="topMargin" id="XiX-DX-2Mr"/>
-                                        <constraint firstItem="VFP-MP-q2I" firstAttribute="leading" secondItem="Mxc-uS-gap" secondAttribute="leadingMargin" constant="20" id="hP0-0a-l3a"/>
-                                        <constraint firstItem="VFP-MP-q2I" firstAttribute="top" secondItem="2Ej-X3-PfG" secondAttribute="bottom" constant="20" id="mQT-zN-grW"/>
+                                        <constraint firstItem="VFP-MP-q2I" firstAttribute="leading" secondItem="Mxc-uS-gap" secondAttribute="leadingMargin" constant="10" id="z9k-lJ-qW7"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
