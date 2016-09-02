@@ -34,7 +34,10 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             }
         }
         
-        let newController = ListViewController(list: list, index: index, useStoryboard: self.storyboard!)
+        let newController = self.storyboard?.instantiateViewControllerWithIdentifier("listviewcontroller") as! ListViewController
+        newController.list = list
+        newController.index = index
+        newController.useStoryboard = self.storyboard
         listControllers.append(newController)
         
         return newController

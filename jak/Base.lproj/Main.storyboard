@@ -356,18 +356,45 @@ you can add new cards with this button!</string>
         <scene sceneID="d6T-7d-6bP">
             <objects>
                 <tableViewController storyboardIdentifier="listviewcontroller" id="0Hv-PH-Aob" customClass="ListViewController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="AP0-SR-cdA">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="86" sectionHeaderHeight="28" sectionFooterHeight="28" id="AP0-SR-cdA">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cardcell" id="qRj-V0-BzK" customClass="CardTableViewCell" customModule="jak" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cardcell" rowHeight="86" id="qRj-V0-BzK" customClass="CardTableViewCell" customModule="jak" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="86"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qRj-V0-BzK" id="Mxc-uS-gap">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="85"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ej-X3-PfG">
+                                            <rect key="frame" x="28" y="8" width="539" height="34"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="21"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFP-MP-q2I">
+                                            <rect key="frame" x="28" y="50" width="531" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="2Ej-X3-PfG" firstAttribute="leading" secondItem="Mxc-uS-gap" secondAttribute="leadingMargin" constant="20" id="H07-8V-y7e"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="2Ej-X3-PfG" secondAttribute="trailing" id="LAM-5h-5Ae"/>
+                                        <constraint firstItem="VFP-MP-q2I" firstAttribute="trailing" secondItem="Mxc-uS-gap" secondAttribute="trailingMargin" id="OiW-j2-xPu"/>
+                                        <constraint firstItem="2Ej-X3-PfG" firstAttribute="top" secondItem="Mxc-uS-gap" secondAttribute="topMargin" id="XiX-DX-2Mr"/>
+                                        <constraint firstItem="VFP-MP-q2I" firstAttribute="leading" secondItem="Mxc-uS-gap" secondAttribute="leadingMargin" constant="20" id="hP0-0a-l3a"/>
+                                        <constraint firstItem="VFP-MP-q2I" firstAttribute="top" secondItem="2Ej-X3-PfG" secondAttribute="bottom" constant="20" id="mQT-zN-grW"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <connections>
+                                    <outlet property="desc" destination="VFP-MP-q2I" id="J6k-dK-9cD"/>
+                                    <outlet property="title" destination="2Ej-X3-PfG" id="N3I-mt-W6A"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
