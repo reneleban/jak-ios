@@ -13,22 +13,26 @@ class LoginController : UIViewController {
         super.viewDidLoad()
         
         let keychain = KeychainSwift()
-        let token = keychain.get("service-token")
+        let token = keychain.get(JakKeychain.SERVICE_TOKEN.rawValue)
         if token != nil {
-            let touchIdEnabled = keychain.getBool("touchid-enabled")
+            let touchIdEnabled = keychain.getBool(JakKeychain.TOUCH_ID_ENABLED.rawValue)
             if touchIdEnabled != nil && touchIdEnabled! {
                 let context = LAContext()
-                let reason = "TouchID is activated. Identify yourself ..."
+                let reason = "Touch ID is enabled"
                 var error: NSError?
                 
                 if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-                    context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason, reply: { (success: Bool, error: NSError?) in
+                    context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason, reply: { (success, error) in
                         if success {
                             self.validateToken(token!)
                         } else {
-                            
+                            let alert = UIAlertController(title: "Error", message: "You could not be verified with Touch ID. Your token has been invalidated!", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert, animated: true)
+                            keychain.delete(JakKeychain.TOUCH_ID_ENABLED.rawValue)
+                            keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
                         }
-                    } as! (Bool, Error?) -> Void)
+                    })
                 }
             } else {
                 self.validateToken(token!)
@@ -53,7 +57,7 @@ class LoginController : UIViewController {
                     alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                     self.present(alert, animated: true, completion: nil)
                     let keychain = KeychainSwift()
-                    keychain.delete("service-token")
+                    keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
                 })
             }
         })
@@ -63,14 +67,14 @@ class LoginController : UIViewController {
         let touchId = sender as! UISwitch
         if touchId.isOn {
             let context = LAContext()
-            let reasonString = "Identify yourself please ..."
+            let reasonString = "Activating Touch ID ..."
             var error: NSError?
             
             if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
-                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString, reply: { (success: Bool, error: NSError?) in
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString, reply: { (success, error) -> Void in
                     if success {
                         let keychain = KeychainSwift()
-                        keychain.set(true, forKey: "touchid-enabled")
+                        keychain.set(true, forKey: JakKeychain.TOUCH_ID_ENABLED.rawValue)
                     } else {
                         print("\(error)")
                         
@@ -78,13 +82,16 @@ class LoginController : UIViewController {
                             touchId.setOn(false, animated: true)
                         })
                     }
-                } as! (Bool, Error?) -> Void)
+                })
             } else {
                 touchId.setOn(false, animated: true)
-                let alert = UIAlertController(title: "TouchID not available", message: "Either your TouchID sensor is disabled, or your device does not support TouchID.", preferredStyle: .alert)
+                let alert = UIAlertController(title: "Touch ID not available", message: "Either your Touch ID sensor is disabled, or your device does not support Touch ID.", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
                 self.present(alert, animated: true, completion: nil)
             }
+        } else {
+            let keychain = KeychainSwift()
+            keychain.delete(JakKeychain.TOUCH_ID_ENABLED.rawValue)
         }
     }
     
@@ -139,7 +146,7 @@ class LoginController : UIViewController {
     fileprivate func storeTokenInKeychain(_ token: String) {
         let keychain = KeychainSwift()
         
-        if keychain.set(token, forKey: "service-token") {
+        if keychain.set(token, forKey: JakKeychain.SERVICE_TOKEN.rawValue) {
             print("Token stored in keychain")
         } else {
             print("Token could not be stored in keychain")

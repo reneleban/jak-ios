@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B42C4E591D91A29800F98CE9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42C4E581D91A29800F98CE9 /* SettingsViewController.swift */; };
+		B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */; };
 		B46F49671D721AFB002C61D6 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F49661D721AFB002C61D6 /* Card.swift */; };
 		B46F49691D721EC0002C61D6 /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */; };
 		F724F5451D6EB7BC00E0B3BB /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */; };
@@ -53,6 +55,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B42C4E581D91A29800F98CE9 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		B46F49661D721AFB002C61D6 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
 		F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +117,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B42C4E571D91A28800F98CE9 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				B42C4E581D91A29800F98CE9 /* SettingsViewController.swift */,
+			);
+			name = settings;
+			sourceTree = "<group>";
+		};
 		F724F5461D6EB7C000E0B3BB /* home */ = {
 			isa = PBXGroup;
 			children = (
@@ -156,6 +168,7 @@
 				F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */,
 				F7F8994F1D78442E007F0479 /* UrlBuilder.swift */,
 				F7F899511D7845BF007F0479 /* JsonHelper.swift */,
+				B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -238,6 +251,7 @@
 			children = (
 				F7ABF6D71D741AF400187FB6 /* utils */,
 				F7ABF6DB1D74472C00187FB6 /* app */,
+				B42C4E571D91A28800F98CE9 /* settings */,
 				F7D89C8F1D6C2D2700BB6BAC /* login */,
 				F73B67B61D6D836800EBD7C2 /* register */,
 				F724F5461D6EB7C000E0B3BB /* home */,
@@ -392,8 +406,10 @@
 			files = (
 				F73B67B81D6DAE4F00EBD7C2 /* JsonConnection.swift in Sources */,
 				F73B67BA1D6DCA1100EBD7C2 /* Services.swift in Sources */,
+				B42C4E591D91A29800F98CE9 /* SettingsViewController.swift in Sources */,
 				F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */,
 				F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */,
+				B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */,
 				F7B908BF1D6F1172006E8267 /* List.swift in Sources */,
 				F75AA2A61D6EFA5700175563 /* BoardTableCell.swift in Sources */,
 				F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */,

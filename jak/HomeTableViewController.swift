@@ -17,18 +17,23 @@ class HomeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadBoards()
+        loadBoards(true)
     }
     
     @IBAction func actions(_ sender: AnyObject) {
         let actionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let logoutAction = UIAlertAction(title: "Logout", style: .default) { (alert: UIAlertAction) in
+        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alert: UIAlertAction) in
+            self.settings()
+        }
+        
+        let logoutAction = UIAlertAction(title: "Logout", style: .destructive) { (alert: UIAlertAction) in
             self.logout()
         }
         
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
+        actionMenu.addAction(settingsAction)
         actionMenu.addAction(logoutAction)
         actionMenu.addAction(cancelAction)
         
@@ -53,10 +58,30 @@ class HomeTableViewController: UITableViewController {
         self.present(boardPrompt, animated: true, completion: nil)
     }
     
+    fileprivate func checkDefaultBoard() {
+        let keychain = KeychainSwift()
+        let defaultBoard = keychain.get(JakKeychain.DEFAULT_BOARD.rawValue)
+        if defaultBoard != nil {
+            let board_id = defaultBoard!
+            
+            var i = 0
+            for board in boards {
+                if board.board_id == board_id {
+                    self.tableView(tableView, didSelectRowAt: IndexPath(row: i, section: 0))
+                }
+                i+=1
+            }
+        }
+    }
+    
+    fileprivate func settings() {
+        self.performSegue(withIdentifier: "settingssegue", sender: self)
+    }
+    
     fileprivate func logout() {
         let keychain = KeychainSwift()
-        keychain.delete("service-token")
-        keychain.delete("touchid-enabled")
+        keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
+        keychain.delete(JakKeychain.TOUCH_ID_ENABLED.rawValue)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -68,7 +93,7 @@ class HomeTableViewController: UITableViewController {
         })
     }
     
-    fileprivate func loadBoards() {
+    fileprivate func loadBoards(_ defaultBoard: Bool) {
         JakBoard.loadBoards(token, handler: { (response: JakResponse) in
             if let boards = response.object as? [[String:Any]] {
                 if boards.count == 0 {
@@ -84,6 +109,10 @@ class HomeTableViewController: UITableViewController {
                 
                 DispatchQueue.main.async(execute: {
                     self.boardTableView.reloadData()
+                    
+                    if defaultBoard {
+                        self.checkDefaultBoard()
+                    }
                 })
             } else {
                 self.noBoards()
@@ -101,7 +130,7 @@ class HomeTableViewController: UITableViewController {
     
     fileprivate func reload() {
         boards = []
-        loadBoards()
+        loadBoards(false)
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

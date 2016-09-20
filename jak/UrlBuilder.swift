@@ -33,7 +33,7 @@ class UrlBuilder {
     }
     
     func create() -> String {
-        var partsString:String = ""
+        var partsString = ""
         
         for part in parts {
             if partsString.characters.count > 0 {
@@ -43,9 +43,28 @@ class UrlBuilder {
             partsString += part
         }
      
-        let combined = host + partsString
+        return host + partsString
+    }
+    
+    func debug(_ host: Bool) -> String {
+        var debugParts = ""
         
-        print("Created url {\(combined)}")
-        return combined;
+        for part in parts {
+            if !host || debugParts.characters.count > 0 {
+                debugParts += "/"
+            }
+            
+            if part.characters.count <= 36 {
+                debugParts += part
+            } else {
+                debugParts += "..."
+            }
+        }
+        
+        if host {
+            debugParts = self.host + debugParts
+        }
+        
+        return debugParts
     }
 }

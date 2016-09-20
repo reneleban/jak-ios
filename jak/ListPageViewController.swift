@@ -176,7 +176,6 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
         listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-            print("Adding list \(titleTextField?.text)")
             self.addCard(titleTextField!.text!, desc: "")
         }))
         
@@ -189,7 +188,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func addCard(_ title: String, desc: String) {
-        JakCard.addCard(title, description: description, list_id: selectedlist!.list_id, token: token) { (response) in
+        JakCard.addCard(title, description: desc, list_id: selectedlist!.list_id, token: token) { (response) in
             self.reloadCards()
         }
     }

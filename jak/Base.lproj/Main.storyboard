@@ -35,7 +35,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail Address" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4ah-q2-FrY">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail Address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ah-q2-FrY">
                                 <frame key="frameInset" minX="16" minY="129" width="343" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -56,7 +56,7 @@
                                     <action selector="loginButtonPressed:" destination="Ryw-9B-PLf" eventType="touchUpInside" id="ScV-hu-it7"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sBl-gJ-5Dr">
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBl-gJ-5Dr">
                                 <frame key="frameInset" minX="17" minY="167" width="342" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -67,13 +67,13 @@
                                 <frame key="frameInset" minX="16" minY="248" width="343" height="117"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">Your token will be stored securely on your device.
-This means everytime you reopen this application, you will be logged in instantly. If you want to protect your login with TouchID, you can enable it here:</string>
+This means everytime you reopen this application, you will be logged in instantly. If you want to protect your login with Touch ID, you can enable it here:</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SzF-nG-kX7">
-                                <frame key="frameInset" minX="163" minY="362" width="51" height="31"/>
+                                <frame key="frameInset" minX="163" minY="350" width="51" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="touchIdToggled:" destination="Ryw-9B-PLf" eventType="valueChanged" id="Uxa-DL-GMh"/>
@@ -134,7 +134,7 @@ This means everytime you reopen this application, you will be logged in instantl
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.32549019607843138" green="0.41568627450980394" blue="0.47058823529411764" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Sign up" id="9bu-Mt-BPr">
                         <barButtonItem key="leftBarButtonItem" title="Abort" id="cdS-Zm-APZ">
@@ -159,6 +159,47 @@ This means everytime you reopen this application, you will be logged in instantl
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qK8-NQ-JRi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1117.5999999999999" y="1003.4482758620691"/>
+        </scene>
+        <!--Settings-->
+        <scene sceneID="TPc-Lp-fkU">
+            <objects>
+                <viewController id="69F-a1-t7z" customClass="SettingsViewController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="5hR-wx-Why"/>
+                        <viewControllerLayoutGuide type="bottom" id="X5Q-1X-VFi"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="2EK-Oo-tn6">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Defaultboard (will be opened at first login):" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G7z-As-G7A">
+                                <frame key="frameInset" minX="16" minY="85" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdX-0N-UPP">
+                                <frame key="frameInset" minX="24" minY="114" width="237" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="None set (tap to set default board)">
+                                    <color key="titleColor" red="0.92941176470588238" green="0.74901960784313726" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="defaultBoard:" destination="69F-a1-t7z" eventType="touchUpInside" id="1Vc-K3-SC3"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.32549019610000002" green="0.41568627450000001" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Settings" id="vy9-RR-TkI"/>
+                    <connections>
+                        <outlet property="defaultBoardButton" destination="fdX-0N-UPP" id="h3d-gD-GLb"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IJx-K7-Khf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2456.8000000000002" y="-352.17391304347831"/>
         </scene>
         <!--Home-->
         <scene sceneID="RkL-QZ-cAB">
@@ -188,7 +229,7 @@ This means everytime you reopen this application, you will be logged in instantl
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Boards" id="Q87-8A-leQ">
-                        <barButtonItem key="leftBarButtonItem" title="Settings" id="B6U-Sj-Sg6">
+                        <barButtonItem key="leftBarButtonItem" title="More" id="B6U-Sj-Sg6">
                             <color key="tintColor" red="0.99620366096496582" green="0.81365394592285156" blue="0.19477297365665436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="actions:" destination="KYN-pJ-2GK" id="lKu-x0-5s9"/>
@@ -205,11 +246,12 @@ This means everytime you reopen this application, you will be logged in instantl
                         <outlet property="actionsButton" destination="B6U-Sj-Sg6" id="sQd-jv-Ji1"/>
                         <outlet property="boardTableView" destination="EUG-Ps-ykf" id="jn2-6M-hza"/>
                         <segue destination="vlY-K7-0rk" kind="show" identifier="list" id="kb7-Aa-o0x"/>
+                        <segue destination="69F-a1-t7z" kind="show" identifier="settingssegue" id="9Bu-zr-Fnq"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0dK-TQ-u5a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1778" y="287"/>
+            <point key="canvasLocation" x="1777" y="287"/>
         </scene>
         <!--List Table View-->
         <scene sceneID="6m3-h3-pRx">

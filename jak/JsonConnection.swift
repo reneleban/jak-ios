@@ -7,7 +7,7 @@ class JsonConnection {
     let APPLICATION_JSON_TYPE = "application/json"
     
     // Constant variables which will be set by constructor
-    let url: String
+    let url: UrlBuilder
     let httpMethod: String
     
     // Mutable variables which can be set by class which uses JsonConnection
@@ -20,7 +20,7 @@ class JsonConnection {
         self.httpMethod = jakUrl.getMethod()
     }
     
-    init(url: String, httpMethod: String) {
+    init(url: UrlBuilder, httpMethod: String) {
         self.url = url
         self.httpMethod = httpMethod
     }
@@ -42,10 +42,12 @@ class JsonConnection {
     
     func send(_ completionHandler: @escaping (_ response: JakResponse) -> ()) {
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        let url = URL(string: self.url)
+        let url = URL(string: self.url.create())
         let request = NSMutableURLRequest(url: url!)
         let session = URLSession.shared
         let parameterString = parameters.stringFromHttpParameters()
+        
+        print("\(self.httpMethod) \(self.url.debug(false)) \(parameterString.characters.count > 0 ? "->" : "") \(parameterString)")
         
         request.httpMethod = httpMethod
         request.httpBody = parameterString.data(using: String.Encoding.utf8)
