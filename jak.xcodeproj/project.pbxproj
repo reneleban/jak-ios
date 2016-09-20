@@ -323,7 +323,7 @@
 				TargetAttributes = {
 					F7D89C571D6C2B9100BB6BAC = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = EZJPELY9FH;
+						DevelopmentTeam = XH8GS4V77E;
 						LastSwiftMigration = 0800;
 					};
 					F7D89C6E1D6C2B9200BB6BAC = {
@@ -560,9 +560,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = XH8GS4V77E;
 				INFOPLIST_FILE = jak/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.jak;
+				PRODUCT_BUNDLE_IDENTIFIER = de.jak.jak;
 				PRODUCT_NAME = jak;
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
@@ -575,9 +576,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = XH8GS4V77E;
 				INFOPLIST_FILE = jak/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.jak;
+				PRODUCT_BUNDLE_IDENTIFIER = de.jak.jak;
 				PRODUCT_NAME = jak;
 				PROVISIONING_PROFILE = "";
 				SWIFT_VERSION = 3.0;
