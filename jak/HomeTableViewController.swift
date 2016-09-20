@@ -20,47 +20,47 @@ class HomeTableViewController: UITableViewController {
         loadBoards()
     }
     
-    @IBAction func actions(sender: AnyObject) {
-        let actionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+    @IBAction func actions(_ sender: AnyObject) {
+        let actionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        let logoutAction = UIAlertAction(title: "Logout", style: .Default) { (alert: UIAlertAction) in
+        let logoutAction = UIAlertAction(title: "Logout", style: .default) { (alert: UIAlertAction) in
             self.logout()
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         actionMenu.addAction(logoutAction)
         actionMenu.addAction(cancelAction)
         
-        self.presentViewController(actionMenu, animated: true, completion: nil)
+        self.present(actionMenu, animated: true, completion: nil)
     }
     
-    @IBAction func addBoard(sender: AnyObject) {
+    @IBAction func addBoard(_ sender: AnyObject) {
         var inputTextField: UITextField?
         
-        let boardPrompt = UIAlertController(title: nil, message: "Enter a board name", preferredStyle: .Alert)
-        boardPrompt.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        boardPrompt.addAction(UIAlertAction(title: "Add", style: .Default, handler: { (action) -> Void in
+        let boardPrompt = UIAlertController(title: nil, message: "Enter a board name", preferredStyle: .alert)
+        boardPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        boardPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
             print("Adding board \(inputTextField?.text)")
             self.newBoard(inputTextField!.text!)
         }))
         
-        boardPrompt.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+        boardPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = "Board name ..."
             inputTextField = textField
         })
         
-        self.presentViewController(boardPrompt, animated: true, completion: nil)
+        self.present(boardPrompt, animated: true, completion: nil)
     }
     
-    private func logout() {
+    fileprivate func logout() {
         let keychain = KeychainSwift()
         keychain.delete("service-token")
         keychain.delete("touchid-enabled")
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
-    private func newBoard(title: String) {
+    fileprivate func newBoard(_ title: String) {
         JakBoard.addBoard(title, token: token, handler: { (response: JakResponse) in
             if response.statusCode == 200 {
                 self.reload()
@@ -68,21 +68,21 @@ class HomeTableViewController: UITableViewController {
         })
     }
     
-    private func loadBoards() {
+    fileprivate func loadBoards() {
         JakBoard.loadBoards(token, handler: { (response: JakResponse) in
-            if let boards = response.object as? NSArray {
+            if let boards = response.object as? [[String:Any]] {
                 if boards.count == 0 {
                     self.noBoards()
                 }
                 
                 for board in boards {
                     var boardName = board["name"] as! String
-                    boardName = boardName.stringByRemovingPercentEncoding!
+                    boardName = boardName.removingPercentEncoding!
                     let b = Board(name: boardName, board_id: board["board_id"] as! String)
                     self.boards.append(b)
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.boardTableView.reloadData()
                 })
             } else {
@@ -91,41 +91,41 @@ class HomeTableViewController: UITableViewController {
         })
     }
     
-    private func noBoards() {
-        dispatch_async(dispatch_get_main_queue(), {
-            let alert = UIAlertController(title: "No boards available", message: "You currently have no boards. Please add a new one!", preferredStyle: .Alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .Cancel, handler: nil))
-            self.presentViewController(alert, animated: true, completion: nil)
+    fileprivate func noBoards() {
+        DispatchQueue.main.async(execute: {
+            let alert = UIAlertController(title: "No boards available", message: "You currently have no boards. Please add a new one!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true, completion: nil)
         })
     }
     
-    private func reload() {
+    fileprivate func reload() {
         boards = []
         loadBoards()
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath) as! BoardTableCell
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath) as! BoardTableCell
         let name = cell.textLabel?.text
         let board_id = cell.board_id
         let board = Board(name: name!, board_id: board_id!)
         UserData.selectedBoard = board
         
-        self.performSegueWithIdentifier("list", sender: nil)
+        self.performSegue(withIdentifier: "list", sender: nil)
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let board = boards[indexPath.row]
-            let deleteAlert = UIAlertController(title: "Warning", message: "This will delete your board \(board.name) including its lists and cards.", preferredStyle: .Alert)
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let board = boards[(indexPath as NSIndexPath).row]
+            let deleteAlert = UIAlertController(title: "Warning", message: "This will delete your board \(board.name) including its lists and cards.", preferredStyle: .alert)
             
-            deleteAlert.addAction(UIAlertAction(title: "Proceed", style: .Destructive, handler: { (action) -> Void in
+            deleteAlert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (action) -> Void in
                 let board_id = board.board_id
                 var list_ids:[String] = []
                 
                 JakList.loadLists(board_id, token: self.token, handler: { (response) in
                     if response.statusCode == 200 {
-                        if let lists = response.object as? NSArray {
+                        if let lists = response.object as? [[String:Any]] {
                             for list in lists {
                                 let list_id = list["list_id"] as! String
                                 list_ids.append(list_id)
@@ -136,9 +136,9 @@ class HomeTableViewController: UITableViewController {
                             
                             JakBoard.deleteBoard(board.board_id, token: self.token, handler: { (response) in
                                 if response.statusCode == 200 {
-                                    dispatch_async(dispatch_get_main_queue(), {
-                                        self.boards.removeAtIndex(indexPath.row)
-                                        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+                                    DispatchQueue.main.async(execute: {
+                                        self.boards.remove(at: (indexPath as NSIndexPath).row)
+                                        tableView.deleteRows(at: [indexPath], with: .automatic)
                                     })
                                 }
                             })
@@ -148,29 +148,29 @@ class HomeTableViewController: UITableViewController {
                 })
             }))
             
-            deleteAlert.addAction(UIAlertAction(title: "Abort", style: .Default, handler: nil))
+            deleteAlert.addAction(UIAlertAction(title: "Abort", style: .default, handler: nil))
             
-            self.presentViewController(deleteAlert, animated: true, completion: nil)
+            self.present(deleteAlert, animated: true, completion: nil)
         }
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return boards.count
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let index = indexPath.row
-        let cell = tableView.dequeueReusableCellWithIdentifier("boardcell") as! BoardTableCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let index = (indexPath as NSIndexPath).row
+        let cell = tableView.dequeueReusableCell(withIdentifier: "boardcell") as! BoardTableCell
         
         let board_id = boards[index].board_id
         let name = boards[index].name
         
         cell.textLabel?.text = name
-        cell.textLabel?.textColor = UIColor.whiteColor()
+        cell.textLabel?.textColor = UIColor.white
         cell.board_id = board_id
         
         return cell

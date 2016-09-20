@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bZD-EJ-vYz">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="bZD-EJ-vYz">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -32,66 +32,59 @@
                         <viewControllerLayoutGuide type="bottom" id="QMH-Tp-NIW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="3I9-VI-etb">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail Address" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4ah-q2-FrY">
-                                <rect key="frame" x="21" y="142" width="558" height="30"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail Address" textAlignment="center" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="4ah-q2-FrY">
+                                <frame key="frameInset" minX="16" minY="129" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                 <connections>
                                     <action selector="userNameChanged:" destination="Ryw-9B-PLf" eventType="editingChanged" id="Dgk-VT-ieb"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PX5-sY-ea7">
-                                <rect key="frame" x="278" y="228" width="46" height="35"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PX5-sY-ea7">
+                                <frame key="frameInset" minX="165" minY="205" width="46" height="35"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Sign in">
-                                    <color key="titleColor" red="1" green="0.84066039323806763" blue="0.24792006611824036" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.99620366096496582" green="0.81365394592285156" blue="0.19477297365665436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="loginButtonPressed:" destination="Ryw-9B-PLf" eventType="touchUpInside" id="ScV-hu-it7"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sBl-gJ-5Dr">
-                                <rect key="frame" x="22" y="180" width="558" height="30"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="sBl-gJ-5Dr">
+                                <frame key="frameInset" minX="17" minY="167" width="342" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ah6-rv-Qi4">
-                                <rect key="frame" x="131" y="278" width="339" height="117"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="339" id="eno-vP-hnn"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ah6-rv-Qi4">
+                                <frame key="frameInset" minX="16" minY="248" width="343" height="117"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">Your token will be stored securely on your device.
 This means everytime you reopen this application, you will be logged in instantly. If you want to protect your login with TouchID, you can enable it here:</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SzF-nG-kX7">
-                                <rect key="frame" x="277" y="376" width="51" height="31"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SzF-nG-kX7">
+                                <frame key="frameInset" minX="163" minY="362" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="touchIdToggled:" destination="Ryw-9B-PLf" eventType="valueChanged" id="Uxa-DL-GMh"/>
                                 </connections>
                             </switch>
                         </subviews>
-                        <color key="backgroundColor" red="0.46750110387802124" green="0.56415927410125732" blue="0.61442160606384277" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="4ah-q2-FrY" secondAttribute="trailing" id="7au-x6-NyH"/>
-                            <constraint firstItem="sBl-gJ-5Dr" firstAttribute="leading" secondItem="3I9-VI-etb" secondAttribute="leadingMargin" id="CNf-dD-7nB"/>
-                            <constraint firstItem="ah6-rv-Qi4" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="M91-WW-WQc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="sBl-gJ-5Dr" secondAttribute="trailing" id="W7a-f2-7DT"/>
-                            <constraint firstItem="PX5-sY-ea7" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="ipf-H1-ba9"/>
-                            <constraint firstItem="SzF-nG-kX7" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="rXu-xT-NhP"/>
-                            <constraint firstItem="4ah-q2-FrY" firstAttribute="leading" secondItem="3I9-VI-etb" secondAttribute="leadingMargin" id="wkc-4M-oPe"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="iSa-Pf-Qnm">
                         <barButtonItem key="leftBarButtonItem" title="Sign up" id="9je-dp-mnT">
-                            <color key="tintColor" red="1" green="0.84066039323806763" blue="0.24792006611824036" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.99620366096496582" green="0.81365394592285156" blue="0.19477297365665436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="actionButtonPressed:" destination="Ryw-9B-PLf" id="rEf-Jh-pne"/>
                             </connections>
@@ -108,7 +101,7 @@ This means everytime you reopen this application, you will be logged in instantl
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LNm-h6-cKT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="429" y="287"/>
+            <point key="canvasLocation" x="428" y="286.50674662668666"/>
         </scene>
         <!--Sign up-->
         <scene sceneID="Udc-CD-tGm">
@@ -119,44 +112,39 @@ This means everytime you reopen this application, you will be logged in instantl
                         <viewControllerLayoutGuide type="bottom" id="tHb-S3-VVH"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Cuj-14-EpI">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail Address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V0g-dE-9Ej">
-                                <rect key="frame" x="20" y="81" width="560" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail Address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="V0g-dE-9Ej">
+                                <frame key="frameInset" minX="20" minY="81" width="339" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ThK-t5-OmI">
-                                <rect key="frame" x="20" y="131" width="560" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ThK-t5-OmI">
+                                <frame key="frameInset" minX="20" minY="131" width="339" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Repeat password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nNT-n6-fn8">
-                                <rect key="frame" x="20" y="169" width="560" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Repeat password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nNT-n6-fn8">
+                                <frame key="frameInset" minX="20" minY="169" width="339" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                         </subviews>
-                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="nNT-n6-fn8" firstAttribute="leading" secondItem="Cuj-14-EpI" secondAttribute="leadingMargin" id="6Kq-wJ-5BD"/>
-                            <constraint firstItem="ThK-t5-OmI" firstAttribute="trailing" secondItem="Cuj-14-EpI" secondAttribute="trailingMargin" id="NSh-3Z-ci7"/>
-                            <constraint firstItem="V0g-dE-9Ej" firstAttribute="leading" secondItem="Cuj-14-EpI" secondAttribute="leadingMargin" id="UI3-pQ-Dc0"/>
-                            <constraint firstItem="ThK-t5-OmI" firstAttribute="leading" secondItem="Cuj-14-EpI" secondAttribute="leadingMargin" id="Uqh-xh-Dqq"/>
-                            <constraint firstItem="nNT-n6-fn8" firstAttribute="trailing" secondItem="Cuj-14-EpI" secondAttribute="trailingMargin" id="WHG-de-art"/>
-                            <constraint firstItem="V0g-dE-9Ej" firstAttribute="trailing" secondItem="Cuj-14-EpI" secondAttribute="trailingMargin" id="mEs-EO-qjt"/>
-                        </constraints>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Sign up" id="9bu-Mt-BPr">
                         <barButtonItem key="leftBarButtonItem" title="Abort" id="cdS-Zm-APZ">
-                            <color key="tintColor" red="1" green="0.84066039323806763" blue="0.24792006611824036" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.99620366096496582" green="0.81365394592285156" blue="0.19477297365665436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="abortRegister:" destination="70f-Wq-q5E" id="Q0Q-HC-Tt9"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Finish" id="539-Wp-tiF">
-                            <color key="tintColor" red="1" green="0.84066039323806763" blue="0.24792006611824036" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.99620366096496582" green="0.81365394592285156" blue="0.19477297365665436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="doRegister:" destination="70f-Wq-q5E" id="9C4-Mc-uNv"/>
                             </connections>
@@ -170,28 +158,28 @@ This means everytime you reopen this application, you will be logged in instantl
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qK8-NQ-JRi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1118" y="1004"/>
+            <point key="canvasLocation" x="1117.5999999999999" y="1003.4482758620691"/>
         </scene>
         <!--Home-->
         <scene sceneID="RkL-QZ-cAB">
             <objects>
                 <tableViewController title="Home" id="KYN-pJ-2GK" customClass="HomeTableViewController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="EUG-Ps-ykf">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        <color key="sectionIndexBackgroundColor" red="0.46750110387802124" green="0.56415927410125732" blue="0.61442160606384277" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="sectionIndexTrackingBackgroundColor" red="0.46750110387802124" green="0.56415927410125732" blue="0.61442160606384277" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexBackgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="sectionIndexTrackingBackgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="boardcell" id="8vZ-AT-6oF" customClass="BoardTableCell" customModule="jak" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="8vZ-AT-6oF" id="oWQ-zb-4we">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <frame key="frameInset" width="342" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
-                                <color key="backgroundColor" red="0.46750110387802124" green="0.56415927410125732" blue="0.61442160606384277" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -201,13 +189,13 @@ This means everytime you reopen this application, you will be logged in instantl
                     </tableView>
                     <navigationItem key="navigationItem" title="Boards" id="Q87-8A-leQ">
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="B6U-Sj-Sg6">
-                            <color key="tintColor" red="1" green="0.84066039323806763" blue="0.24792006611824036" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.99620366096496582" green="0.81365394592285156" blue="0.19477297365665436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="actions:" destination="KYN-pJ-2GK" id="lKu-x0-5s9"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="9A3-RA-Psl">
-                            <color key="tintColor" red="1" green="0.84066039323806763" blue="0.24792006611824036" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="0.99620366096496582" green="0.81365394592285156" blue="0.19477297365665436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="addBoard:" destination="KYN-pJ-2GK" id="pGI-i9-z3a"/>
                             </connections>
@@ -228,15 +216,15 @@ This means everytime you reopen this application, you will be logged in instantl
             <objects>
                 <tableViewController id="RA5-At-rbc" customClass="ListTableView" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="5hf-dC-WUC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="hXE-UP-gGE">
-                                <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="hXE-UP-gGE" id="UqK-za-Mch">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -290,11 +278,12 @@ This means everytime you reopen this application, you will be logged in instantl
                         <viewControllerLayoutGuide type="bottom" id="Guj-eW-YGf"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="r3M-SD-ibg">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scz-Ut-Oe2">
-                                <rect key="frame" x="120" y="160" width="361" height="199"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scz-Ut-Oe2">
+                                <frame key="frameInset" minX="16" minY="162" width="343" height="226"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">Your board does not contain any lists.
 Create a new one by tapping the action-icon!
 
@@ -303,34 +292,31 @@ you can also add a new list via the plus-icon.
 If a board contains lists,
 you can add new cards with this button!</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.46750110387802124" green="0.56415927410125732" blue="0.61442160606384277" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="scz-Ut-Oe2" firstAttribute="centerX" secondItem="r3M-SD-ibg" secondAttribute="centerX" id="S2G-SJ-Q7A"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWF-kJ-zly" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1778" y="1678"/>
+            <point key="canvasLocation" x="1776.8" y="1677.2113943028487"/>
         </scene>
         <!--Available lists-->
         <scene sceneID="OuQ-XR-3hX">
             <objects>
                 <tableViewController id="SIk-xV-1h4" customClass="AvailableListsController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="N7O-aB-ud8">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="listcell" id="Fxw-bO-W1m">
-                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="44"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Fxw-bO-W1m" id="IsQ-iD-sm1">
-                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <frame key="frameInset" width="375" height="43"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
                             </tableViewCell>
@@ -357,37 +343,32 @@ you can add new cards with this button!</string>
             <objects>
                 <tableViewController storyboardIdentifier="listviewcontroller" id="0Hv-PH-Aob" customClass="ListViewController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="86" sectionHeaderHeight="28" sectionFooterHeight="28" id="AP0-SR-cdA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="cardcell" rowHeight="86" id="qRj-V0-BzK" customClass="CardTableViewCell" customModule="jak" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="92" width="600" height="86"/>
+                                <rect key="frame" x="0.0" y="92" width="375" height="86"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="qRj-V0-BzK" id="Mxc-uS-gap">
-                                    <rect key="frame" x="0.0" y="0.0" width="567" height="85"/>
+                                    <frame key="frameInset" width="342" height="85"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ej-X3-PfG">
-                                            <rect key="frame" x="18" y="8" width="549" height="34"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ej-X3-PfG">
+                                            <frame key="frameInset" minX="18" minY="8" width="324" height="34"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="21"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFP-MP-q2I">
-                                            <rect key="frame" x="18" y="41" width="541" height="21"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFP-MP-q2I">
+                                            <frame key="frameInset" minX="18" minY="41" width="324" height="21"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailingMargin" secondItem="2Ej-X3-PfG" secondAttribute="trailing" id="LAM-5h-5Ae"/>
-                                        <constraint firstItem="VFP-MP-q2I" firstAttribute="trailing" secondItem="Mxc-uS-gap" secondAttribute="trailingMargin" id="OiW-j2-xPu"/>
-                                        <constraint firstItem="2Ej-X3-PfG" firstAttribute="leading" secondItem="Mxc-uS-gap" secondAttribute="leadingMargin" constant="10" id="Xgb-cL-bQG"/>
-                                        <constraint firstItem="2Ej-X3-PfG" firstAttribute="top" secondItem="Mxc-uS-gap" secondAttribute="topMargin" id="XiX-DX-2Mr"/>
-                                        <constraint firstItem="VFP-MP-q2I" firstAttribute="leading" secondItem="Mxc-uS-gap" secondAttribute="leadingMargin" constant="10" id="z9k-lJ-qW7"/>
-                                    </constraints>
                                 </tableViewCellContentView>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <connections>
@@ -408,7 +389,7 @@ you can add new cards with this button!</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dv3-bs-tD8" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2457" y="1004"/>
+            <point key="canvasLocation" x="2456.8000000000002" y="1003.4482758620691"/>
         </scene>
         <!--Card-->
         <scene sceneID="uUv-Gf-eUW">
@@ -419,40 +400,38 @@ you can add new cards with this button!</string>
                         <viewControllerLayoutGuide type="bottom" id="7Ca-lJ-Hvi"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="rzH-KK-gDX">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Titletext" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pby-4I-cwJ">
-                                <rect key="frame" x="28" y="110" width="552" height="30"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Titletext" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pby-4I-cwJ">
+                                <frame key="frameInset" minX="16" minY="110" width="343" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOc-e6-3q4">
-                                <rect key="frame" x="28" y="169" width="88" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tp5-Lj-lCK">
-                                <rect key="frame" x="28" y="81" width="34" height="21"/>
+                                <frame key="frameInset" minX="16" minY="81" width="34" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="s60-5d-bTR">
-                                <rect key="frame" x="28" y="192" width="552" height="232"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="s60-5d-bTR">
+                                <frame key="frameInset" minX="16" minY="192" width="343" height="232"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jOc-e6-3q4">
+                                <frame key="frameInset" minX="16" minY="171" width="88" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.46750110387802124" green="0.56415927410125732" blue="0.61442160606384277" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="s60-5d-bTR" firstAttribute="leading" secondItem="rzH-KK-gDX" secondAttribute="leadingMargin" constant="8" id="5h9-LD-AVx"/>
-                            <constraint firstItem="Pby-4I-cwJ" firstAttribute="trailing" secondItem="rzH-KK-gDX" secondAttribute="trailingMargin" id="Exc-mL-NGe"/>
-                            <constraint firstItem="s60-5d-bTR" firstAttribute="trailing" secondItem="rzH-KK-gDX" secondAttribute="trailingMargin" id="JVz-PP-Qwt"/>
-                            <constraint firstItem="Pby-4I-cwJ" firstAttribute="leading" secondItem="rzH-KK-gDX" secondAttribute="leadingMargin" constant="8" id="xHe-9B-JBI"/>
-                        </constraints>
+                        <color key="backgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Card" id="1Ro-kn-Eal">
                         <barButtonItem key="leftBarButtonItem" title="Back" id="eUo-3R-R6B">
@@ -474,7 +453,7 @@ you can add new cards with this button!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UyQ-Cg-Nnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3819" y="1004"/>
+            <point key="canvasLocation" x="3818.4000000000001" y="1003.4482758620691"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="i7C-fE-pij">

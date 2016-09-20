@@ -14,15 +14,15 @@ class CardViewController : UIViewController {
         }
     }
     
-    private func dismiss() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    fileprivate func dismiss() {
+        self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func backButton(sender: AnyObject) {
+    @IBAction func backButton(_ sender: AnyObject) {
         dismiss()
     }
     
-    @IBAction func saveButton(sender: AnyObject) {
+    @IBAction func saveButton(_ sender: AnyObject) {
         // Save here
         
         dismiss()

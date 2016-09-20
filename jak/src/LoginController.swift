@@ -21,14 +21,14 @@ class LoginController : UIViewController {
                 let reason = "TouchID is activated. Identify yourself ..."
                 var error: NSError?
                 
-                if context.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
-                    context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reason, reply: { (success: Bool, error: NSError?) in
+                if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                    context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason, reply: { (success: Bool, error: NSError?) in
                         if success {
                             self.validateToken(token!)
                         } else {
                             
                         }
-                    })
+                    } as! (Bool, Error?) -> Void)
                 }
             } else {
                 self.validateToken(token!)
@@ -38,20 +38,20 @@ class LoginController : UIViewController {
         }
     }
     
-    private func validateToken(token: String) {
+    fileprivate func validateToken(_ token: String) {
         JakLogin.validate(token, handler: { (response: JakResponse) in
             let statusCode = response.statusCode
             if statusCode == 200 {
                 UserData.token = token
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.showBoard()
                 })
             } else {
-                dispatch_async(dispatch_get_main_queue(), {
-                    let alert = UIAlertController(title: "Token invalid", message: "Your token is invalid. Please perform a fresh login!", preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
+                DispatchQueue.main.async(execute: {
+                    let alert = UIAlertController(title: "Token invalid", message: "Your token is invalid. Please perform a fresh login!", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                     let keychain = KeychainSwift()
                     keychain.delete("service-token")
                 })
@@ -59,71 +59,71 @@ class LoginController : UIViewController {
         })
     }
     
-    @IBAction func touchIdToggled(sender: AnyObject) {
+    @IBAction func touchIdToggled(_ sender: AnyObject) {
         let touchId = sender as! UISwitch
-        if touchId.on {
+        if touchId.isOn {
             let context = LAContext()
             let reasonString = "Identify yourself please ..."
             var error: NSError?
             
-            if context.canEvaluatePolicy(LAPolicy.DeviceOwnerAuthenticationWithBiometrics, error: &error) {
-                context.evaluatePolicy(.DeviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString, reply: { (success: Bool, error: NSError?) in
+            if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+                context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reasonString, reply: { (success: Bool, error: NSError?) in
                     if success {
                         let keychain = KeychainSwift()
                         keychain.set(true, forKey: "touchid-enabled")
                     } else {
                         print("\(error)")
                         
-                        dispatch_async(dispatch_get_main_queue(), {
+                        DispatchQueue.main.async(execute: {
                             touchId.setOn(false, animated: true)
                         })
                     }
-                })
+                } as! (Bool, Error?) -> Void)
             } else {
                 touchId.setOn(false, animated: true)
-                let alert = UIAlertController(title: "TouchID not available", message: "Either your TouchID sensor is disabled, or your device does not support TouchID.", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                let alert = UIAlertController(title: "TouchID not available", message: "Either your TouchID sensor is disabled, or your device does not support TouchID.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }
         }
     }
     
-    @IBAction func actionButtonPressed(sender: AnyObject) {
-        self.performSegueWithIdentifier("register", sender: self)
+    @IBAction func actionButtonPressed(_ sender: AnyObject) {
+        self.performSegue(withIdentifier: "register", sender: self)
     }
     
-    @IBAction func userNameChanged(sender: AnyObject) {
+    @IBAction func userNameChanged(_ sender: AnyObject) {
     }
     
-    @IBAction func loginButtonPressed(sender: AnyObject) {
+    @IBAction func loginButtonPressed(_ sender: AnyObject) {
         performLogin()
     }
     
     @IBOutlet weak var loginButtonPressed: UIButton!
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let navController = segue.destinationViewController as? UINavigationController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navController = segue.destination as? UINavigationController
         if let viewController = navController?.topViewController as? RegisterController {
             viewController.loginController = self
         }
     }
     
-    internal func setCredentials(username: String, password: String) {
+    internal func setCredentials(_ username: String, password: String) {
         self.emailAddress.text = username
         self.password.text = password
     }
     
-    private func showBoard() {
-        self.performSegueWithIdentifier("home", sender: self)
+    fileprivate func showBoard() {
+        self.performSegue(withIdentifier: "home", sender: self)
     }
     
-    private func performLogin() {
+    fileprivate func performLogin() {
         JakLogin.login(self.emailAddress.text!, password: self.password.text!, handler: { (response: JakResponse) in
             let statusCode = response.statusCode
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 if statusCode != 200 {
-                    let alert:UIAlertController = UIAlertController(title: "Error logging in", message: "Your credentials were incorrect. Please try again!", preferredStyle: .Alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-                    self.presentViewController(alert, animated: true, completion: nil)
+                    let alert:UIAlertController = UIAlertController(title: "Error logging in", message: "Your credentials were incorrect. Please try again!", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
                 } else {
                     self.password.text = ""
                     let token = (response.object as! NSDictionary)["token"] as! String
@@ -136,7 +136,7 @@ class LoginController : UIViewController {
         })
     }
     
-    private func storeTokenInKeychain(token: String) {
+    fileprivate func storeTokenInKeychain(_ token: String) {
         let keychain = KeychainSwift()
         
         if keychain.set(token, forKey: "service-token") {

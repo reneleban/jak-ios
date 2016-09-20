@@ -13,18 +13,18 @@ class UrlBuilder {
         self.host = service.rawValue
     }
     
-    func a(part: String) -> UrlBuilder {
+    func a(_ part: String) -> UrlBuilder {
         parts.append(part)
         return self
     }
     
-    func p(placeholder: String) -> UrlBuilder {
+    func p(_ placeholder: String) -> UrlBuilder {
         parts.append("#" + placeholder)
         return self
     }
     
-    func r(placeholder: String, value: String) -> UrlBuilder {
-        for (index, element) in parts.enumerate() {
+    func r(_ placeholder: String, value: String) -> UrlBuilder {
+        for (index, element) in parts.enumerated() {
             if element == "#" + placeholder {
                 parts[index] = value
             }

@@ -27,14 +27,14 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         loadAllLists()
     }
     
-    func getListController(list: List, index: Int) -> ListViewController {
+    func getListController(_ list: List, index: Int) -> ListViewController {
         for controller in listControllers {
             if controller.getList().list_id == list.list_id {
                 return controller
             }
         }
         
-        let newController = self.storyboard?.instantiateViewControllerWithIdentifier("listviewcontroller") as! ListViewController
+        let newController = self.storyboard?.instantiateViewController(withIdentifier: "listviewcontroller") as! ListViewController
         newController.list = list
         newController.index = index
         newController.useStoryboard = self.storyboard
@@ -59,7 +59,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     
     func loadAllLists() {
         JakList.loadLists(boardId, token: token) { (response) in
-            if let rows = response.object as? NSArray {
+            if let rows = response.object as? [[String:Any]] {
                 self.lists.removeAll()
                 
                 for row in rows {
@@ -67,7 +67,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
                     self.lists.append(list)
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     if self.lists.count > 0 {
                         self.cleanUp()
                         let list = self.lists[0]
@@ -75,68 +75,68 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
                         self.selectedlist = list
                         let listController = self.getListController(list, index: 0)
                         listController.reloadCards()
-                        self.setViewControllers([listController], direction: .Forward, animated: true, completion: nil)
+                        self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
                     } else {
-                        self.setViewControllers([(self.storyboard?.instantiateViewControllerWithIdentifier("nolistscontroller"))!], direction: .Forward, animated: true, completion: nil)
+                        self.setViewControllers([(self.storyboard?.instantiateViewController(withIdentifier: "nolistscontroller"))!], direction: .forward, animated: true, completion: nil)
                     }
                 })
             }
         }
     }
     
-    @IBAction func actionButton(sender: AnyObject) {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
-        actionSheet.addAction(UIAlertAction(title: "New list", style: .Default, handler: { (UIAlertAction) in
+    @IBAction func actionButton(_ sender: AnyObject) {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "New list", style: .default, handler: { (UIAlertAction) in
             self.addListPrompt()
         }))
         
         if lists.count != 0 {
-            actionSheet.addAction(UIAlertAction(title: "Edit mode", style: .Default, handler: { (UIAlertAction) in
+            actionSheet.addAction(UIAlertAction(title: "Edit mode", style: .default, handler: { (UIAlertAction) in
                 self.switchEditMode()
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Available lists of '" + UserData.selectedBoard!.name + "'", style: .Default, handler: { (UIAlertAction) in
-                self.performSegueWithIdentifier("availablelists", sender: self)
+            actionSheet.addAction(UIAlertAction(title: "Available lists of '" + UserData.selectedBoard!.name + "'", style: .default, handler: { (UIAlertAction) in
+                self.performSegue(withIdentifier: "availablelists", sender: self)
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Delete '" + selectedlist!.name + "'", style: .Destructive, handler: { (alert) in
-                let alert = UIAlertController(title: "Warning", message: "Your cards will also be removed if you delete this list! Proceed?", preferredStyle: .Alert)
-                alert.addAction(UIAlertAction(title: "Proceed", style: .Destructive, handler: { (UIAlertAction) in
+            actionSheet.addAction(UIAlertAction(title: "Delete '" + selectedlist!.name + "'", style: .destructive, handler: { (alert) in
+                let alert = UIAlertController(title: "Warning", message: "Your cards will also be removed if you delete this list! Proceed?", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (UIAlertAction) in
                     self.deleteList()
                 }))
-                alert.addAction(UIAlertAction(title: "Abort", style: .Default, handler: nil))
-                self.presentViewController(alert, animated: true, completion: nil)
+                alert.addAction(UIAlertAction(title: "Abort", style: .default, handler: nil))
+                self.present(alert, animated: true, completion: nil)
             }))
         }
         
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        self.presentViewController(actionSheet, animated: true, completion: nil)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(actionSheet, animated: true, completion: nil)
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let navController = segue.destinationViewController as? UINavigationController
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let navController = segue.destination as? UINavigationController
         if let viewController = navController?.topViewController as? AvailableListsController {
             viewController.pageViewController = self
         }
     }
     
-    private func switchEditMode() {
+    fileprivate func switchEditMode() {
         let viewController = getSelectedListController()
         if viewController != nil {
-            let currentMode = viewController!.tableView.editing
+            let currentMode = viewController!.tableView.isEditing
             viewController!.tableView.setEditing(!currentMode, animated: true)
             
             if !currentMode {
-                self.navigationItem.setRightBarButtonItems([UIBarButtonItem(title: "Done", style: .Plain, target: self, action: #selector(finishButtonClicked))], animated: true)
+                self.navigationItem.setRightBarButtonItems([UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishButtonClicked))], animated: true)
             }
         }
     }
     
-    func selectList(list: List) {
+    func selectList(_ list: List) {
         self.selectedlist = list
         let listController = getListController(list, index: 0)
         self.title = list.name
-        self.setViewControllers([listController], direction: .Forward, animated: true, completion: nil)
+        self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
     }
     
     func finishButtonClicked() {
@@ -144,7 +144,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         getSelectedListController()!.tableView.setEditing(false, animated: true)
     }
     
-    private func getSelectedListController() -> ListViewController? {
+    fileprivate func getSelectedListController() -> ListViewController? {
         if selectedlist != nil {
             return getListController(selectedlist!, index: 0)
         }
@@ -152,7 +152,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         return nil
     }
     
-    @IBAction func addNewCard(sender: AnyObject) {
+    @IBAction func addNewCard(_ sender: AnyObject) {
         if lists.count == 0 {
             addListPrompt()
         } else {
@@ -164,7 +164,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         if selectedlist != nil {
             let currentController = getListController(selectedlist!, index: 0)
             
-            dispatch_async(dispatch_get_main_queue(), {
+            DispatchQueue.main.async(execute: {
                 currentController.reloadCards(true)
             })
         }
@@ -173,22 +173,22 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func addCardPrompt() {
         var titleTextField: UITextField?
         
-        let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .Alert)
-        listPrompt.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        listPrompt.addAction(UIAlertAction(title: "Add", style: .Default, handler: { (action) -> Void in
+        let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
+        listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
             print("Adding list \(titleTextField?.text)")
             self.addCard(titleTextField!.text!, desc: "")
         }))
         
-        listPrompt.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+        listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = "Card name ..."
             titleTextField = textField
         })
         
-        self.presentViewController(listPrompt, animated: true, completion: nil)
+        self.present(listPrompt, animated: true, completion: nil)
     }
     
-    func addCard(title: String, desc: String) {
+    func addCard(_ title: String, desc: String) {
         JakCard.addCard(title, description: description, list_id: selectedlist!.list_id, token: token) { (response) in
             self.reloadCards()
         }
@@ -210,27 +210,27 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func addListPrompt() {
         var inputTextField: UITextField?
         
-        let listPrompt = UIAlertController(title: nil, message: "Enter a list name", preferredStyle: .Alert)
-        listPrompt.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
-        listPrompt.addAction(UIAlertAction(title: "Add", style: .Default, handler: { (action) -> Void in
+        let listPrompt = UIAlertController(title: nil, message: "Enter a list name", preferredStyle: .alert)
+        listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
             self.addList(inputTextField!.text!)
         }))
         
-        listPrompt.addTextFieldWithConfigurationHandler({(textField: UITextField!) in
+        listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
             textField.placeholder = "List name ..."
             inputTextField = textField
         })
         
-        self.presentViewController(listPrompt, animated: true, completion: nil)
+        self.present(listPrompt, animated: true, completion: nil)
     }
     
-    func addList(name: String) {
+    func addList(_ name: String) {
         JakList.addList(name, board_id: boardId, token: token) { (response) in
             self.loadAllLists()
         }
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerBeforeViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         if let listController = viewController as? ListViewController {
             let index = listController.getIndex()
             if index == 0 {
@@ -251,7 +251,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         return nil
     }
     
-    func pageViewController(pageViewController: UIPageViewController, viewControllerAfterViewController viewController: UIViewController) -> UIViewController? {
+    func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let listController = viewController as? ListViewController {
             let index = listController.getIndex()
             if index == lists.count - 1 {
@@ -273,11 +273,11 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         return nil
     }
     
-    func presentationCountForPageViewController(pageViewController: UIPageViewController) -> Int {
+    func presentationCount(for pageViewController: UIPageViewController) -> Int {
         return lists.count
     }
     
-    func presentationIndexForPageViewController(pageViewController: UIPageViewController) -> Int {
+    func presentationIndex(for pageViewController: UIPageViewController) -> Int {
         return 0
     }
 }

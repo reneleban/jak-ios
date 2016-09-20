@@ -6,14 +6,14 @@ class ListViewController : UITableViewController {
     var list:List?
     var useStoryboard: UIStoryboard?
     
-    private var cards:[Card] = []
+    fileprivate var cards:[Card] = []
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
     init(list: List, index: Int, useStoryboard: UIStoryboard) {
-        super.init(style: UITableViewStyle.Plain)
+        super.init(style: UITableViewStyle.plain)
         self.index = index
         self.list = list
         self.useStoryboard = useStoryboard
@@ -31,76 +31,76 @@ class ListViewController : UITableViewController {
         return self.list!
     }
     
-    func reloadCards(scrollToLast: Bool = false) {
+    func reloadCards(_ scrollToLast: Bool = false) {
         JakCard.loadCards((list?.list_id)!, token: UserData.token!) { (response) in
-            if let arr = response.object as? NSArray {
+            if let arr = response.object as? [[String:Any]] {
                 self.cards.removeAll()
                 for c in arr {
                     let card = Card(title: c["name"] as! String, desc: c["description"] as! String, card_id: c["card_id"] as! String, owner: c["owner"] as! String, list_id: c["list_id"] as! String)
                     self.cards.append(card)
                 }
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     self.tableView.reloadData()
                     
                     if scrollToLast {
-                        let indexPath = NSIndexPath(forRow: self.tableView.numberOfRowsInSection(0) - 1, inSection: 0)
+                        let indexPath = IndexPath(row: self.tableView.numberOfRows(inSection: 0) - 1, section: 0)
                         //self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
-                        self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Top)
+                        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
                     }
                 })
             }
         }
     }
     
-    func deleteCard(card_id: String) {
+    func deleteCard(_ card_id: String) {
         JakCard.deleteCard(card_id, token: UserData.token!) { (response) in
             self.reloadCards()
         }
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let card = self.cards[indexPath.row]
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let card = self.cards[(indexPath as NSIndexPath).row]
         UserData.selectedCard = card
         
-        let cardController = self.useStoryboard!.instantiateViewControllerWithIdentifier("carddetail")
-        self.presentViewController(cardController, animated: true, completion: nil)
+        let cardController = self.useStoryboard!.instantiateViewController(withIdentifier: "carddetail")
+        self.present(cardController, animated: true, completion: nil)
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("cardcell", forIndexPath: indexPath) as! CardTableViewCell
-        let index = indexPath.row
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cardcell", for: indexPath) as! CardTableViewCell
+        let index = (indexPath as NSIndexPath).row
         cell.title.text = cards[index].title!
-        cell.title.textColor = UIColor.whiteColor()
+        cell.title.textColor = UIColor.white
         
         if cards[index].desc!.characters.count != 0 {
             cell.desc.text = cards[index].desc!
-            cell.desc.textColor = UIColor.whiteColor()
+            cell.desc.textColor = UIColor.white
         } else {
             cell.desc.text = "No description"
-            cell.desc.textColor = UIColor.lightGrayColor()
+            cell.desc.textColor = UIColor.lightGray
         }
         
-        cell.accessoryType = .DisclosureIndicator
+        cell.accessoryType = .disclosureIndicator
         return cell
     }
     
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            let card_id = self.cards[indexPath.row].card_id
+    override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            let card_id = self.cards[(indexPath as NSIndexPath).row].card_id
             deleteCard(card_id!)
         }
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 65
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return cards.count
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 }
