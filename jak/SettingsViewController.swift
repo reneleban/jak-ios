@@ -42,7 +42,7 @@ class SettingsViewController : UIViewController {
         
         let action = UIAlertAction(title: "Disable", style: .cancel, handler: { (action) in
             self.setDefaultBoard(nil)
-            sender.setTitle("None set (tap to set default board)", for: UIControlState.normal)
+            sender.setTitle("No default board set", for: UIControlState.normal)
         })
         sheet.addAction(action)
         
