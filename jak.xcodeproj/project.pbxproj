@@ -23,6 +23,7 @@
 		F7B908BA1D6F0408006E8267 /* ListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908B91D6F0408006E8267 /* ListPageViewController.swift */; };
 		F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908BC1D6F0C79006E8267 /* ListViewController.swift */; };
 		F7B908BF1D6F1172006E8267 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908BE1D6F1172006E8267 /* List.swift */; };
+		F7CA2D221D953B2F0080773D /* PersistenceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */; };
 		F7D3772B1D7997280068716D /* AvailableListsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D3772A1D7997280068716D /* AvailableListsController.swift */; };
 		F7D89C5C1D6C2B9200BB6BAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */; };
 		F7D89C611D6C2B9200BB6BAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7D89C5F1D6C2B9200BB6BAC /* Main.storyboard */; };
@@ -72,6 +73,7 @@
 		F7B908BC1D6F0C79006E8267 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		F7B908BE1D6F1172006E8267 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		F7CA2D201D9537A60080773D /* jak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = jak.entitlements; sourceTree = "<group>"; };
+		F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceLayer.swift; sourceTree = "<group>"; };
 		F7D3772A1D7997280068716D /* AvailableListsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableListsController.swift; sourceTree = "<group>"; };
 		F7D89C581D6C2B9100BB6BAC /* jak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -129,7 +131,6 @@
 		F724F5461D6EB7C000E0B3BB /* home */ = {
 			isa = PBXGroup;
 			children = (
-				F7F51C851D6EF6C600174CE9 /* Board.swift */,
 				F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */,
 				F75AA2A51D6EFA5700175563 /* BoardTableCell.swift */,
 			);
@@ -170,6 +171,7 @@
 				F7F8994F1D78442E007F0479 /* UrlBuilder.swift */,
 				F7F899511D7845BF007F0479 /* JsonHelper.swift */,
 				B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */,
+				F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -187,12 +189,20 @@
 			children = (
 				F7B908B91D6F0408006E8267 /* ListPageViewController.swift */,
 				F7B908BC1D6F0C79006E8267 /* ListViewController.swift */,
-				F7B908BE1D6F1172006E8267 /* List.swift */,
-				B46F49661D721AFB002C61D6 /* Card.swift */,
 				B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */,
 				F7D3772A1D7997280068716D /* AvailableListsController.swift */,
 			);
 			name = list;
+			sourceTree = "<group>";
+		};
+		F7CA2D231D953B610080773D /* models */ = {
+			isa = PBXGroup;
+			children = (
+				F7F51C851D6EF6C600174CE9 /* Board.swift */,
+				F7B908BE1D6F1172006E8267 /* List.swift */,
+				B46F49661D721AFB002C61D6 /* Card.swift */,
+			);
+			name = models;
 			sourceTree = "<group>";
 		};
 		F7D89C4F1D6C2B9100BB6BAC = {
@@ -256,6 +266,7 @@
 				B42C4E571D91A28800F98CE9 /* settings */,
 				F7D89C8F1D6C2D2700BB6BAC /* login */,
 				F73B67B61D6D836800EBD7C2 /* register */,
+				F7CA2D231D953B610080773D /* models */,
 				F724F5461D6EB7C000E0B3BB /* home */,
 				F7B908BB1D6F040A006E8267 /* list */,
 				F7ABF6DE1D7448B800187FB6 /* card */,
@@ -418,6 +429,7 @@
 				F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */,
 				B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */,
 				F7B908BF1D6F1172006E8267 /* List.swift in Sources */,
+				F7CA2D221D953B2F0080773D /* PersistenceLayer.swift in Sources */,
 				F75AA2A61D6EFA5700175563 /* BoardTableCell.swift in Sources */,
 				F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */,
 				F7B908BA1D6F0408006E8267 /* ListPageViewController.swift in Sources */,

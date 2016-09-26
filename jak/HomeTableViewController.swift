@@ -1,9 +1,10 @@
 import Foundation
 import UIKit
+import CoreData
 
 class HomeTableViewController: UITableViewController {
     
-    var boards:[Board] = []
+    var boards = [NSManagedObject]()
     
     let token = UserData.token!
     
