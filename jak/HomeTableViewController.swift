@@ -6,7 +6,7 @@ class HomeTableViewController: UITableViewController {
     
     var boards = [NSManagedObject]()
     
-    let token = UserData.token!
+    let token = UserData.getToken()!
     
     @IBOutlet weak var actionsButton: UIBarButtonItem!
     @IBOutlet var boardTableView: UITableView!
@@ -59,20 +59,24 @@ class HomeTableViewController: UITableViewController {
         self.present(boardPrompt, animated: true, completion: nil)
     }
     
-    fileprivate func checkDefaultBoard() {
-        let keychain = KeychainSwift()
-        let defaultBoard = keychain.get(JakKeychain.DEFAULT_BOARD.rawValue)
-        if defaultBoard != nil {
-            let board_id = defaultBoard!
-            
-            var i = 0
-            for board in boards {
-                if board.board_id == board_id {
-                    self.tableView(tableView, didSelectRowAt: IndexPath(row: i, section: 0))
-                }
-                i+=1
-            }
-        }
+    fileprivate func checkDefaultBoard(_ defaultBoard: Bool) {
+        if !defaultBoard { return }
+        
+        DispatchQueue.main.async(execute: {
+//        let keychain = KeychainSwift()
+//        let defaultBoard = keychain.get(JakKeychain.DEFAULT_BOARD.rawValue)
+//        if defaultBoard != nil {
+//            let board_id = defaultBoard!
+//            
+//            var i = 0
+//            for board in boards {
+//                if board.board_id == board_id {
+//                    self.tableView(tableView, didSelectRowAt: IndexPath(row: i, section: 0))
+//                }
+//                i+=1
+//            }
+//        }
+        })
     }
     
     fileprivate func settings() {
@@ -95,30 +99,38 @@ class HomeTableViewController: UITableViewController {
     }
     
     fileprivate func loadBoards(_ defaultBoard: Bool) {
-        JakBoard.loadBoards(token, handler: { (response: JakResponse) in
-            if let boards = response.object as? [[String:Any]] {
-                if boards.count == 0 {
+        let persistence = JakPersistence.get()
+        let boards:[NSManagedObject]? = persistence.getBoards()
+        
+        if (boards != nil && boards!.count > 0) {
+            self.boards = boards!
+        } else {
+            JakBoard.loadBoards(token, handler: { (response: JakResponse) in
+                if let boards = response.object as? [[String:Any]] {
+                    if boards.count == 0 {
+                        self.noBoards()
+                    }
+                    
+                    for board in boards {
+                        let boardName = (board["name"] as! String).removingPercentEncoding!
+                        let boardId = board["board_id"] as! String
+                        let board = persistence.newBoard(name: boardName, board_id: boardId)
+                        
+                        if board != nil {
+                            self.boards.append(board!)
+                        }
+                    }
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.boardTableView.reloadData()
+                    })
+                } else {
                     self.noBoards()
                 }
-                
-                for board in boards {
-                    var boardName = board["name"] as! String
-                    boardName = boardName.removingPercentEncoding!
-                    let b = Board(name: boardName, board_id: board["board_id"] as! String)
-                    self.boards.append(b)
-                }
-                
-                DispatchQueue.main.async(execute: {
-                    self.boardTableView.reloadData()
-                    
-                    if defaultBoard {
-                        self.checkDefaultBoard()
-                    }
-                })
-            } else {
-                self.noBoards()
-            }
-        })
+            })
+        }
+        
+        self.checkDefaultBoard(defaultBoard)
     }
     
     fileprivate func noBoards() {
@@ -147,7 +159,7 @@ class HomeTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             let board = boards[(indexPath as NSIndexPath).row]
-            let deleteAlert = UIAlertController(title: "Warning", message: "This will delete your board \(board.name) including its lists and cards.", preferredStyle: .alert)
+            let deleteAlert = UIAlertController(title: "Warning", message: "This will delete your board \(board.value(forKey: "name")) including its lists and cards.", preferredStyle: .alert)
             
             deleteAlert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (action) -> Void in
                 let board_id = board.board_id
@@ -196,12 +208,12 @@ class HomeTableViewController: UITableViewController {
         let index = (indexPath as NSIndexPath).row
         let cell = tableView.dequeueReusableCell(withIdentifier: "boardcell") as! BoardTableCell
         
-        let board_id = boards[index].board_id
-        let name = boards[index].name
+        let board_id = boards[index].value(forKey: "board_id")
+        let name = boards[index].value(forKey: "name")
         
-        cell.textLabel?.text = name
+        cell.textLabel?.text = name!
         cell.textLabel?.textColor = UIColor.white
-        cell.board_id = board_id
+        cell.board_id = board_id!
         
         return cell
     }

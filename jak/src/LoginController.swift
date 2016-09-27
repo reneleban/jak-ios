@@ -46,7 +46,7 @@ class LoginController : UIViewController {
         JakLogin.validate(token, handler: { (response: JakResponse) in
             let statusCode = response.statusCode
             if statusCode == 200 {
-                UserData.token = token
+                UserData.setToken(token)
                 
                 DispatchQueue.main.async(execute: {
                     self.showBoard()
@@ -135,7 +135,7 @@ class LoginController : UIViewController {
                     self.password.text = ""
                     let token = (response.object as! NSDictionary)["token"] as! String
                     print("Received token for \(self.emailAddress.text!): \(token)")
-                    UserData.token = token
+                    UserData.setToken(token)
                     self.storeTokenInKeychain(token)
                     self.showBoard()
                 }

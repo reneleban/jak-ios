@@ -2,6 +2,9 @@ import Foundation
 import UIKit
 
 class ListViewController : UITableViewController {
+    
+    let token = UserData.getToken()!
+    
     var index:Int?
     var list:List?
     var useStoryboard: UIStoryboard?
@@ -32,7 +35,7 @@ class ListViewController : UITableViewController {
     }
     
     func reloadCards(_ scrollToLast: Bool = false) {
-        JakCard.loadCards((list?.list_id)!, token: UserData.token!) { (response) in
+        JakCard.loadCards((list?.list_id)!, token: token) { (response) in
             if let arr = response.object as? [[String:Any]] {
                 self.cards.removeAll()
                 for c in arr {
@@ -54,7 +57,7 @@ class ListViewController : UITableViewController {
     }
     
     func deleteCard(_ card_id: String) {
-        JakCard.deleteCard(card_id, token: UserData.token!) { (response) in
+        JakCard.deleteCard(card_id, token: token) { (response) in
             self.reloadCards()
         }
     }

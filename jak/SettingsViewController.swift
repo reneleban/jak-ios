@@ -9,7 +9,7 @@ class SettingsViewController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        JakBoard.loadBoards(UserData.token!) { (response) in
+        JakBoard.loadBoards(UserData.getToken()!) { (response) in
             if response.statusCode == 200 {
                 self.boards = response.object as? [[String:String]]
                 

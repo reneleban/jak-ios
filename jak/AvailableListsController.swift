@@ -13,8 +13,8 @@ class AvailableListsController: UITableViewController {
     func loadLists() {
         self.lists.removeAll()
         
-        let board_id = UserData.selectedBoard!.board_id
-        JakList.loadLists(board_id, token: UserData.token!) { (response) in
+        let board_id = UserData.getSelectedBoardId()!
+        JakList.loadLists(board_id, token: UserData.getToken()!) { (response) in
             if let lists = response.object as? [[String:Any]] {
                 for list in lists {
                     let l = List(list_id: list["list_id"] as! String, board_id: list["board_id"] as! String, name: list["name"] as! String, owner: list["owner"] as! String)

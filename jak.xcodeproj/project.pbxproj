@@ -33,7 +33,6 @@
 		F7D89C741D6C2B9200BB6BAC /* jakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C731D6C2B9200BB6BAC /* jakTests.swift */; };
 		F7D89C7F1D6C2B9200BB6BAC /* jakUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C7E1D6C2B9200BB6BAC /* jakUITests.swift */; };
 		F7D89C8D1D6C2D1100BB6BAC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */; };
-		F7F51C861D6EF6C600174CE9 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F51C851D6EF6C600174CE9 /* Board.swift */; };
 		F7F899501D78442E007F0479 /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F8994F1D78442E007F0479 /* UrlBuilder.swift */; };
 		F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F899511D7845BF007F0479 /* JsonHelper.swift */; };
 /* End PBXBuildFile section */
@@ -89,7 +88,6 @@
 		F7D89C7E1D6C2B9200BB6BAC /* jakUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jakUITests.swift; sourceTree = "<group>"; };
 		F7D89C801D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = src/LoginController.swift; sourceTree = "<group>"; };
-		F7F51C851D6EF6C600174CE9 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		F7F8994F1D78442E007F0479 /* UrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
 		F7F899511D7845BF007F0479 /* JsonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -198,7 +196,6 @@
 		F7CA2D231D953B610080773D /* models */ = {
 			isa = PBXGroup;
 			children = (
-				F7F51C851D6EF6C600174CE9 /* Board.swift */,
 				F7B908BE1D6F1172006E8267 /* List.swift */,
 				B46F49661D721AFB002C61D6 /* Card.swift */,
 			);
@@ -443,7 +440,6 @@
 				F724F5451D6EB7BC00E0B3BB /* HomeTableViewController.swift in Sources */,
 				F7D89C641D6C2B9200BB6BAC /* jak.xcdatamodeld in Sources */,
 				F7D89C5C1D6C2B9200BB6BAC /* AppDelegate.swift in Sources */,
-				F7F51C861D6EF6C600174CE9 /* Board.swift in Sources */,
 				F7ABF6D61D741AE200187FB6 /* KeychainSwiftDistrib.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

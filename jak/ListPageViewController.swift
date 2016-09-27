@@ -6,8 +6,8 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     @IBOutlet weak var addNewCard: UIBarButtonItem!
     @IBOutlet weak var actionButton: UIBarButtonItem!
     
-    let token = UserData.token!
-    let boardId = (UserData.selectedBoard?.board_id)!
+    let token = UserData.getToken()!
+    let boardId = UserData.getSelectedBoardId()!
     
     var lists:[List] = []
     var selectedlist:List?
@@ -95,7 +95,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
                 self.switchEditMode()
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Available lists of '" + UserData.selectedBoard!.name + "'", style: .default, handler: { (UIAlertAction) in
+            actionSheet.addAction(UIAlertAction(title: "Available lists of '" + UserData.getSelectedBoardName()! + "'", style: .default, handler: { (UIAlertAction) in
                 self.performSegue(withIdentifier: "availablelists", sender: self)
             }))
             
