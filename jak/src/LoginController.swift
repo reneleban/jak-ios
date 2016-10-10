@@ -43,24 +43,30 @@ class LoginController : UIViewController {
     }
     
     fileprivate func validateToken(_ token: String) {
-        JakLogin.validate(token, handler: { (response: JakResponse) in
-            let statusCode = response.statusCode
-            if statusCode == 200 {
-                UserData.setToken(token)
-                
-                DispatchQueue.main.async(execute: {
-                    self.showBoard()
-                })
-            } else {
-                DispatchQueue.main.async(execute: {
-                    let alert = UIAlertController(title: "Token invalid", message: "Your token is invalid. Please perform a fresh login!", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                    let keychain = KeychainSwift()
-                    keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
-                })
-            }
-        })
+        if Reachability.isConnectedToNetwork() {
+            JakLogin.validate(token, handler: { (response: JakResponse) in
+                let statusCode = response.statusCode
+                if statusCode == 200 {
+                    UserData.setToken(token)
+                    
+                    DispatchQueue.main.async(execute: {
+                        self.showBoard()
+                    })
+                } else {
+                    DispatchQueue.main.async(execute: {
+                        let alert = UIAlertController(title: "Token invalid", message: "Your token is invalid. Please perform a fresh login!", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        let keychain = KeychainSwift()
+                        keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
+                    })
+                }
+            })
+        } else {
+            // Assuming we have not active internet connection, but have a token for this user ...
+            UserData.setToken(token)
+            self.showBoard()
+        }
     }
     
     @IBAction func touchIdToggled(_ sender: AnyObject) {

@@ -19,6 +19,13 @@ class HomeTableViewController: UITableViewController {
         super.viewDidLoad()
         
         loadBoards(true)
+        
+        self.refreshControl?.addTarget(self, action: #selector(HomeTableViewController.refresh(sender:)), for: .valueChanged)
+    }
+    
+    func refresh(sender:AnyObject) {
+        self.tableView.reloadData()
+        self.refreshControl?.endRefreshing()
     }
     
     @IBAction func actions(_ sender: AnyObject) {
@@ -84,10 +91,17 @@ class HomeTableViewController: UITableViewController {
     }
     
     fileprivate func logout() {
-        let keychain = KeychainSwift()
-        keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
-        keychain.delete(JakKeychain.TOUCH_ID_ENABLED.rawValue)
-        self.dismiss(animated: true, completion: nil)
+        let alert = UIAlertController(title: "Warning", message: "While not having an active internet connection you can't login again without an active connection.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { (action) in
+            let keychain = KeychainSwift()
+            keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
+            keychain.delete(JakKeychain.TOUCH_ID_ENABLED.rawValue)
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Abort", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     fileprivate func newBoard(_ title: String) {
@@ -102,7 +116,7 @@ class HomeTableViewController: UITableViewController {
         let persistence = JakPersistence.get()
         let boards:[NSManagedObject]? = persistence.getBoards()
         
-        if (boards != nil && boards!.count > 0) {
+        if !Reachability.isConnectedToNetwork() {
             self.boards = boards!
         } else {
             JakBoard.loadBoards(token, handler: { (response: JakResponse) in
@@ -148,11 +162,10 @@ class HomeTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let cell = tableView.cellForRow(at: indexPath) as! BoardTableCell
-        let name = cell.textLabel?.text
+        //let name = cell.textLabel?.text
         let board_id = cell.board_id
-        let board = Board(name: name!, board_id: board_id!)
-        UserData.selectedBoard = board
-        
+       
+        UserData.setSelectedBoardId(board_id: board_id!)
         self.performSegue(withIdentifier: "list", sender: nil)
     }
     
@@ -162,7 +175,7 @@ class HomeTableViewController: UITableViewController {
             let deleteAlert = UIAlertController(title: "Warning", message: "This will delete your board \(board.value(forKey: "name")) including its lists and cards.", preferredStyle: .alert)
             
             deleteAlert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (action) -> Void in
-                let board_id = board.board_id
+                let board_id = board.value(forKey: "board_id") as! String
                 var list_ids:[String] = []
                 
                 JakList.loadLists(board_id, token: self.token, handler: { (response) in
@@ -176,7 +189,7 @@ class HomeTableViewController: UITableViewController {
                                 JakCard.deleteCards(list_id, token: self.token, handler: { (response) in })
                             }
                             
-                            JakBoard.deleteBoard(board.board_id, token: self.token, handler: { (response) in
+                            JakBoard.deleteBoard(board_id, token: self.token, handler: { (response) in
                                 if response.statusCode == 200 {
                                     DispatchQueue.main.async(execute: {
                                         self.boards.remove(at: (indexPath as NSIndexPath).row)
@@ -208,12 +221,12 @@ class HomeTableViewController: UITableViewController {
         let index = (indexPath as NSIndexPath).row
         let cell = tableView.dequeueReusableCell(withIdentifier: "boardcell") as! BoardTableCell
         
-        let board_id = boards[index].value(forKey: "board_id")
-        let name = boards[index].value(forKey: "name")
+        let board_id = boards[index].value(forKey: "board_id") as? String
+        let name = boards[index].value(forKey: "name") as? String
         
-        cell.textLabel?.text = name!
+        cell.textLabel?.text = name
         cell.textLabel?.textColor = UIColor.white
-        cell.board_id = board_id!
+        cell.board_id = board_id
         
         return cell
     }

@@ -95,7 +95,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
                 self.switchEditMode()
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Available lists of '" + UserData.getSelectedBoardName()! + "'", style: .default, handler: { (UIAlertAction) in
+            actionSheet.addAction(UIAlertAction(title: "Available lists of '" /*+ UserData.getSelectedBoardName()!*/ + "'", style: .default, handler: { (UIAlertAction) in
                 self.performSegue(withIdentifier: "availablelists", sender: self)
             }))
             

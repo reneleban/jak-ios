@@ -79,6 +79,19 @@ This means everytime you reopen this application, you will be logged in instantl
                                     <action selector="touchIdToggled:" destination="Ryw-9B-PLf" eventType="valueChanged" id="Uxa-DL-GMh"/>
                                 </connections>
                             </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCk-2S-i2B">
+                                <frame key="frameInset" minX="16" minY="395" width="343" height="213"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">A red status bar indicates that you've lost
+connection to the internet. All changes
+you perform will be synced with JAK-services as
+soon as you're connected to the internet again.
+
+If an internet connection is unavailable, you can only login, if you were authenticated before. If you manually logout while not having an active internet connection, you can't login anymore without an internet connection.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.94751736111111107" green="0.6526941212204016" blue="0.61594200684868261" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
@@ -242,6 +255,10 @@ This means everytime you reopen this application, you will be logged in instantl
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="0iM-RI-rmR">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle"/>
+                    </refreshControl>
                     <connections>
                         <outlet property="actionsButton" destination="B6U-Sj-Sg6" id="sQd-jv-Ji1"/>
                         <outlet property="boardTableView" destination="EUG-Ps-ykf" id="jn2-6M-hza"/>

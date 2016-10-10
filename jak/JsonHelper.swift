@@ -31,10 +31,15 @@ class JakResponse {
     
     let object: AnyObject?
     let statusCode: Int
+    var internetConnection = true
     
     init(object: AnyObject?, statusCode: Int) {
         self.object = object
         self.statusCode = statusCode
+    }
+    
+    func internetConnectionUnavailable() {
+        self.internetConnection = false
     }
 }
 

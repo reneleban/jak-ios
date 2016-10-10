@@ -33,6 +33,7 @@
 		F7D89C741D6C2B9200BB6BAC /* jakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C731D6C2B9200BB6BAC /* jakTests.swift */; };
 		F7D89C7F1D6C2B9200BB6BAC /* jakUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C7E1D6C2B9200BB6BAC /* jakUITests.swift */; };
 		F7D89C8D1D6C2D1100BB6BAC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */; };
+		F7E997C41DAB8BA00074961A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E997C31DAB8BA00074961A /* Reachability.swift */; };
 		F7F899501D78442E007F0479 /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F8994F1D78442E007F0479 /* UrlBuilder.swift */; };
 		F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F899511D7845BF007F0479 /* JsonHelper.swift */; };
 /* End PBXBuildFile section */
@@ -88,6 +89,7 @@
 		F7D89C7E1D6C2B9200BB6BAC /* jakUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jakUITests.swift; sourceTree = "<group>"; };
 		F7D89C801D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = src/LoginController.swift; sourceTree = "<group>"; };
+		F7E997C31DAB8BA00074961A /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		F7F8994F1D78442E007F0479 /* UrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
 		F7F899511D7845BF007F0479 /* JsonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -147,6 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				F7ABF6D51D741AE200187FB6 /* KeychainSwiftDistrib.swift */,
+				F7E997C31DAB8BA00074961A /* Reachability.swift */,
 			);
 			name = utils;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 				F7ABF6DD1D7448B500187FB6 /* CardViewController.swift in Sources */,
 				F7F899501D78442E007F0479 /* UrlBuilder.swift in Sources */,
 				F7D89C8D1D6C2D1100BB6BAC /* LoginController.swift in Sources */,
+				F7E997C41DAB8BA00074961A /* Reachability.swift in Sources */,
 				B46F49671D721AFB002C61D6 /* Card.swift in Sources */,
 				F7D3772B1D7997280068716D /* AvailableListsController.swift in Sources */,
 				B46F49691D721EC0002C61D6 /* CardTableViewCell.swift in Sources */,

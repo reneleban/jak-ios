@@ -41,6 +41,10 @@ class JsonConnection {
     }
     
     func send(_ completionHandler: @escaping (_ response: JakResponse) -> ()) {
+        if !Reachability.isConnectedToNetwork() {
+            print("No connection available - Performing request with empty response anyway ...")
+        }
+        
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let url = URL(string: self.url.create())
         let request = NSMutableURLRequest(url: url!)
@@ -58,6 +62,13 @@ class JsonConnection {
         
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
+            if data == nil {
+                let jakResponse = JakResponse(object: nil, statusCode: -1)
+                jakResponse.internetConnectionUnavailable()
+                completionHandler(jakResponse)
+                return
+            }
             
             do {
                 let json = try JSONSerialization.jsonObject(with: data!, options: .mutableLeaves) as AnyObject
