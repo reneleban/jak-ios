@@ -1,30 +1,21 @@
 import Foundation
+import CoreData
 import UIKit
 
 class AvailableListsController: UITableViewController {
     
     var pageViewController:ListPageViewController?
-    var lists:[List] = []
+    var lists:[NSManagedObject]?
     
     override func viewDidLoad() {
         loadLists()
     }
     
     func loadLists() {
-        self.lists.removeAll()
-        
         let board_id = UserData.getSelectedBoardId()!
-        JakList.loadLists(board_id, token: UserData.getToken()!) { (response) in
-            if let lists = response.object as? [[String:Any]] {
-                for list in lists {
-                    let l = List(list_id: list["list_id"] as! String, board_id: list["board_id"] as! String, name: list["name"] as! String, owner: list["owner"] as! String)
-                    self.lists.append(l)
-                }
-                
-                self.tableView.reloadData()
-            }
-        }
-
+        self.lists = JakPersistence.get().getLists(board_id)
+        
+        self.tableView.reloadData()
     }
     
     @IBAction func backButton(_ sender: AnyObject) {
@@ -34,7 +25,8 @@ class AvailableListsController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "listcell")! as UITableViewCell
         
-        cell.textLabel?.text = lists[(indexPath as NSIndexPath).row].name
+        let list = lists![(indexPath as NSIndexPath).row]
+        cell.textLabel?.text = list.value(forKey: "name") as? String
         cell.textLabel?.textColor = UIColor.white
         cell.accessoryType = .disclosureIndicator
         
@@ -42,7 +34,7 @@ class AvailableListsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let list = lists[(indexPath as NSIndexPath).row]
+        let list = lists![(indexPath as NSIndexPath).row]
         pageViewController!.selectList(list)
         self.dismiss(animated: true, completion: nil)
     }
@@ -52,6 +44,6 @@ class AvailableListsController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return lists.count
+        return lists!.count
     }
 }

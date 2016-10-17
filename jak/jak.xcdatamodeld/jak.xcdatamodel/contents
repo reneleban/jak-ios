@@ -4,6 +4,13 @@
         <attribute name="board_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
+    <entity name="Card" syncable="YES">
+        <attribute name="card_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="desc" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="list_id" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="owner" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="List" syncable="YES">
         <attribute name="board_id" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="list_id" optional="YES" attributeType="String" syncable="YES"/>
@@ -13,5 +20,6 @@
     <elements>
         <element name="Board" positionX="-63" positionY="-18" width="128" height="75"/>
         <element name="List" positionX="-54" positionY="9" width="128" height="105"/>
+        <element name="Card" positionX="-54" positionY="27" width="128" height="120"/>
     </elements>
 </model>

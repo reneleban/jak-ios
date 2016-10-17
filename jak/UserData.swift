@@ -4,11 +4,8 @@ import CoreData
 class UserData {
     
     fileprivate static var token:String? = nil
-    //fileprivate static var selectedBoard:NSManagedObject? = nil
     fileprivate static var selectedBoardId:String? = nil
-    
-    // TODO: Switch to NSManagedObject
-    static var selectedCard:Card? = nil
+    fileprivate static var selectedCardId:String? = nil
     
     static func setToken(_ token: String) {
         if self.token == nil {
@@ -26,5 +23,13 @@ class UserData {
     
     static func setSelectedBoardId(board_id: String) {
         selectedBoardId = board_id
+    }
+    
+    static func setSelectedCardId(card_id: String) {
+        selectedCardId = card_id
+    }
+    
+    static func getSelectedCardId() -> String? {
+        return selectedCardId
     }
 }

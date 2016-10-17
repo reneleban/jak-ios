@@ -1,4 +1,5 @@
 import Foundation
+import CoreData
 import UIKit
 
 class ListPageViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -9,8 +10,8 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     let token = UserData.getToken()!
     let boardId = UserData.getSelectedBoardId()!
     
-    var lists:[List] = []
-    var selectedlist:List?
+    var lists:[NSManagedObject]?
+    var selectedlist:NSManagedObject?
     
     var listControllers:[ListViewController] = []
     
@@ -27,9 +28,10 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         loadAllLists()
     }
     
-    func getListController(_ list: List, index: Int) -> ListViewController {
+    func getListController(_ list: NSManagedObject, index: Int) -> ListViewController {
+        let list_id = list.value(forKey: "list_id") as! String
         for controller in listControllers {
-            if controller.getList().list_id == list.list_id {
+            if controller.getListId() == list_id {
                 return controller
             }
         }
@@ -46,7 +48,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func getListControllers() -> [ListViewController] {
         var controllers:[ListViewController] = []
         var index = 0
-        for list in lists {
+        for list in lists! {
             controllers.append(getListController(list, index: index))
             index += 1
         }
@@ -58,30 +60,41 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func loadAllLists() {
-        JakList.loadLists(boardId, token: token) { (response) in
-            if let rows = response.object as? [[String:Any]] {
-                self.lists.removeAll()
-                
-                for row in rows {
-                    let list = List(list_id: row["list_id"] as! String, board_id: row["board_id"] as! String, name: row["name"] as! String, owner: row["owner"] as! String)
-                    self.lists.append(list)
-                }
-                
-                DispatchQueue.main.async(execute: {
-                    if self.lists.count > 0 {
-                        self.cleanUp()
-                        let list = self.lists[0]
-                        self.title = list.name
-                        self.selectedlist = list
-                        let listController = self.getListController(list, index: 0)
-                        listController.reloadCards()
-                        self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
-                    } else {
-                        self.setViewControllers([(self.storyboard?.instantiateViewController(withIdentifier: "nolistscontroller"))!], direction: .forward, animated: true, completion: nil)
+        let persistence = JakPersistence.get()
+        
+        if Reachability.isConnectedToNetwork() {
+            JakList.loadLists(boardId, token: token) { (response) in
+                if let rows = response.object as? [[String:Any]] {
+                    for row in rows {
+                        let _ = persistence.newList(name: row["name"] as! String, list_id: row["list_id"] as! String, board_id: row["board_id"] as! String, owner: row["owner"] as! String)
                     }
-                })
+                    
+                    self.lists = persistence.getLists(self.boardId)
+                    self.finishedLoading()
+                }
             }
+        } else {
+            self.lists = persistence.getLists(self.boardId)
+            self.finishedLoading()
         }
+    }
+    
+    func finishedLoading() {
+        DispatchQueue.main.async(execute: {
+            if self.lists != nil && self.lists!.count > 0 {
+                self.cleanUp()
+                let list = self.lists![0]
+                self.title = list.value(forKey: "name") as? String
+                self.selectedlist = list
+                print("Selectedlist has been set: \(self.selectedlist)")
+                let listController = self.getListController(list, index: 0)
+                listController.reloadCards()
+                self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
+            } else {
+                self.setViewControllers([(self.storyboard?.instantiateViewController(withIdentifier: "nolistscontroller"))!], direction: .forward, animated: true, completion: nil)
+            }
+        })
+
     }
     
     @IBAction func actionButton(_ sender: AnyObject) {
@@ -90,7 +103,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             self.addListPrompt()
         }))
         
-        if lists.count != 0 {
+        if lists != nil && lists!.count != 0 {
             actionSheet.addAction(UIAlertAction(title: "Edit mode", style: .default, handler: { (UIAlertAction) in
                 self.switchEditMode()
             }))
@@ -99,7 +112,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
                 self.performSegue(withIdentifier: "availablelists", sender: self)
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Delete '" + selectedlist!.name + "'", style: .destructive, handler: { (alert) in
+            actionSheet.addAction(UIAlertAction(title: "Delete '" + (selectedlist!.value(forKey: "name") as! String) + "'", style: .destructive, handler: { (alert) in
                 let alert = UIAlertController(title: "Warning", message: "Your cards will also be removed if you delete this list! Proceed?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (UIAlertAction) in
                     self.deleteList()
@@ -132,10 +145,10 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         }
     }
     
-    func selectList(_ list: List) {
+    func selectList(_ list: NSManagedObject) {
         self.selectedlist = list
         let listController = getListController(list, index: 0)
-        self.title = list.name
+        self.title = list.value(forKey: "name") as? String
         self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
     }
     
@@ -153,7 +166,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     @IBAction func addNewCard(_ sender: AnyObject) {
-        if lists.count == 0 {
+        if lists!.count == 0 {
             addListPrompt()
         } else {
             addCardPrompt()
@@ -188,16 +201,17 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func addCard(_ title: String, desc: String) {
-        JakCard.addCard(title, description: desc, list_id: selectedlist!.list_id, token: token) { (response) in
+        JakCard.addCard(title, description: desc, list_id: selectedlist?.value(forKey: "list_id") as! String, token: token) { (response) in
             self.reloadCards()
         }
     }
     
     func deleteList() {
         if selectedlist != nil {
-            JakCard.deleteCards(selectedlist!.list_id, token: token, handler: { (response) in
+            let list_id = selectedlist?.value(forKey: "list_id") as! String
+            JakCard.deleteCards(list_id, token: token, handler: { (response) in
                 if response.statusCode == 200 {
-                    JakList.deleteList(self.selectedlist!.list_id, token: self.token, handler: { (response) in
+                    JakList.deleteList(list_id, token: self.token, handler: { (response) in
                         self.loadAllLists()
                         self.selectedlist = nil
                     })
@@ -237,8 +251,8 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             }
             
             let prevIndex = index-1
-            let list = lists[prevIndex]
-            self.title = list.name
+            let list = lists![prevIndex]
+            self.title = list.value(forKey: "name") as? String
             
             selectedlist = list
             
@@ -253,14 +267,14 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let listController = viewController as? ListViewController {
             let index = listController.getIndex()
-            if index == lists.count - 1 {
+            if index == lists!.count - 1 {
                 return nil
             }
 
             
             let nextIndex = index+1
-            let list = lists[nextIndex]
-            self.title = list.name
+            let list = lists![nextIndex]
+            self.title = list.value(forKey: "name") as? String
             
             selectedlist = list
             
@@ -273,7 +287,10 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return lists.count
+        if lists != nil {
+            return lists!.count
+        }
+        return 0
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {

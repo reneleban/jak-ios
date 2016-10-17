@@ -90,7 +90,7 @@ class HomeTableViewController: UITableViewController {
         self.performSegue(withIdentifier: "settingssegue", sender: self)
     }
     
-    fileprivate func logout() {
+    func logout() {
         let alert = UIAlertController(title: "Warning", message: "While not having an active internet connection you can't login again without an active connection.", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { (action) in
             let keychain = KeychainSwift()
@@ -114,10 +114,9 @@ class HomeTableViewController: UITableViewController {
     
     fileprivate func loadBoards(_ defaultBoard: Bool) {
         let persistence = JakPersistence.get()
-        let boards:[NSManagedObject]? = persistence.getBoards()
         
         if !Reachability.isConnectedToNetwork() {
-            self.boards = boards!
+            self.boards = persistence.getBoards()!
         } else {
             JakBoard.loadBoards(token, handler: { (response: JakResponse) in
                 if let boards = response.object as? [[String:Any]] {
@@ -128,14 +127,11 @@ class HomeTableViewController: UITableViewController {
                     for board in boards {
                         let boardName = (board["name"] as! String).removingPercentEncoding!
                         let boardId = board["board_id"] as! String
-                        let board = persistence.newBoard(name: boardName, board_id: boardId)
-                        
-                        if board != nil {
-                            self.boards.append(board!)
-                        }
+                        let _ = persistence.newBoard(name: boardName, board_id: boardId)
                     }
                     
                     DispatchQueue.main.async(execute: {
+                        self.boards = persistence.getBoards()!
                         self.boardTableView.reloadData()
                     })
                 } else {

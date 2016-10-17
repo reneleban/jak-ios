@@ -57,4 +57,18 @@ class SettingsViewController : UIViewController {
             keychain.delete(JakKeychain.DEFAULT_BOARD.rawValue)
         }
     }
+    
+    @IBAction func reset(_ sender: AnyObject) {
+        JakPersistence.get().reset()
+        let keychain = KeychainSwift()
+        keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
+        
+        let alert = UIAlertController(title: "Reset successful", message: "Your settings and user data has been wiped. You'll be logged out now!", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+            self.dismiss(animated: true)
+        }))
+        self.present(alert, animated: true, completion: nil)
+        
+        
+    }
 }

@@ -22,7 +22,6 @@
 		F7ABF6DD1D7448B500187FB6 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ABF6DC1D7448B500187FB6 /* CardViewController.swift */; };
 		F7B908BA1D6F0408006E8267 /* ListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908B91D6F0408006E8267 /* ListPageViewController.swift */; };
 		F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908BC1D6F0C79006E8267 /* ListViewController.swift */; };
-		F7B908BF1D6F1172006E8267 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908BE1D6F1172006E8267 /* List.swift */; };
 		F7CA2D221D953B2F0080773D /* PersistenceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */; };
 		F7D3772B1D7997280068716D /* AvailableListsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D3772A1D7997280068716D /* AvailableListsController.swift */; };
 		F7D89C5C1D6C2B9200BB6BAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */; };
@@ -71,7 +70,6 @@
 		F7ABF6DC1D7448B500187FB6 /* CardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		F7B908B91D6F0408006E8267 /* ListPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPageViewController.swift; sourceTree = "<group>"; };
 		F7B908BC1D6F0C79006E8267 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		F7B908BE1D6F1172006E8267 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
 		F7CA2D201D9537A60080773D /* jak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = jak.entitlements; sourceTree = "<group>"; };
 		F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceLayer.swift; sourceTree = "<group>"; };
 		F7D3772A1D7997280068716D /* AvailableListsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableListsController.swift; sourceTree = "<group>"; };
@@ -199,7 +197,6 @@
 		F7CA2D231D953B610080773D /* models */ = {
 			isa = PBXGroup;
 			children = (
-				F7B908BE1D6F1172006E8267 /* List.swift */,
 				B46F49661D721AFB002C61D6 /* Card.swift */,
 			);
 			name = models;
@@ -428,7 +425,6 @@
 				F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */,
 				F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */,
 				B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */,
-				F7B908BF1D6F1172006E8267 /* List.swift in Sources */,
 				F7CA2D221D953B2F0080773D /* PersistenceLayer.swift in Sources */,
 				F75AA2A61D6EFA5700175563 /* BoardTableCell.swift in Sources */,
 				F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */,
