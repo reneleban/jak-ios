@@ -44,7 +44,7 @@ class ListViewController : UITableViewController {
         
         let persistence = JakPersistence.get()
         
-        if Reachability.isConnectedToNetwork() {
+        if ReachabilityObserver.isConnected() {
             JakCard.loadCards(list_id, token: token) { (response) in
                 if let arr = response.object as? [[String:Any]] {
                     for c in arr {

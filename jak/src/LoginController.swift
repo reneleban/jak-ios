@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import LocalAuthentication
 
-class LoginController : UIViewController {
+class LoginController : UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var emailAddress: UITextField!
@@ -11,6 +11,9 @@ class LoginController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        emailAddress.delegate = self
+        password.delegate = self
         
         let keychain = KeychainSwift()
         let token = keychain.get(JakKeychain.SERVICE_TOKEN.rawValue)
@@ -42,8 +45,17 @@ class LoginController : UIViewController {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailAddress {
+            password.becomeFirstResponder()
+        } else if textField == password {
+            performLogin()
+        }
+        return true
+    }
+    
     fileprivate func validateToken(_ token: String) {
-        if Reachability.isConnectedToNetwork() {
+        if ReachabilityObserver.isConnected() {
             JakLogin.validate(token, handler: { (response: JakResponse) in
                 let statusCode = response.statusCode
                 if statusCode == 200 {

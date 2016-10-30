@@ -24,8 +24,7 @@ class HomeTableViewController: UITableViewController {
     }
     
     func refresh(sender:AnyObject) {
-        self.tableView.reloadData()
-        self.refreshControl?.endRefreshing()
+        self.loadBoards(false)
     }
     
     @IBAction func actions(_ sender: AnyObject) {
@@ -49,40 +48,46 @@ class HomeTableViewController: UITableViewController {
     }
     
     @IBAction func addBoard(_ sender: AnyObject) {
-        var inputTextField: UITextField?
-        
-        let boardPrompt = UIAlertController(title: nil, message: "Enter a board name", preferredStyle: .alert)
-        boardPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        boardPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-            print("Adding board \(inputTextField?.text)")
-            self.newBoard(inputTextField!.text!)
-        }))
-        
-        boardPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
-            textField.placeholder = "Board name ..."
-            inputTextField = textField
-        })
-        
-        self.present(boardPrompt, animated: true, completion: nil)
+        if ReachabilityObserver.isConnected() {
+            var inputTextField: UITextField?
+            
+            let boardPrompt = UIAlertController(title: nil, message: "Enter a board name", preferredStyle: .alert)
+            boardPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            boardPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
+                print("Adding board \(inputTextField?.text)")
+                self.newBoard(inputTextField!.text!)
+            }))
+            
+            boardPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
+                textField.placeholder = "Board name ..."
+                inputTextField = textField
+            })
+            
+            self.present(boardPrompt, animated: true, completion: nil)
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
+        }
     }
     
     fileprivate func checkDefaultBoard(_ defaultBoard: Bool) {
         if !defaultBoard { return }
         
         DispatchQueue.main.async(execute: {
-//        let keychain = KeychainSwift()
-//        let defaultBoard = keychain.get(JakKeychain.DEFAULT_BOARD.rawValue)
-//        if defaultBoard != nil {
-//            let board_id = defaultBoard!
-//            
-//            var i = 0
-//            for board in boards {
-//                if board.board_id == board_id {
-//                    self.tableView(tableView, didSelectRowAt: IndexPath(row: i, section: 0))
-//                }
-//                i+=1
-//            }
-//        }
+            let keychain = KeychainSwift()
+            let defaultBoard = keychain.get(JakKeychain.DEFAULT_BOARD.rawValue)
+            if defaultBoard != nil {
+                let board_id = defaultBoard!
+                
+                var i = 0
+                for board in self.boards {
+                    let boardId = board.value(forKey: "board_id") as! String
+                    
+                    if boardId == board_id {
+                        self.tableView(self.tableView, didSelectRowAt: IndexPath(row: i, section: 0))
+                    }
+                    i+=1
+                }
+            }
         })
     }
     
@@ -115,8 +120,10 @@ class HomeTableViewController: UITableViewController {
     fileprivate func loadBoards(_ defaultBoard: Bool) {
         let persistence = JakPersistence.get()
         
-        if !Reachability.isConnectedToNetwork() {
+        if !ReachabilityObserver.isConnected() {
             self.boards = persistence.getBoards()!
+            self.checkDefaultBoard(defaultBoard)
+            self.refreshControl?.endRefreshing()
         } else {
             JakBoard.loadBoards(token, handler: { (response: JakResponse) in
                 if let boards = response.object as? [[String:Any]] {
@@ -133,14 +140,15 @@ class HomeTableViewController: UITableViewController {
                     DispatchQueue.main.async(execute: {
                         self.boards = persistence.getBoards()!
                         self.boardTableView.reloadData()
+                        self.checkDefaultBoard(defaultBoard)
+                        
+                        self.refreshControl?.endRefreshing()
                     })
                 } else {
                     self.noBoards()
                 }
             })
         }
-        
-        self.checkDefaultBoard(defaultBoard)
     }
     
     fileprivate func noBoards() {
@@ -157,18 +165,21 @@ class HomeTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.cellForRow(at: indexPath) as! BoardTableCell
-        //let name = cell.textLabel?.text
-        let board_id = cell.board_id
-       
-        UserData.setSelectedBoardId(board_id: board_id!)
-        self.performSegue(withIdentifier: "list", sender: nil)
+        let plainCell = tableView.cellForRow(at: indexPath)
+        if plainCell != nil {
+            let cell = plainCell as! BoardTableCell
+            //let name = cell.textLabel?.text
+            let board_id = cell.board_id
+           
+            UserData.setSelectedBoardId(board_id: board_id!)
+            self.performSegue(withIdentifier: "list", sender: nil)
+        }
     }
     
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
+        if editingStyle == .delete && ReachabilityObserver.isConnected() {
             let board = boards[(indexPath as NSIndexPath).row]
-            let deleteAlert = UIAlertController(title: "Warning", message: "This will delete your board \(board.value(forKey: "name")) including its lists and cards.", preferredStyle: .alert)
+            let deleteAlert = UIAlertController(title: "Warning", message: "This will delete your board \(board.value(forKey: "name") as! String) including its lists and cards.", preferredStyle: .alert)
             
             deleteAlert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (action) -> Void in
                 let board_id = board.value(forKey: "board_id") as! String
@@ -202,6 +213,8 @@ class HomeTableViewController: UITableViewController {
             deleteAlert.addAction(UIAlertAction(title: "Abort", style: .default, handler: nil))
             
             self.present(deleteAlert, animated: true, completion: nil)
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
         }
     }
     

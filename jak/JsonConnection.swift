@@ -41,10 +41,6 @@ class JsonConnection {
     }
     
     func send(_ completionHandler: @escaping (_ response: JakResponse) -> ()) {
-        if !Reachability.isConnectedToNetwork() {
-            print("No connection available - Performing request with empty response anyway ...")
-        }
-        
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         let url = URL(string: self.url.create())
         let request = NSMutableURLRequest(url: url!)

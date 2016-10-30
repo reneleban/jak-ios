@@ -62,7 +62,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func loadAllLists() {
         let persistence = JakPersistence.get()
         
-        if Reachability.isConnectedToNetwork() {
+        if ReachabilityObserver.isConnected() {
             JakList.loadLists(boardId, token: token) { (response) in
                 if let rows = response.object as? [[String:Any]] {
                     for row in rows {
@@ -134,14 +134,18 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     fileprivate func switchEditMode() {
-        let viewController = getSelectedListController()
-        if viewController != nil {
-            let currentMode = viewController!.tableView.isEditing
-            viewController!.tableView.setEditing(!currentMode, animated: true)
-            
-            if !currentMode {
-                self.navigationItem.setRightBarButtonItems([UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishButtonClicked))], animated: true)
+        if ReachabilityObserver.isConnected() {
+            let viewController = getSelectedListController()
+            if viewController != nil {
+                let currentMode = viewController!.tableView.isEditing
+                viewController!.tableView.setEditing(!currentMode, animated: true)
+                
+                if !currentMode {
+                    self.navigationItem.setRightBarButtonItems([UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishButtonClicked))], animated: true)
+                }
             }
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
         }
     }
     
@@ -184,20 +188,24 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func addCardPrompt() {
-        var titleTextField: UITextField?
-        
-        let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
-        listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-            self.addCard(titleTextField!.text!, desc: "")
-        }))
-        
-        listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
-            textField.placeholder = "Card name ..."
-            titleTextField = textField
-        })
-        
-        self.present(listPrompt, animated: true, completion: nil)
+        if ReachabilityObserver.isConnected() {
+            var titleTextField: UITextField?
+            
+            let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
+            listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
+                self.addCard(titleTextField!.text!, desc: "")
+            }))
+            
+            listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
+                textField.placeholder = "Card name ..."
+                titleTextField = textField
+            })
+            
+            self.present(listPrompt, animated: true, completion: nil)
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
+        }
     }
     
     func addCard(_ title: String, desc: String) {
@@ -221,20 +229,24 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func addListPrompt() {
-        var inputTextField: UITextField?
-        
-        let listPrompt = UIAlertController(title: nil, message: "Enter a list name", preferredStyle: .alert)
-        listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-            self.addList(inputTextField!.text!)
-        }))
-        
-        listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
-            textField.placeholder = "List name ..."
-            inputTextField = textField
-        })
-        
-        self.present(listPrompt, animated: true, completion: nil)
+        if ReachabilityObserver.isConnected() {
+            var inputTextField: UITextField?
+            
+            let listPrompt = UIAlertController(title: nil, message: "Enter a list name", preferredStyle: .alert)
+            listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
+                self.addList(inputTextField!.text!)
+            }))
+            
+            listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
+                textField.placeholder = "List name ..."
+                inputTextField = textField
+            })
+            
+            self.present(listPrompt, animated: true, completion: nil)
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
+        }
     }
     
     func addList(_ name: String) {

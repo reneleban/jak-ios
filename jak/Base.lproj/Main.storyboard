@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -35,9 +36,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail Address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ah-q2-FrY">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="E-Mail Address" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4ah-q2-FrY">
                                 <frame key="frameInset" minX="16" minY="129" width="343" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
@@ -45,9 +45,8 @@
                                     <action selector="userNameChanged:" destination="Ryw-9B-PLf" eventType="editingChanged" id="Dgk-VT-ieb"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PX5-sY-ea7">
-                                <frame key="frameInset" minX="165" minY="205" width="46" height="35"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PX5-sY-ea7">
+                                <frame key="frameInset" minX="152" minY="198" width="70" height="52"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Sign in">
                                     <color key="titleColor" red="0.99620366096496582" green="0.81365394592285156" blue="0.19477297365665436" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -56,44 +55,60 @@
                                     <action selector="loginButtonPressed:" destination="Ryw-9B-PLf" eventType="touchUpInside" id="ScV-hu-it7"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBl-gJ-5Dr">
+                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" textAlignment="center" clearsOnBeginEditing="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sBl-gJ-5Dr">
                                 <frame key="frameInset" minX="17" minY="167" width="342" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ah6-rv-Qi4">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="7" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ah6-rv-Qi4">
                                 <frame key="frameInset" minX="16" minY="248" width="343" height="117"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <string key="text">Your token will be stored securely on your device.
 This means everytime you reopen this application, you will be logged in instantly. If you want to protect your login with Touch ID, you can enable it here:</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SzF-nG-kX7">
-                                <frame key="frameInset" minX="163" minY="350" width="51" height="31"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="SzF-nG-kX7">
+                                <frame key="frameInset" minX="163" minY="345" width="51" height="31"/>
                                 <connections>
                                     <action selector="touchIdToggled:" destination="Ryw-9B-PLf" eventType="valueChanged" id="Uxa-DL-GMh"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCk-2S-i2B">
-                                <frame key="frameInset" minX="16" minY="395" width="343" height="213"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="12" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UCk-2S-i2B">
+                                <frame key="frameInset" minX="17" minY="534" width="343" height="113"/>
                                 <string key="text">A red status bar indicates that you've lost
-connection to the internet. All changes
-you perform will be synced with JAK-services as
-soon as you're connected to the internet again.
-
-If an internet connection is unavailable, you can only login, if you were authenticated before. If you manually logout while not having an active internet connection, you can't login anymore without an internet connection.</string>
+connection to the internet. You won't be able to make changes to your boards, lists and cards while having no active internet connection.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.94751736111111107" green="0.6526941212204016" blue="0.61594200684868261" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="QMH-Tp-NIW" firstAttribute="top" secondItem="UCk-2S-i2B" secondAttribute="bottom" constant="20" id="2sc-nE-8Ei"/>
+                            <constraint firstItem="sBl-gJ-5Dr" firstAttribute="trailing" secondItem="3I9-VI-etb" secondAttribute="trailingMargin" id="47Z-E7-w8F"/>
+                            <constraint firstItem="UCk-2S-i2B" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="6cw-2X-H7Y"/>
+                            <constraint firstItem="sBl-gJ-5Dr" firstAttribute="leading" secondItem="3I9-VI-etb" secondAttribute="leadingMargin" constant="1" id="G9f-j3-YF5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PX5-sY-ea7" secondAttribute="trailing" constant="137" id="J9a-fy-zHf"/>
+                            <constraint firstItem="sBl-gJ-5Dr" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="Ofo-qs-Uat"/>
+                            <constraint firstItem="PX5-sY-ea7" firstAttribute="leading" secondItem="3I9-VI-etb" secondAttribute="leadingMargin" constant="136" id="TmC-PJ-gtm"/>
+                            <constraint firstItem="SzF-nG-kX7" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="Wvn-eX-JhN"/>
+                            <constraint firstItem="ah6-rv-Qi4" firstAttribute="leading" secondItem="3I9-VI-etb" secondAttribute="leadingMargin" id="Xyh-Cy-dWE"/>
+                            <constraint firstItem="PX5-sY-ea7" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="bcH-Ni-Um0"/>
+                            <constraint firstItem="SzF-nG-kX7" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="cQI-Mx-jLx"/>
+                            <constraint firstItem="ah6-rv-Qi4" firstAttribute="trailing" secondItem="3I9-VI-etb" secondAttribute="trailingMargin" id="dTw-Yc-Wim"/>
+                            <constraint firstItem="4ah-q2-FrY" firstAttribute="leading" secondItem="3I9-VI-etb" secondAttribute="leadingMargin" id="dyI-ew-8jk"/>
+                            <constraint firstItem="UCk-2S-i2B" firstAttribute="leading" secondItem="3I9-VI-etb" secondAttribute="leadingMargin" id="eLt-NF-t9D"/>
+                            <constraint firstItem="ah6-rv-Qi4" firstAttribute="top" secondItem="PX5-sY-ea7" secondAttribute="bottom" constant="8" id="fzs-xu-3V8"/>
+                            <constraint firstItem="PX5-sY-ea7" firstAttribute="top" secondItem="sBl-gJ-5Dr" secondAttribute="bottom" constant="8" id="i7k-Ol-wUF"/>
+                            <constraint firstItem="4ah-q2-FrY" firstAttribute="trailing" secondItem="3I9-VI-etb" secondAttribute="trailingMargin" id="iF5-R2-W1L"/>
+                            <constraint firstItem="ah6-rv-Qi4" firstAttribute="centerX" secondItem="3I9-VI-etb" secondAttribute="centerX" id="kPi-4b-BCD"/>
+                            <constraint firstItem="4ah-q2-FrY" firstAttribute="top" secondItem="E7i-ET-gRF" secondAttribute="bottom" constant="65" id="kud-wI-Vb7"/>
+                            <constraint firstItem="sBl-gJ-5Dr" firstAttribute="top" secondItem="4ah-q2-FrY" secondAttribute="bottom" constant="8" id="y1L-uQ-bkV"/>
+                            <constraint firstItem="SzF-nG-kX7" firstAttribute="top" secondItem="PX5-sY-ea7" secondAttribute="bottom" constant="110" id="yW3-Ez-YCF"/>
+                            <constraint firstItem="UCk-2S-i2B" firstAttribute="trailing" secondItem="3I9-VI-etb" secondAttribute="trailingMargin" id="z96-TA-RkR"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Login" id="iSa-Pf-Qnm">
                         <barButtonItem key="leftBarButtonItem" title="Sign up" id="9je-dp-mnT">
@@ -202,9 +217,7 @@ If an internet connection is unavailable, you can only login, if you were authen
                                     <action selector="defaultBoard:" destination="69F-a1-t7z" eventType="touchUpInside" id="1Vc-K3-SC3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wS8-w9-axX">
-                                <frame key="frameInset" minX="144" minY="617" width="87" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wS8-w9-axX">
                                 <state key="normal" title="Full reset!">
                                     <color key="titleColor" red="1" green="0.84066039323806763" blue="0.24792006611824036" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -214,6 +227,10 @@ If an internet connection is unavailable, you can only login, if you were authen
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.32549019610000002" green="0.41568627450000001" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="wS8-w9-axX" firstAttribute="centerX" secondItem="2EK-Oo-tn6" secondAttribute="centerX" id="HMS-02-upM"/>
+                            <constraint firstItem="X5Q-1X-VFi" firstAttribute="top" secondItem="wS8-w9-axX" secondAttribute="bottom" constant="8" id="TSI-ZU-akV"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="vy9-RR-TkI"/>
                     <connections>
@@ -351,22 +368,22 @@ If an internet connection is unavailable, you can only login, if you were authen
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scz-Ut-Oe2">
-                                <frame key="frameInset" minX="16" minY="162" width="343" height="226"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="8" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scz-Ut-Oe2">
                                 <string key="text">Your board does not contain any lists.
-Create a new one by tapping the action-icon!
 
-If a board has no lists, 
-you can also add a new list via the plus-icon. 
-If a board contains lists,
-you can add new cards with this button!</string>
+Create a new one by tapping the action-icon!</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="scz-Ut-Oe2" firstAttribute="top" secondItem="hed-YV-7T6" secondAttribute="bottom" constant="180" id="Mbt-qu-cPj"/>
+                            <constraint firstItem="scz-Ut-Oe2" firstAttribute="leading" secondItem="r3M-SD-ibg" secondAttribute="leading" constant="16" id="Vlh-Xh-AxU"/>
+                            <constraint firstAttribute="trailing" secondItem="scz-Ut-Oe2" secondAttribute="trailing" constant="15" id="uCo-3W-fa2"/>
+                            <constraint firstItem="scz-Ut-Oe2" firstAttribute="centerX" secondItem="r3M-SD-ibg" secondAttribute="centerX" id="yLY-s4-0tp"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QWF-kJ-zly" userLabel="First Responder" sceneMemberID="firstResponder"/>
