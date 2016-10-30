@@ -61,22 +61,8 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     
     func loadAllLists() {
         let persistence = JakPersistence.get()
-        
-        if ReachabilityObserver.isConnected() {
-            JakList.loadLists(boardId, token: token) { (response) in
-                if let rows = response.object as? [[String:Any]] {
-                    for row in rows {
-                        let _ = persistence.newList(name: row["name"] as! String, list_id: row["list_id"] as! String, board_id: row["board_id"] as! String, owner: row["owner"] as! String)
-                    }
-                    
-                    self.lists = persistence.getLists(self.boardId)
-                    self.finishedLoading()
-                }
-            }
-        } else {
-            self.lists = persistence.getLists(self.boardId)
-            self.finishedLoading()
-        }
+        self.lists = persistence.getLists(self.boardId)
+        self.finishedLoading()
     }
     
     func finishedLoading() {
@@ -86,7 +72,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
                 let list = self.lists![0]
                 self.title = list.value(forKey: "name") as? String
                 self.selectedlist = list
-                print("Selectedlist has been set: \(self.selectedlist)")
+                print("Selectedlist has been set: \(self.selectedlist?.value(forKey: "name"))")
                 let listController = self.getListController(list, index: 0)
                 listController.reloadCards()
                 self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
@@ -210,7 +196,18 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     
     func addCard(_ title: String, desc: String) {
         JakCard.addCard(title, description: desc, list_id: selectedlist?.value(forKey: "list_id") as! String, token: token) { (response) in
-            self.reloadCards()
+            let dict = response.object as! NSDictionary
+            let card_id = dict.value(forKey: "card_id") as! String
+            let owner = dict.value(forKey: "owner") as! String
+            let list_id = dict.value(forKey: "list_id") as! String
+            
+            DispatchQueue.main.async(execute: {
+                let card = JakPersistence.get().newCard(title: title, desc: desc, card_id: card_id, owner: owner, list_id: list_id)
+                if card != nil {
+                    print("Saved successfully your new card")
+                    self.reloadCards()
+                }
+            })
         }
     }
     

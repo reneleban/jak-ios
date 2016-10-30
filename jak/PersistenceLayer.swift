@@ -27,7 +27,7 @@ class JakPersistence {
         listEntity = NSEntityDescription.entity(forEntityName: "List", in: managedContext)!
         cardEntity = NSEntityDescription.entity(forEntityName: "Card", in: managedContext)!
         
-        entities = [boardEntity, listEntity]
+        entities = [boardEntity, listEntity, cardEntity]
     }
     
     func reset() {
@@ -39,6 +39,7 @@ class JakPersistence {
             
             do {
                 try coord.execute(deleteRequest, with: managedContext)
+                let _ = save()
             } catch let error as NSError {
                 debugPrint(error)
             }
@@ -145,6 +146,19 @@ class JakPersistence {
         }
         
         return false
+    }
+    
+    func getAllLists() -> [NSManagedObject]? {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "List")
+        
+        do {
+            let results = try managedContext.fetch(fetchRequest)
+            return results as? [NSManagedObject]
+        } catch let error as NSError {
+            print(error)
+        }
+        
+        return nil
     }
     
     func getLists(_ board_id: String) -> [NSManagedObject]? {

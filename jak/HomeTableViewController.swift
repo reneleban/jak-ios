@@ -119,36 +119,9 @@ class HomeTableViewController: UITableViewController {
     
     fileprivate func loadBoards(_ defaultBoard: Bool) {
         let persistence = JakPersistence.get()
-        
-        if !ReachabilityObserver.isConnected() {
-            self.boards = persistence.getBoards()!
-            self.checkDefaultBoard(defaultBoard)
-            self.refreshControl?.endRefreshing()
-        } else {
-            JakBoard.loadBoards(token, handler: { (response: JakResponse) in
-                if let boards = response.object as? [[String:Any]] {
-                    if boards.count == 0 {
-                        self.noBoards()
-                    }
-                    
-                    for board in boards {
-                        let boardName = (board["name"] as! String).removingPercentEncoding!
-                        let boardId = board["board_id"] as! String
-                        let _ = persistence.newBoard(name: boardName, board_id: boardId)
-                    }
-                    
-                    DispatchQueue.main.async(execute: {
-                        self.boards = persistence.getBoards()!
-                        self.boardTableView.reloadData()
-                        self.checkDefaultBoard(defaultBoard)
-                        
-                        self.refreshControl?.endRefreshing()
-                    })
-                } else {
-                    self.noBoards()
-                }
-            })
-        }
+        self.boards = persistence.getBoards()!
+        self.checkDefaultBoard(defaultBoard)
+        self.refreshControl?.endRefreshing()
     }
     
     fileprivate func noBoards() {

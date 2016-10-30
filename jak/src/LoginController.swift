@@ -60,10 +60,7 @@ class LoginController : UIViewController, UITextFieldDelegate {
                 let statusCode = response.statusCode
                 if statusCode == 200 {
                     UserData.setToken(token)
-                    
-                    DispatchQueue.main.async(execute: {
-                        self.showBoard()
-                    })
+                    self.runPrefetcher()
                 } else {
                     DispatchQueue.main.async(execute: {
                         let alert = UIAlertController(title: "Token invalid", message: "Your token is invalid. Please perform a fresh login!", preferredStyle: .alert)
@@ -77,7 +74,7 @@ class LoginController : UIViewController, UITextFieldDelegate {
         } else {
             // Assuming we have not active internet connection, but have a token for this user ...
             UserData.setToken(token)
-            self.showBoard()
+            self.runPrefetcher()
         }
     }
     
@@ -137,8 +134,16 @@ class LoginController : UIViewController, UITextFieldDelegate {
         self.password.text = password
     }
     
-    fileprivate func showBoard() {
-        self.performSegue(withIdentifier: "home", sender: self)
+    fileprivate func runPrefetcher() {
+        let p = Prefetcher.get()
+        p.prefetch(self)
+    }
+    
+    func showBoardViewController() {
+        DispatchQueue.main.async(execute: {
+            print("Show view controller called")
+            self.performSegue(withIdentifier: "home", sender: self)
+        })
     }
     
     fileprivate func performLogin() {
@@ -155,7 +160,7 @@ class LoginController : UIViewController, UITextFieldDelegate {
                     print("Received token for \(self.emailAddress.text!): \(token)")
                     UserData.setToken(token)
                     self.storeTokenInKeychain(token)
-                    self.showBoard()
+                    self.runPrefetcher()
                 }
             })
         })

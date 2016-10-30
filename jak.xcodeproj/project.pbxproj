@@ -11,6 +11,7 @@
 		B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */; };
 		B46F49671D721AFB002C61D6 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F49661D721AFB002C61D6 /* Card.swift */; };
 		B46F49691D721EC0002C61D6 /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */; };
+		B4C0D7091DC5F9B000DE293A /* Prefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C0D7081DC5F9B000DE293A /* Prefetcher.swift */; };
 		F724F5451D6EB7BC00E0B3BB /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */; };
 		F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F724F5471D6EBD7D00E0B3BB /* UserData.swift */; };
 		F73B67B51D6D836100EBD7C2 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73B67B41D6D836100EBD7C2 /* RegisterController.swift */; };
@@ -60,6 +61,7 @@
 		B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		B46F49661D721AFB002C61D6 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		B4C0D7081DC5F9B000DE293A /* Prefetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prefetcher.swift; sourceTree = "<group>"; };
 		F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		F724F5471D6EBD7D00E0B3BB /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		F73B67B41D6D836100EBD7C2 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
@@ -174,6 +176,7 @@
 				B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */,
 				F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */,
 				F7FEC3C31DBDE36E00BD7B56 /* ReachabilityObserver.swift */,
+				B4C0D7081DC5F9B000DE293A /* Prefetcher.swift */,
 			);
 			name = app;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 				F73B67B81D6DAE4F00EBD7C2 /* JsonConnection.swift in Sources */,
 				F73B67BA1D6DCA1100EBD7C2 /* Services.swift in Sources */,
 				B42C4E591D91A29800F98CE9 /* SettingsViewController.swift in Sources */,
+				B4C0D7091DC5F9B000DE293A /* Prefetcher.swift in Sources */,
 				F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */,
 				F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */,
 				B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */,

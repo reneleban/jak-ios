@@ -41,32 +41,8 @@ class ListViewController : UITableViewController {
     
     func reloadCards(_ scrollToLast: Bool = false) {
         let list_id = self.list?.value(forKey: "list_id") as! String
-        
         let persistence = JakPersistence.get()
-        
-        if ReachabilityObserver.isConnected() {
-            JakCard.loadCards(list_id, token: token) { (response) in
-                if let arr = response.object as? [[String:Any]] {
-                    for c in arr {
-                        let _ = persistence.newCard(title: c["name"] as! String, desc: c["description"] as! String, card_id: c["card_id"] as! String, owner: c["owner"] as! String, list_id: c["list_id"] as! String)
-                    }
-                    
-                    self.cards = persistence.getCards(list_id)
-                    
-                    DispatchQueue.main.async(execute: {
-                        self.tableView.reloadData()
-                        
-                        if scrollToLast {
-                            let indexPath = IndexPath(row: self.tableView.numberOfRows(inSection: 0) - 1, section: 0)
-                            //self.tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: .Top, animated: true)
-                            self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .top)
-                        }
-                    })
-                }
-            }
-        } else {
-            self.cards = persistence.getCards(list_id)
-        }
+        self.cards = persistence.getCards(list_id)
     }
     
     func deleteCard(_ card_id: String) {
