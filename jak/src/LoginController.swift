@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 import LocalAuthentication
 
-class LoginController : UIViewController {
+class LoginController : UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var actionButton: UIBarButtonItem!
     @IBOutlet weak var emailAddress: UITextField!
@@ -11,6 +11,9 @@ class LoginController : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        emailAddress.delegate = self
+        password.delegate = self
         
         let keychain = KeychainSwift()
         let token = keychain.get(JakKeychain.SERVICE_TOKEN.rawValue)
@@ -42,25 +45,37 @@ class LoginController : UIViewController {
         }
     }
     
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == emailAddress {
+            password.becomeFirstResponder()
+        } else if textField == password {
+            performLogin()
+        }
+        return true
+    }
+    
     fileprivate func validateToken(_ token: String) {
-        JakLogin.validate(token, handler: { (response: JakResponse) in
-            let statusCode = response.statusCode
-            if statusCode == 200 {
-                UserData.token = token
-                
-                DispatchQueue.main.async(execute: {
-                    self.showBoard()
-                })
-            } else {
-                DispatchQueue.main.async(execute: {
-                    let alert = UIAlertController(title: "Token invalid", message: "Your token is invalid. Please perform a fresh login!", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                    let keychain = KeychainSwift()
-                    keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
-                })
-            }
-        })
+        if ReachabilityObserver.isConnected() {
+            JakLogin.validate(token, handler: { (response: JakResponse) in
+                let statusCode = response.statusCode
+                if statusCode == 200 {
+                    UserData.setToken(token)
+                    self.runPrefetcher()
+                } else {
+                    DispatchQueue.main.async(execute: {
+                        let alert = UIAlertController(title: "Token invalid", message: "Your token is invalid. Please perform a fresh login!", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                        let keychain = KeychainSwift()
+                        keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
+                    })
+                }
+            })
+        } else {
+            // Assuming we have not active internet connection, but have a token for this user ...
+            UserData.setToken(token)
+            self.runPrefetcher()
+        }
     }
     
     @IBAction func touchIdToggled(_ sender: AnyObject) {
@@ -119,8 +134,16 @@ class LoginController : UIViewController {
         self.password.text = password
     }
     
-    fileprivate func showBoard() {
-        self.performSegue(withIdentifier: "home", sender: self)
+    fileprivate func runPrefetcher() {
+        let p = Prefetcher.get()
+        p.prefetch(self)
+    }
+    
+    func showBoardViewController() {
+        DispatchQueue.main.async(execute: {
+            print("Show view controller called")
+            self.performSegue(withIdentifier: "home", sender: self)
+        })
     }
     
     fileprivate func performLogin() {
@@ -135,9 +158,9 @@ class LoginController : UIViewController {
                     self.password.text = ""
                     let token = (response.object as! NSDictionary)["token"] as! String
                     print("Received token for \(self.emailAddress.text!): \(token)")
-                    UserData.token = token
+                    UserData.setToken(token)
                     self.storeTokenInKeychain(token)
-                    self.showBoard()
+                    self.runPrefetcher()
                 }
             })
         })

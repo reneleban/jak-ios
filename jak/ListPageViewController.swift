@@ -1,4 +1,5 @@
 import Foundation
+import CoreData
 import UIKit
 
 class ListPageViewController : UIPageViewController, UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -6,11 +7,11 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     @IBOutlet weak var addNewCard: UIBarButtonItem!
     @IBOutlet weak var actionButton: UIBarButtonItem!
     
-    let token = UserData.token!
-    let boardId = (UserData.selectedBoard?.board_id)!
+    let token = UserData.getToken()!
+    let boardId = UserData.getSelectedBoardId()!
     
-    var lists:[List] = []
-    var selectedlist:List?
+    var lists:[NSManagedObject]?
+    var selectedlist:NSManagedObject?
     
     var listControllers:[ListViewController] = []
     
@@ -27,9 +28,10 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         loadAllLists()
     }
     
-    func getListController(_ list: List, index: Int) -> ListViewController {
+    func getListController(_ list: NSManagedObject, index: Int) -> ListViewController {
+        let list_id = list.value(forKey: "list_id") as! String
         for controller in listControllers {
-            if controller.getList().list_id == list.list_id {
+            if controller.getListId() == list_id {
                 return controller
             }
         }
@@ -46,7 +48,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func getListControllers() -> [ListViewController] {
         var controllers:[ListViewController] = []
         var index = 0
-        for list in lists {
+        for list in lists! {
             controllers.append(getListController(list, index: index))
             index += 1
         }
@@ -58,30 +60,27 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func loadAllLists() {
-        JakList.loadLists(boardId, token: token) { (response) in
-            if let rows = response.object as? [[String:Any]] {
-                self.lists.removeAll()
-                
-                for row in rows {
-                    let list = List(list_id: row["list_id"] as! String, board_id: row["board_id"] as! String, name: row["name"] as! String, owner: row["owner"] as! String)
-                    self.lists.append(list)
-                }
-                
-                DispatchQueue.main.async(execute: {
-                    if self.lists.count > 0 {
-                        self.cleanUp()
-                        let list = self.lists[0]
-                        self.title = list.name
-                        self.selectedlist = list
-                        let listController = self.getListController(list, index: 0)
-                        listController.reloadCards()
-                        self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
-                    } else {
-                        self.setViewControllers([(self.storyboard?.instantiateViewController(withIdentifier: "nolistscontroller"))!], direction: .forward, animated: true, completion: nil)
-                    }
-                })
+        let persistence = JakPersistence.get()
+        self.lists = persistence.getLists(self.boardId)
+        self.finishedLoading()
+    }
+    
+    func finishedLoading() {
+        DispatchQueue.main.async(execute: {
+            if self.lists != nil && self.lists!.count > 0 {
+                self.cleanUp()
+                let list = self.lists![0]
+                self.title = list.value(forKey: "name") as? String
+                self.selectedlist = list
+                print("Selectedlist has been set: \(self.selectedlist?.value(forKey: "name"))")
+                let listController = self.getListController(list, index: 0)
+                listController.reloadCards()
+                self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
+            } else {
+                self.setViewControllers([(self.storyboard?.instantiateViewController(withIdentifier: "nolistscontroller"))!], direction: .forward, animated: true, completion: nil)
             }
-        }
+        })
+
     }
     
     @IBAction func actionButton(_ sender: AnyObject) {
@@ -90,16 +89,18 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             self.addListPrompt()
         }))
         
-        if lists.count != 0 {
+        if lists != nil && lists!.count != 0 {
+            let listName = selectedlist?.value(forKey: "name") as! String
+            
             actionSheet.addAction(UIAlertAction(title: "Edit mode", style: .default, handler: { (UIAlertAction) in
                 self.switchEditMode()
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Available lists of '" + UserData.selectedBoard!.name + "'", style: .default, handler: { (UIAlertAction) in
+            actionSheet.addAction(UIAlertAction(title: "Show all available lists", style: .default, handler: { (UIAlertAction) in
                 self.performSegue(withIdentifier: "availablelists", sender: self)
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Delete '" + selectedlist!.name + "'", style: .destructive, handler: { (alert) in
+            actionSheet.addAction(UIAlertAction(title: "Delete " + listName, style: .destructive, handler: { (alert) in
                 let alert = UIAlertController(title: "Warning", message: "Your cards will also be removed if you delete this list! Proceed?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (UIAlertAction) in
                     self.deleteList()
@@ -121,21 +122,25 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     fileprivate func switchEditMode() {
-        let viewController = getSelectedListController()
-        if viewController != nil {
-            let currentMode = viewController!.tableView.isEditing
-            viewController!.tableView.setEditing(!currentMode, animated: true)
-            
-            if !currentMode {
-                self.navigationItem.setRightBarButtonItems([UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishButtonClicked))], animated: true)
+        if ReachabilityObserver.isConnected() {
+            let viewController = getSelectedListController()
+            if viewController != nil {
+                let currentMode = viewController!.tableView.isEditing
+                viewController!.tableView.setEditing(!currentMode, animated: true)
+                
+                if !currentMode {
+                    self.navigationItem.setRightBarButtonItems([UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(finishButtonClicked))], animated: true)
+                }
             }
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
         }
     }
     
-    func selectList(_ list: List) {
+    func selectList(_ list: NSManagedObject) {
         self.selectedlist = list
         let listController = getListController(list, index: 0)
-        self.title = list.name
+        self.title = list.value(forKey: "name") as? String
         self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
     }
     
@@ -153,7 +158,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     @IBAction func addNewCard(_ sender: AnyObject) {
-        if lists.count == 0 {
+        if lists!.count == 0 {
             addListPrompt()
         } else {
             addCardPrompt()
@@ -171,33 +176,49 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func addCardPrompt() {
-        var titleTextField: UITextField?
-        
-        let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
-        listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-            self.addCard(titleTextField!.text!, desc: "")
-        }))
-        
-        listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
-            textField.placeholder = "Card name ..."
-            titleTextField = textField
-        })
-        
-        self.present(listPrompt, animated: true, completion: nil)
+        if ReachabilityObserver.isConnected() {
+            var titleTextField: UITextField?
+            
+            let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
+            listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
+                self.addCard(titleTextField!.text!, desc: "")
+            }))
+            
+            listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
+                textField.placeholder = "Card name ..."
+                titleTextField = textField
+            })
+            
+            self.present(listPrompt, animated: true, completion: nil)
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
+        }
     }
     
     func addCard(_ title: String, desc: String) {
-        JakCard.addCard(title, description: desc, list_id: selectedlist!.list_id, token: token) { (response) in
-            self.reloadCards()
+        JakCard.addCard(title, description: desc, list_id: selectedlist?.value(forKey: "list_id") as! String, token: token) { (response) in
+            let dict = response.object as! NSDictionary
+            let card_id = dict.value(forKey: "card_id") as! String
+            let owner = dict.value(forKey: "owner") as! String
+            let list_id = dict.value(forKey: "list_id") as! String
+            
+            DispatchQueue.main.async(execute: {
+                let card = JakPersistence.get().newCard(title: title, desc: desc, card_id: card_id, owner: owner, list_id: list_id)
+                if card != nil {
+                    print("Saved successfully your new card")
+                    self.reloadCards()
+                }
+            })
         }
     }
     
     func deleteList() {
         if selectedlist != nil {
-            JakCard.deleteCards(selectedlist!.list_id, token: token, handler: { (response) in
+            let list_id = selectedlist?.value(forKey: "list_id") as! String
+            JakCard.deleteCards(list_id, token: token, handler: { (response) in
                 if response.statusCode == 200 {
-                    JakList.deleteList(self.selectedlist!.list_id, token: self.token, handler: { (response) in
+                    JakList.deleteList(list_id, token: self.token, handler: { (response) in
                         self.loadAllLists()
                         self.selectedlist = nil
                     })
@@ -207,25 +228,35 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func addListPrompt() {
-        var inputTextField: UITextField?
-        
-        let listPrompt = UIAlertController(title: nil, message: "Enter a list name", preferredStyle: .alert)
-        listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-            self.addList(inputTextField!.text!)
-        }))
-        
-        listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
-            textField.placeholder = "List name ..."
-            inputTextField = textField
-        })
-        
-        self.present(listPrompt, animated: true, completion: nil)
+        if ReachabilityObserver.isConnected() {
+            var inputTextField: UITextField?
+            
+            let listPrompt = UIAlertController(title: nil, message: "Enter a list name", preferredStyle: .alert)
+            listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+            listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
+                self.addList(inputTextField!.text!)
+            }))
+            
+            listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
+                textField.placeholder = "List name ..."
+                inputTextField = textField
+            })
+            
+            self.present(listPrompt, animated: true, completion: nil)
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
+        }
     }
     
     func addList(_ name: String) {
         JakList.addList(name, board_id: boardId, token: token) { (response) in
-            self.loadAllLists()
+            if let list = response.object as? NSDictionary {
+                let id = list.value(forKey: "list_id") as! String
+                let board_id = list.value(forKey: "board_id") as! String
+                let owner = list.value(forKey: "owner") as! String
+                let _ = JakPersistence.get().newList(name: name, list_id: id, board_id: board_id, owner: owner)
+                self.loadAllLists()
+            }
         }
     }
     
@@ -237,8 +268,8 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             }
             
             let prevIndex = index-1
-            let list = lists[prevIndex]
-            self.title = list.name
+            let list = lists![prevIndex]
+            self.title = list.value(forKey: "name") as? String
             
             selectedlist = list
             
@@ -253,14 +284,14 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         if let listController = viewController as? ListViewController {
             let index = listController.getIndex()
-            if index == lists.count - 1 {
+            if index == lists!.count - 1 {
                 return nil
             }
 
             
             let nextIndex = index+1
-            let list = lists[nextIndex]
-            self.title = list.name
+            let list = lists![nextIndex]
+            self.title = list.value(forKey: "name") as? String
             
             selectedlist = list
             
@@ -273,7 +304,10 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func presentationCount(for pageViewController: UIPageViewController) -> Int {
-        return lists.count
+        if lists != nil {
+            return lists!.count
+        }
+        return 0
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {

@@ -7,11 +7,11 @@ class CardViewController : UIViewController {
     @IBOutlet weak var descriptionField: UITextView!
     
     override func viewDidLoad() {
-        if UserData.selectedCard != nil {
-            let card = UserData.selectedCard!
-            titleField.text = card.title
-            descriptionField.text = card.desc
-        }
+//        if UserData.selectedCard != nil {
+//            let card = UserData.selectedCard!
+//            titleField.text = card.title
+//            descriptionField.text = card.desc
+//        }
     }
     
     fileprivate func dismiss() {

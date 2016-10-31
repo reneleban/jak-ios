@@ -31,14 +31,26 @@ class JakResponse {
     
     let object: AnyObject?
     let statusCode: Int
+    var internetConnection = true
     
     init(object: AnyObject?, statusCode: Int) {
         self.object = object
         self.statusCode = statusCode
     }
+    
+    func internetConnectionUnavailable() {
+        self.internetConnection = false
+    }
 }
 
-class JakLogin {
+class JakBase {
+    
+    static func isReachable() -> Bool {
+        return ReachabilityObserver.isConnected()
+    }
+}
+
+class JakLogin: JakBase {
     
     static func validate(_ token: String, handler: @escaping (_ response: JakResponse) -> ()) {
         let validateUrl = JakUrl(url: UrlBuilder(service: Services.LOGIN).a("login").a("validate").a(token), method: JakMethod.GET)
@@ -61,7 +73,7 @@ class JakLogin {
     }
 }
 
-class JakBoard {
+class JakBoard: JakBase {
     
     static func loadBoards(_ token: String, handler: @escaping (_ response: JakResponse) -> ()) {
         let getBoardUrl = JakUrl(url: UrlBuilder(service: Services.BOARD).a("board").a(token), method: JakMethod.GET)
@@ -81,7 +93,7 @@ class JakBoard {
     }
 }
 
-class JakList {
+class JakList: JakBase {
     
     static func loadLists(_ board_id: String, token: String, handler: @escaping (_ response: JakResponse) -> ()) {
         let getListsUrl = JakUrl(url: UrlBuilder(service: Services.LIST).a("lists").a("list").a(token).a(board_id), method: JakMethod.GET)
@@ -101,7 +113,7 @@ class JakList {
     }
 }
 
-class JakCard {
+class JakCard: JakBase {
     
     static func loadCards(_ list_id: String, token: String, handler: @escaping (_ response: JakResponse) -> ()) {
         let getCardsUrl = JakUrl(url: UrlBuilder(service: Services.CARD).a("cards").a(token).a(list_id), method: JakMethod.GET)

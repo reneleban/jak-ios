@@ -59,6 +59,13 @@ class JsonConnection {
         let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
             UIApplication.shared.isNetworkActivityIndicatorVisible = false
             
+            if data == nil {
+                let jakResponse = JakResponse(object: nil, statusCode: -1)
+                jakResponse.internetConnectionUnavailable()
+                completionHandler(jakResponse)
+                return
+            }
+            
             do {
                 let json = try JSONSerialization.jsonObject(with: data!, options: .mutableLeaves) as AnyObject
                 let jakResponse = JakResponse(object: json, statusCode: (response as! HTTPURLResponse).statusCode)
