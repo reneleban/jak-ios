@@ -25,6 +25,17 @@ class ListViewController : UITableViewController {
     
     override func viewDidLoad() {
         self.tableView.contentInset = UIEdgeInsetsMake(65,0,0,0)
+        
+        self.refreshControl?.addTarget(self, action: #selector(ListViewController.refresh(sender:)), for: .valueChanged)
+    }
+    
+    func refresh(sender:AnyObject) {
+        let list_id = list?.value(forKey: "list_id") as! String
+        JakPersistence.get().cleanupCards(list_id)
+        Prefetcher.get().prefetchCards(list_id) {
+            self.reloadCards()
+            self.refreshControl?.endRefreshing()
+        }
     }
     
     func getIndex() -> Int {
@@ -43,6 +54,7 @@ class ListViewController : UITableViewController {
         let list_id = self.list?.value(forKey: "list_id") as! String
         let persistence = JakPersistence.get()
         self.cards = persistence.getCards(list_id)
+        self.tableView.reloadData()
     }
     
     func deleteCard(_ card_id: String) {

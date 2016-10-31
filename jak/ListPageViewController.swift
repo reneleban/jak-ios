@@ -90,15 +90,17 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         }))
         
         if lists != nil && lists!.count != 0 {
+            let listName = selectedlist?.value(forKey: "name") as! String
+            
             actionSheet.addAction(UIAlertAction(title: "Edit mode", style: .default, handler: { (UIAlertAction) in
                 self.switchEditMode()
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Available lists of '" /*+ UserData.getSelectedBoardName()!*/ + "'", style: .default, handler: { (UIAlertAction) in
+            actionSheet.addAction(UIAlertAction(title: "Show all available lists", style: .default, handler: { (UIAlertAction) in
                 self.performSegue(withIdentifier: "availablelists", sender: self)
             }))
             
-            actionSheet.addAction(UIAlertAction(title: "Delete '" + (selectedlist!.value(forKey: "name") as! String) + "'", style: .destructive, handler: { (alert) in
+            actionSheet.addAction(UIAlertAction(title: "Delete " + listName, style: .destructive, handler: { (alert) in
                 let alert = UIAlertController(title: "Warning", message: "Your cards will also be removed if you delete this list! Proceed?", preferredStyle: .alert)
                 alert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (UIAlertAction) in
                     self.deleteList()
@@ -248,7 +250,13 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     
     func addList(_ name: String) {
         JakList.addList(name, board_id: boardId, token: token) { (response) in
-            self.loadAllLists()
+            if let list = response.object as? NSDictionary {
+                let id = list.value(forKey: "list_id") as! String
+                let board_id = list.value(forKey: "board_id") as! String
+                let owner = list.value(forKey: "owner") as! String
+                let _ = JakPersistence.get().newList(name: name, list_id: id, board_id: board_id, owner: owner)
+                self.loadAllLists()
+            }
         }
     }
     

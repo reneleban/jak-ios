@@ -27,20 +27,12 @@ class Prefetcher {
     }
     
     func prefetch(_ loginController: LoginController) {
-        self.loginController = loginController;
-        if keychain.get(JakKeychain.PREFETCHER_RAN.rawValue) == nil {
-            print("PREFETCHER IS RUNNING ...")
-            prefetchBoards()
-        } else {
-            print("PREFETCHER ALREADY RAN!")
-            loginController.showBoardViewController()
-        }
+        self.loginController = loginController
+        JakPersistence.get().reset()
+        prefetchBoards()
     }
     
-    /*
-        Prefetch all boards at first.. Then prefetch all lists, and so on
-    */
-    private func prefetchBoards() {
+    func prefetchBoards(handler: @escaping () -> ()) {
         JakBoard.loadBoards(token, handler: { (response: JakResponse) in
             if let boards = response.object as? [[String:Any]] {
                 for board in boards {
@@ -49,12 +41,18 @@ class Prefetcher {
                     let _ = self.persistence.newBoard(name: name, board_id: id)
                 }
                 
-                self.prefetchLists()
+                self.prefetchLists() {
+                    handler()
+                }
             }
         })
     }
     
-    private func prefetchLists() {
+    func prefetchBoards() {
+        prefetchBoards() {}
+    }
+    
+    func prefetchLists(handler: @escaping () -> ()) {
         let boards = persistence.getBoards()
         for board in boards! {
             let id = asString(board, key: "board_id")
@@ -69,14 +67,20 @@ class Prefetcher {
                         
                         let _ = self.persistence.newList(name: name, list_id: list_id, board_id: board_id, owner: owner)
                         
-                        self.prefetchCards(list_id)
+                        self.prefetchCards(list_id) {
+                            handler()
+                        }
                     }
                 }
             })
         }
     }
     
-    private func prefetchCards(_ list_id: String) {
+    func prefetchLists() {
+        prefetchLists() {}
+    }
+    
+    func prefetchCards(_ list_id: String, handler: @escaping () -> ()) {
         JakCard.loadCards(list_id, token: token, handler: { (response: JakResponse) in
             if let cards = response.object as? [[String:Any]] {
                 for card in cards {
@@ -89,13 +93,18 @@ class Prefetcher {
                     let _ = self.persistence.newCard(title: name, desc: description, card_id: card_id, owner: owner, list_id: list_id)
                 }
                 
+                handler()
+                
                 if (!self.showBoardControllerCalled) {
                     self.showBoardControllerCalled = true
-                    self.keychain.set(true, forKey: JakKeychain.PREFETCHER_RAN.rawValue)
                     self.loginController?.showBoardViewController()
                 }
             }
         })
+    }
+    
+    func prefetchCards(_ list_id: String) {
+        prefetchCards(list_id, handler: {})
     }
     
     private func asString(_ object: NSManagedObject, key: String) -> String {

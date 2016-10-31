@@ -1,30 +1,27 @@
 import Foundation
 import UIKit
+import CoreData
 
 class SettingsViewController : UIViewController {
     
     @IBOutlet weak var defaultBoardButton: UIButton!
     
-    private var boards:[[String:String]]? = nil
+    private var boards:[NSManagedObject]? = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if ReachabilityObserver.isConnected() {
-            JakBoard.loadBoards(UserData.getToken()!) { (response) in
-                if response.statusCode == 200 {
-                    self.boards = response.object as? [[String:String]]
-                    
-                    let keychain = KeychainSwift()
-                    let defaultBoard = keychain.get(JakKeychain.DEFAULT_BOARD.rawValue)
-                    if defaultBoard != nil {
-                        let board_id = defaultBoard!
-                        for b in self.boards! {
-                            if b["board_id"] == board_id {
-                                DispatchQueue.main.async {
-                                    self.defaultBoardButton.setTitle(b["name"], for: UIControlState.normal)
-                                }
-                            }
-                        }
+        self.boards = JakPersistence.get().getBoards()
+        
+        let keychain = KeychainSwift()
+        let defaultBoard = keychain.get(JakKeychain.DEFAULT_BOARD.rawValue)
+        if defaultBoard != nil {
+            let board_id = defaultBoard!
+            for b in self.boards! {
+                let id = b.value(forKey: "board_id") as! String
+                let name = b.value(forKey: "name") as! String
+                if id == board_id {
+                    DispatchQueue.main.async {
+                        self.defaultBoardButton.setTitle(name, for: UIControlState.normal)
                     }
                 }
             }
@@ -37,9 +34,11 @@ class SettingsViewController : UIViewController {
                 let sheet = UIAlertController(title: "Select new default board", message: nil, preferredStyle: .actionSheet)
                 
                 for b in boards! {
-                    let action = UIAlertAction(title: b["name"], style: .default, handler: { (action) in
-                        self.setDefaultBoard(b["board_id"])
-                        sender.setTitle(b["name"], for: UIControlState.normal)
+                    let name = b.value(forKey: "name") as! String
+                    let id = b.value(forKey: "board_id") as! String
+                    let action = UIAlertAction(title: name, style: .default, handler: { (action) in
+                        self.setDefaultBoard(id)
+                        sender.setTitle(name, for: UIControlState.normal)
                     })
                     sheet.addAction(action)
                 }

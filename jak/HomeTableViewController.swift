@@ -24,7 +24,10 @@ class HomeTableViewController: UITableViewController {
     }
     
     func refresh(sender:AnyObject) {
-        self.loadBoards(false)
+        JakPersistence.get().cleanupBoards()
+        Prefetcher.get().prefetchBoards {
+            self.loadBoards(false)
+        }
     }
     
     @IBAction func actions(_ sender: AnyObject) {
@@ -111,17 +114,22 @@ class HomeTableViewController: UITableViewController {
     
     fileprivate func newBoard(_ title: String) {
         JakBoard.addBoard(title, token: token, handler: { (response: JakResponse) in
-            if response.statusCode == 200 {
-                self.reload()
+            if let board = response.object as? NSDictionary {
+                let id = board["board_id"] as! String
+                let _ = JakPersistence.get().newBoard(name: title, board_id: id)
+                self.loadBoards(false)
             }
         })
     }
     
     fileprivate func loadBoards(_ defaultBoard: Bool) {
-        let persistence = JakPersistence.get()
-        self.boards = persistence.getBoards()!
-        self.checkDefaultBoard(defaultBoard)
-        self.refreshControl?.endRefreshing()
+        DispatchQueue.main.async(execute: {
+            let persistence = JakPersistence.get()
+            self.boards = persistence.getBoards()!
+            self.checkDefaultBoard(defaultBoard)
+            self.refreshControl?.endRefreshing()
+            self.tableView.reloadData()
+        })
     }
     
     fileprivate func noBoards() {
@@ -172,6 +180,8 @@ class HomeTableViewController: UITableViewController {
                             JakBoard.deleteBoard(board_id, token: self.token, handler: { (response) in
                                 if response.statusCode == 200 {
                                     DispatchQueue.main.async(execute: {
+                                        JakPersistence.get().deleteBoard(board_id: board_id)
+                                        
                                         self.boards.remove(at: (indexPath as NSIndexPath).row)
                                         tableView.deleteRows(at: [indexPath], with: .automatic)
                                     })

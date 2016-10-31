@@ -104,16 +104,17 @@ class JakPersistence {
         return nil
     }
     
+    func cleanupBoards() {
+        delete("Board")
+    }
+    
+    func cleanupLists(_ list_id: String) {
+        delete("List", qualifier: "list_id = %@", key: list_id)
+        cleanupCards(list_id)
+    }
+    
     func cleanupCards(_ list_id: String) {
-        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Card")
-        let predicate = NSPredicate(format: "list_id = %@", list_id)
-        fetchRequest.predicate = predicate
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
-        do {
-            try managedContext.execute(deleteRequest)
-        } catch let error as NSError {
-            debugPrint(error)
-        }
+        delete("Card", qualifier: "list_id = %@", key: list_id)
     }
     
     func newList(name: String, list_id: String, board_id: String, owner: String) -> NSManagedObject? {
@@ -165,7 +166,6 @@ class JakPersistence {
         let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "List")
         let predicate = NSPredicate(format: "board_id = %@", board_id)
         
-        //let compount = NSCompoundPredicate.init(andPredicateWithSubpredicates: [predicate])
         fetchRequest.predicate = predicate
         
         do {
@@ -217,6 +217,47 @@ class JakPersistence {
             }
         }
         return false
+    }
+    
+    func deleteBoard(board_id: String) {
+        if containsBoard(board_id: board_id) {
+            for list in getLists(board_id)! {
+                deleteList(list_id: list.value(forKey: "list_id") as! String, board_id: board_id)
+            }
+            
+            delete("Board", qualifier: "board_id = %@", key: board_id)
+        }
+    }
+    
+    func deleteList(list_id: String, board_id: String) {
+        if containsList(list_id: list_id, board_id: board_id) {
+            for card in getCards(list_id)! {
+                delete("Card", qualifier: "list_id = %@", key: card.value(forKey: "list_id") as? String)
+            }
+        }
+        
+        delete("List", qualifier: "list_id = %@", key: list_id)
+    }
+    
+    fileprivate func delete(_ entityName: String) {
+        delete(entityName, qualifier: nil, key: nil)
+    }
+    
+    fileprivate func delete(_ entityName: String, qualifier: String?, key: String?) {
+        let fetchRequest: NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: entityName)
+        
+        if (qualifier != nil) {
+            let predicate = NSPredicate(format: qualifier!, key!)
+            fetchRequest.predicate = predicate
+        }
+        
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: fetchRequest)
+        
+        do {
+            try managedContext.execute(deleteRequest)
+        } catch let error as NSError {
+            debugPrint(error)
+        }
     }
     
 //    func saveBoards() -> [] {
