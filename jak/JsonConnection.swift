@@ -7,60 +7,80 @@ class JsonConnection {
     let APPLICATION_JSON_TYPE = "application/json"
     
     // Constant variables which will be set by constructor
-    let url: String
+    let url: UrlBuilder
     let httpMethod: String
     
     // Mutable variables which can be set by class which uses JsonConnection
     var parameters : [String : String] = Dictionary()
-    var basicAuth: Bool = false
+    fileprivate var basicAuth: Bool = false
     var base64LoginString:String = ""
     
-    init(url: String, httpMethod: String) {
+    init(jakUrl: JakUrl) {
+        self.url = jakUrl.getUrl()
+        self.httpMethod = jakUrl.getMethod()
+    }
+    
+    init(url: UrlBuilder, httpMethod: String) {
         self.url = url
         self.httpMethod = httpMethod
     }
     
-    func addParameter(key: String, value: String) {
+    func addParameter(_ key: String, value: String) {
         parameters[key] = value
     }
     
-    func basicAuth(username: String, password: String) {
+    func basicAuth(_ username: String, password: String) {
         basicAuth = true
         let loginString = NSString(format: "%@:%@", username, password)
-        let loginData: NSData = loginString.dataUsingEncoding(NSUTF8StringEncoding)!
-        base64LoginString = loginData.base64EncodedStringWithOptions([])
+        let loginData: Data = loginString.data(using: String.Encoding.utf8.rawValue)!
+        base64LoginString = loginData.base64EncodedString(options: [])
     }
     
     func disableBasicAuth() {
         basicAuth = false
     }
     
-    func send(completionHandler: (object: AnyObject?, statusCode: Int) -> ()) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        let url = NSURL(string: self.url)
-        let request = NSMutableURLRequest(URL: url!)
-        let session = NSURLSession.sharedSession()
+    func send(_ completionHandler: @escaping (_ response: JakResponse) -> ()) {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
+        let url = URL(string: self.url.create())
+        let request = NSMutableURLRequest(url: url!)
+        let session = URLSession.shared
         let parameterString = parameters.stringFromHttpParameters()
         
-        request.HTTPMethod = httpMethod
-        request.HTTPBody = parameterString.dataUsingEncoding(NSUTF8StringEncoding)
+        print("\(self.httpMethod) \(self.url.debug(false)) \(parameterString.characters.count > 0 ? "->" : "") \(parameterString)")
+        
+        request.httpMethod = httpMethod
+        request.httpBody = parameterString.data(using: String.Encoding.utf8)
         
         request.addValue(APPLICATION_JSON_TYPE, forHTTPHeaderField: "Content-Type")
         request.addValue(APPLICATION_JSON_TYPE, forHTTPHeaderField: "Accept")
         if basicAuth { request.addValue("Basic \(base64LoginString)", forHTTPHeaderField: "Authorization") }
         
-        let task = session.dataTaskWithRequest(request, completionHandler: {data, response, error -> Void in
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        let task = session.dataTask(with: request as URLRequest, completionHandler: {data, response, error -> Void in
+            UIApplication.shared.isNetworkActivityIndicatorVisible = false
+            
+            if data == nil {
+                let jakResponse = JakResponse(object: nil, statusCode: -1)
+                jakResponse.internetConnectionUnavailable()
+                completionHandler(jakResponse)
+                return
+            }
             
             do {
-                let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .MutableLeaves)
-                completionHandler(object: json, statusCode: (response as! NSHTTPURLResponse).statusCode)
+                let json = try JSONSerialization.jsonObject(with: data!, options: .mutableLeaves) as AnyObject
+                let jakResponse = JakResponse(object: json, statusCode: (response as! HTTPURLResponse).statusCode)
+                completionHandler(jakResponse)
             } catch {
-                let body = NSString(data: data!, encoding: NSUTF8StringEncoding) as! String
-                print("\(error)")
-                print("Unparsable JSON: \(response)")
-                print("Data: \(body)")
-                completionHandler(object: nil, statusCode: (response as! NSHTTPURLResponse).statusCode)
+                let jakResponse = JakResponse(object: nil, statusCode: (response as! HTTPURLResponse).statusCode)
+                
+                if jakResponse.statusCode != 200 {
+                    let body = NSString(data: data!, encoding: String.Encoding.utf8.rawValue) as! String
+                    print("\(error)")
+                    print("Unparsable JSON: \(response)")
+                    print("Data: \(body)")
+                }
+                
+                completionHandler(jakResponse)
             }
         })
         
@@ -70,9 +90,9 @@ class JsonConnection {
 
 extension String {
     func stringByAddingPercentEncodingForURLQueryValue() -> String? {
-        let allowedCharacters = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
+        let allowedCharacters = CharacterSet(charactersIn: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._~")
         
-        return self.stringByAddingPercentEncodingWithAllowedCharacters(allowedCharacters)
+        return self.addingPercentEncoding(withAllowedCharacters: allowedCharacters)
     }
     
 }
@@ -85,7 +105,7 @@ extension Dictionary {
             return "\(percentEscapedKey)=\(percentEscapedValue)"
         }
         
-        return parameterArray.joinWithSeparator("&")
+        return parameterArray.joined(separator: "&")
     }
     
 }

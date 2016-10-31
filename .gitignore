@@ -65,3 +65,4 @@ fastlane/screenshots
 fastlane/test_output
 
 jak.xcodeproj/xcuserdata/
+.DS_Store

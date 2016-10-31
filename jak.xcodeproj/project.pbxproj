@@ -7,15 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B42C4E591D91A29800F98CE9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42C4E581D91A29800F98CE9 /* SettingsViewController.swift */; };
+		B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */; };
+		B46F49671D721AFB002C61D6 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F49661D721AFB002C61D6 /* Card.swift */; };
+		B46F49691D721EC0002C61D6 /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */; };
+		B4C0D7091DC5F9B000DE293A /* Prefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C0D7081DC5F9B000DE293A /* Prefetcher.swift */; };
 		F724F5451D6EB7BC00E0B3BB /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */; };
 		F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F724F5471D6EBD7D00E0B3BB /* UserData.swift */; };
 		F73B67B51D6D836100EBD7C2 /* RegisterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73B67B41D6D836100EBD7C2 /* RegisterController.swift */; };
 		F73B67B81D6DAE4F00EBD7C2 /* JsonConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73B67B71D6DAE4F00EBD7C2 /* JsonConnection.swift */; };
 		F73B67BA1D6DCA1100EBD7C2 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73B67B91D6DCA1100EBD7C2 /* Services.swift */; };
 		F75AA2A61D6EFA5700175563 /* BoardTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75AA2A51D6EFA5700175563 /* BoardTableCell.swift */; };
+		F7ABF6D61D741AE200187FB6 /* KeychainSwiftDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ABF6D51D741AE200187FB6 /* KeychainSwiftDistrib.swift */; };
+		F7ABF6D91D7420EB00187FB6 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7ABF6D81D7420EB00187FB6 /* LocalAuthentication.framework */; };
+		F7ABF6DD1D7448B500187FB6 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ABF6DC1D7448B500187FB6 /* CardViewController.swift */; };
 		F7B908BA1D6F0408006E8267 /* ListPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908B91D6F0408006E8267 /* ListPageViewController.swift */; };
 		F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908BC1D6F0C79006E8267 /* ListViewController.swift */; };
-		F7B908BF1D6F1172006E8267 /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7B908BE1D6F1172006E8267 /* List.swift */; };
+		F7CA2D221D953B2F0080773D /* PersistenceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */; };
+		F7D3772B1D7997280068716D /* AvailableListsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D3772A1D7997280068716D /* AvailableListsController.swift */; };
 		F7D89C5C1D6C2B9200BB6BAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */; };
 		F7D89C611D6C2B9200BB6BAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F7D89C5F1D6C2B9200BB6BAC /* Main.storyboard */; };
 		F7D89C641D6C2B9200BB6BAC /* jak.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C621D6C2B9200BB6BAC /* jak.xcdatamodeld */; };
@@ -24,7 +33,10 @@
 		F7D89C741D6C2B9200BB6BAC /* jakTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C731D6C2B9200BB6BAC /* jakTests.swift */; };
 		F7D89C7F1D6C2B9200BB6BAC /* jakUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C7E1D6C2B9200BB6BAC /* jakUITests.swift */; };
 		F7D89C8D1D6C2D1100BB6BAC /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */; };
-		F7F51C861D6EF6C600174CE9 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F51C851D6EF6C600174CE9 /* Board.swift */; };
+		F7E997C41DAB8BA00074961A /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7E997C31DAB8BA00074961A /* Reachability.swift */; };
+		F7F899501D78442E007F0479 /* UrlBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F8994F1D78442E007F0479 /* UrlBuilder.swift */; };
+		F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7F899511D7845BF007F0479 /* JsonHelper.swift */; };
+		F7FEC3C41DBDE36E00BD7B56 /* ReachabilityObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7FEC3C31DBDE36E00BD7B56 /* ReachabilityObserver.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,15 +57,25 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B42C4E581D91A29800F98CE9 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
+		B46F49661D721AFB002C61D6 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		B4C0D7081DC5F9B000DE293A /* Prefetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prefetcher.swift; sourceTree = "<group>"; };
 		F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		F724F5471D6EBD7D00E0B3BB /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
 		F73B67B41D6D836100EBD7C2 /* RegisterController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RegisterController.swift; sourceTree = "<group>"; };
 		F73B67B71D6DAE4F00EBD7C2 /* JsonConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonConnection.swift; sourceTree = "<group>"; };
 		F73B67B91D6DCA1100EBD7C2 /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		F75AA2A51D6EFA5700175563 /* BoardTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardTableCell.swift; sourceTree = "<group>"; };
+		F7ABF6D51D741AE200187FB6 /* KeychainSwiftDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftDistrib.swift; sourceTree = "<group>"; };
+		F7ABF6D81D7420EB00187FB6 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
+		F7ABF6DC1D7448B500187FB6 /* CardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
 		F7B908B91D6F0408006E8267 /* ListPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListPageViewController.swift; sourceTree = "<group>"; };
 		F7B908BC1D6F0C79006E8267 /* ListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
-		F7B908BE1D6F1172006E8267 /* List.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = List.swift; sourceTree = "<group>"; };
+		F7CA2D201D9537A60080773D /* jak.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = jak.entitlements; sourceTree = "<group>"; };
+		F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceLayer.swift; sourceTree = "<group>"; };
+		F7D3772A1D7997280068716D /* AvailableListsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AvailableListsController.swift; sourceTree = "<group>"; };
 		F7D89C581D6C2B9100BB6BAC /* jak.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = jak.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F7D89C601D6C2B9200BB6BAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -61,14 +83,17 @@
 		F7D89C651D6C2B9200BB6BAC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F7D89C681D6C2B9200BB6BAC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F7D89C6A1D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F7D89C6F1D6C2B9200BB6BAC /* jakTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jakTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7D89C6F1D6C2B9200BB6BAC /* jak.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jak.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D89C731D6C2B9200BB6BAC /* jakTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jakTests.swift; sourceTree = "<group>"; };
 		F7D89C751D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F7D89C7A1D6C2B9200BB6BAC /* jakUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jakUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F7D89C7A1D6C2B9200BB6BAC /* jak.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = jak.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F7D89C7E1D6C2B9200BB6BAC /* jakUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = jakUITests.swift; sourceTree = "<group>"; };
 		F7D89C801D6C2B9200BB6BAC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F7D89C8C1D6C2D1100BB6BAC /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginController.swift; path = src/LoginController.swift; sourceTree = "<group>"; };
-		F7F51C851D6EF6C600174CE9 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		F7E997C31DAB8BA00074961A /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		F7F8994F1D78442E007F0479 /* UrlBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlBuilder.swift; sourceTree = "<group>"; };
+		F7F899511D7845BF007F0479 /* JsonHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonHelper.swift; sourceTree = "<group>"; };
+		F7FEC3C31DBDE36E00BD7B56 /* ReachabilityObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityObserver.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F7ABF6D91D7420EB00187FB6 /* LocalAuthentication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -96,10 +122,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B42C4E571D91A28800F98CE9 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				B42C4E581D91A29800F98CE9 /* SettingsViewController.swift */,
+			);
+			name = settings;
+			sourceTree = "<group>";
+		};
 		F724F5461D6EB7C000E0B3BB /* home */ = {
 			isa = PBXGroup;
 			children = (
-				F7F51C851D6EF6C600174CE9 /* Board.swift */,
 				F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */,
 				F75AA2A51D6EFA5700175563 /* BoardTableCell.swift */,
 			);
@@ -114,14 +147,65 @@
 			name = register;
 			sourceTree = "<group>";
 		};
+		F7ABF6D71D741AF400187FB6 /* utils */ = {
+			isa = PBXGroup;
+			children = (
+				F7ABF6D51D741AE200187FB6 /* KeychainSwiftDistrib.swift */,
+				F7E997C31DAB8BA00074961A /* Reachability.swift */,
+			);
+			name = utils;
+			sourceTree = "<group>";
+		};
+		F7ABF6DA1D74471C00187FB6 /* frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F7ABF6D81D7420EB00187FB6 /* LocalAuthentication.framework */,
+			);
+			name = frameworks;
+			sourceTree = "<group>";
+		};
+		F7ABF6DB1D74472C00187FB6 /* app */ = {
+			isa = PBXGroup;
+			children = (
+				F724F5471D6EBD7D00E0B3BB /* UserData.swift */,
+				F73B67B91D6DCA1100EBD7C2 /* Services.swift */,
+				F73B67B71D6DAE4F00EBD7C2 /* JsonConnection.swift */,
+				F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */,
+				F7F8994F1D78442E007F0479 /* UrlBuilder.swift */,
+				F7F899511D7845BF007F0479 /* JsonHelper.swift */,
+				B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */,
+				F7CA2D211D953B2F0080773D /* PersistenceLayer.swift */,
+				F7FEC3C31DBDE36E00BD7B56 /* ReachabilityObserver.swift */,
+				B4C0D7081DC5F9B000DE293A /* Prefetcher.swift */,
+			);
+			name = app;
+			sourceTree = "<group>";
+		};
+		F7ABF6DE1D7448B800187FB6 /* card */ = {
+			isa = PBXGroup;
+			children = (
+				F7ABF6DC1D7448B500187FB6 /* CardViewController.swift */,
+			);
+			name = card;
+			sourceTree = "<group>";
+		};
 		F7B908BB1D6F040A006E8267 /* list */ = {
 			isa = PBXGroup;
 			children = (
 				F7B908B91D6F0408006E8267 /* ListPageViewController.swift */,
 				F7B908BC1D6F0C79006E8267 /* ListViewController.swift */,
-				F7B908BE1D6F1172006E8267 /* List.swift */,
+				B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */,
+				F7D3772A1D7997280068716D /* AvailableListsController.swift */,
 			);
 			name = list;
+			sourceTree = "<group>";
+		};
+		F7CA2D231D953B610080773D /* models */ = {
+			isa = PBXGroup;
+			children = (
+				B46F49661D721AFB002C61D6 /* Card.swift */,
+			);
+			name = models;
 			sourceTree = "<group>";
 		};
 		F7D89C4F1D6C2B9100BB6BAC = {
@@ -138,8 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				F7D89C581D6C2B9100BB6BAC /* jak.app */,
-				F7D89C6F1D6C2B9200BB6BAC /* jakTests.xctest */,
-				F7D89C7A1D6C2B9200BB6BAC /* jakUITests.xctest */,
+				F7D89C6F1D6C2B9200BB6BAC /* jak.xctest */,
+				F7D89C7A1D6C2B9200BB6BAC /* jak.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -147,6 +231,8 @@
 		F7D89C5A1D6C2B9200BB6BAC /* jak */ = {
 			isa = PBXGroup;
 			children = (
+				F7CA2D201D9537A60080773D /* jak.entitlements */,
+				F7ABF6DA1D74471C00187FB6 /* frameworks */,
 				F7D89C8E1D6C2D1B00BB6BAC /* src */,
 				F7D89C5F1D6C2B9200BB6BAC /* Main.storyboard */,
 				F7D89C651D6C2B9200BB6BAC /* Assets.xcassets */,
@@ -178,14 +264,15 @@
 		F7D89C8E1D6C2D1B00BB6BAC /* src */ = {
 			isa = PBXGroup;
 			children = (
-				F724F5471D6EBD7D00E0B3BB /* UserData.swift */,
-				F73B67B91D6DCA1100EBD7C2 /* Services.swift */,
-				F73B67B71D6DAE4F00EBD7C2 /* JsonConnection.swift */,
-				F7D89C5B1D6C2B9200BB6BAC /* AppDelegate.swift */,
+				F7ABF6D71D741AF400187FB6 /* utils */,
+				F7ABF6DB1D74472C00187FB6 /* app */,
+				B42C4E571D91A28800F98CE9 /* settings */,
 				F7D89C8F1D6C2D2700BB6BAC /* login */,
 				F73B67B61D6D836800EBD7C2 /* register */,
+				F7CA2D231D953B610080773D /* models */,
 				F724F5461D6EB7C000E0B3BB /* home */,
 				F7B908BB1D6F040A006E8267 /* list */,
+				F7ABF6DE1D7448B800187FB6 /* card */,
 			);
 			name = src;
 			sourceTree = "<group>";
@@ -233,7 +320,7 @@
 			);
 			name = jakTests;
 			productName = jakTests;
-			productReference = F7D89C6F1D6C2B9200BB6BAC /* jakTests.xctest */;
+			productReference = F7D89C6F1D6C2B9200BB6BAC /* jak.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		F7D89C791D6C2B9200BB6BAC /* jakUITests */ = {
@@ -251,7 +338,7 @@
 			);
 			name = jakUITests;
 			productName = jakUITests;
-			productReference = F7D89C7A1D6C2B9200BB6BAC /* jakUITests.xctest */;
+			productReference = F7D89C7A1D6C2B9200BB6BAC /* jak.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -261,18 +348,27 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = de;
 				TargetAttributes = {
 					F7D89C571D6C2B9100BB6BAC = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = XH8GS4V77E;
+						LastSwiftMigration = 0800;
+						SystemCapabilities = {
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 					F7D89C6E1D6C2B9200BB6BAC = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = F7D89C571D6C2B9100BB6BAC;
 					};
 					F7D89C791D6C2B9200BB6BAC = {
 						CreatedOnToolsVersion = 7.3.1;
+						LastSwiftMigration = 0800;
 						TestTargetID = F7D89C571D6C2B9100BB6BAC;
 					};
 				};
@@ -331,17 +427,28 @@
 			files = (
 				F73B67B81D6DAE4F00EBD7C2 /* JsonConnection.swift in Sources */,
 				F73B67BA1D6DCA1100EBD7C2 /* Services.swift in Sources */,
+				B42C4E591D91A29800F98CE9 /* SettingsViewController.swift in Sources */,
+				B4C0D7091DC5F9B000DE293A /* Prefetcher.swift in Sources */,
 				F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */,
 				F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */,
-				F7B908BF1D6F1172006E8267 /* List.swift in Sources */,
+				B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */,
+				F7CA2D221D953B2F0080773D /* PersistenceLayer.swift in Sources */,
 				F75AA2A61D6EFA5700175563 /* BoardTableCell.swift in Sources */,
+				F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */,
 				F7B908BA1D6F0408006E8267 /* ListPageViewController.swift in Sources */,
 				F73B67B51D6D836100EBD7C2 /* RegisterController.swift in Sources */,
+				F7ABF6DD1D7448B500187FB6 /* CardViewController.swift in Sources */,
+				F7F899501D78442E007F0479 /* UrlBuilder.swift in Sources */,
 				F7D89C8D1D6C2D1100BB6BAC /* LoginController.swift in Sources */,
+				F7E997C41DAB8BA00074961A /* Reachability.swift in Sources */,
+				B46F49671D721AFB002C61D6 /* Card.swift in Sources */,
+				F7D3772B1D7997280068716D /* AvailableListsController.swift in Sources */,
+				B46F49691D721EC0002C61D6 /* CardTableViewCell.swift in Sources */,
 				F724F5451D6EB7BC00E0B3BB /* HomeTableViewController.swift in Sources */,
 				F7D89C641D6C2B9200BB6BAC /* jak.xcdatamodeld in Sources */,
 				F7D89C5C1D6C2B9200BB6BAC /* AppDelegate.swift in Sources */,
-				F7F51C861D6EF6C600174CE9 /* Board.swift in Sources */,
+				F7FEC3C41DBDE36E00BD7B56 /* ReachabilityObserver.swift in Sources */,
+				F7ABF6D61D741AE200187FB6 /* KeychainSwiftDistrib.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -410,8 +517,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -456,8 +565,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -476,6 +587,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};
@@ -485,10 +597,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = jak/jak.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = XH8GS4V77E;
 				INFOPLIST_FILE = jak/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.jak;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = de.jak.jak;
+				PRODUCT_NAME = jak;
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -496,10 +614,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = jak/jak.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = XH8GS4V77E;
 				INFOPLIST_FILE = jak/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = de.jak;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = de.jak.jak;
+				PRODUCT_NAME = jak;
+				PROVISIONING_PROFILE = "";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -510,7 +634,8 @@
 				INFOPLIST_FILE = jakTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jakTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/jak.app/jak";
 			};
 			name = Debug;
@@ -522,7 +647,8 @@
 				INFOPLIST_FILE = jakTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jakTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/jak.app/jak";
 			};
 			name = Release;
@@ -533,7 +659,8 @@
 				INFOPLIST_FILE = jakUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jakUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = jak;
 			};
 			name = Debug;
@@ -544,7 +671,8 @@
 				INFOPLIST_FILE = jakUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jakUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = jak;
+				SWIFT_VERSION = 3.0;
 				TEST_TARGET_NAME = jak;
 			};
 			name = Release;

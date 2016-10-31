@@ -9,27 +9,24 @@ class RegisterController : UIViewController {
     @IBOutlet weak var password1: UITextField!
     @IBOutlet weak var password2: UITextField!
         
-    @IBAction func doRegister(sender: AnyObject) {
-        (sender as! UIBarButtonItem).enabled = false
+    @IBAction func doRegister(_ sender: AnyObject) {
+        (sender as! UIBarButtonItem).isEnabled = false
         
         if emailAddress.text?.characters.count == 0 {
-            let alertController = UIAlertController(title: "E-Mail Address is empty", message: "Please specify a valid e-mail address!", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "E-Mail Address is empty", message: "Please specify a valid e-mail address!", preferredStyle: .alert)
             showAlertController(alertController)
         } else if password1.text != password2.text {
-            let alertController = UIAlertController(title: "Passwords do not match", message: "Please enter the same passwords into each text field!", preferredStyle: .Alert)
+            let alertController = UIAlertController(title: "Passwords do not match", message: "Please enter the same passwords into each text field!", preferredStyle: .alert)
             showAlertController(alertController)
         } else {
-            let jsonConn = JsonConnection(url: Services.LOGIN.rawValue, httpMethod: "POST")
-            jsonConn.addParameter("username", value: emailAddress.text!)
-            jsonConn.addParameter("password", value: password1.text!)
-            jsonConn.send({ (object, statusCode) -> Void in
-                dispatch_async(dispatch_get_main_queue(), {
-                    if statusCode != 200 {
-                        let alertController = UIAlertController(title: "Account already exists", message: "It seems your account already exists. Try to login with given credentials!", preferredStyle: .Alert)
+            JakLogin.register(emailAddress.text!, password: password1.text!, handler: { (response) in
+                DispatchQueue.main.async(execute: {
+                    if response.statusCode != 200 {
+                        let alertController = UIAlertController(title: "Account already exists", message: "It seems your account already exists. Try to login with given credentials!", preferredStyle: .alert)
                         self.showAlertController(alertController)
                     } else {
-                        let alertController = UIAlertController(title: "Account created", message: "Your account has been created. You can now login!", preferredStyle: .Alert)
-                        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: { (UIAlertAction) in
+                        let alertController = UIAlertController(title: "Account created", message: "Your account has been created. You can now login!", preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
                             self.dismissViewController()
                         }))
                         
@@ -39,19 +36,19 @@ class RegisterController : UIViewController {
             })
         }
         
-        (sender as! UIBarButtonItem).enabled = false
+        (sender as! UIBarButtonItem).isEnabled = false
     }
     
-    @IBAction func abortRegister(sender: AnyObject) {
+    @IBAction func abortRegister(_ sender: AnyObject) {
         dismissViewController()
     }
     
-    func showAlertController(alertController: UIAlertController) {
-        alertController.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
-        self.presentViewController(alertController, animated: true, completion: nil)
+    func showAlertController(_ alertController: UIAlertController) {
+        alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        self.present(alertController, animated: true, completion: nil)
     }
     
     func dismissViewController() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }
