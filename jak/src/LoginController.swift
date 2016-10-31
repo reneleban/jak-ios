@@ -147,23 +147,27 @@ class LoginController : UIViewController, UITextFieldDelegate {
     }
     
     fileprivate func performLogin() {
-        JakLogin.login(self.emailAddress.text!, password: self.password.text!, handler: { (response: JakResponse) in
-            let statusCode = response.statusCode
-            DispatchQueue.main.async(execute: {
-                if statusCode != 200 {
-                    let alert:UIAlertController = UIAlertController(title: "Error logging in", message: "Your credentials were incorrect. Please try again!", preferredStyle: .alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                } else {
-                    self.password.text = ""
-                    let token = (response.object as! NSDictionary)["token"] as! String
-                    print("Received token for \(self.emailAddress.text!): \(token)")
-                    UserData.setToken(token)
-                    self.storeTokenInKeychain(token)
-                    self.runPrefetcher()
-                }
+        if ReachabilityObserver.isConnected() {
+            JakLogin.login(self.emailAddress.text!, password: self.password.text!, handler: { (response: JakResponse) in
+                let statusCode = response.statusCode
+                DispatchQueue.main.async(execute: {
+                    if statusCode != 200 {
+                        let alert:UIAlertController = UIAlertController(title: "Error logging in", message: "Your credentials were incorrect. Please try again!", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                        self.present(alert, animated: true, completion: nil)
+                    } else {
+                        self.password.text = ""
+                        let token = (response.object as! NSDictionary)["token"] as! String
+                        print("Received token for \(self.emailAddress.text!): \(token)")
+                        UserData.setToken(token)
+                        self.storeTokenInKeychain(token)
+                        self.runPrefetcher()
+                    }
+                })
             })
-        })
+        } else {
+            ReachabilityObserver.showNoConnectionAlert(self)
+        }
     }
     
     fileprivate func storeTokenInKeychain(_ token: String) {

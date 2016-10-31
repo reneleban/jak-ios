@@ -239,6 +239,10 @@ class JakPersistence {
         delete("List", qualifier: "list_id = %@", key: list_id)
     }
     
+    func deleteCard(_ card_id: String) {
+        delete("Card", qualifier: "card_id = %@", key: card_id)
+    }
+    
     fileprivate func delete(_ entityName: String) {
         delete(entityName, qualifier: nil, key: nil)
     }

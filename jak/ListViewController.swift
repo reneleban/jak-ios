@@ -34,7 +34,6 @@ class ListViewController : UITableViewController {
         JakPersistence.get().cleanupCards(list_id)
         Prefetcher.get().prefetchCards(list_id) {
             self.reloadCards()
-            self.refreshControl?.endRefreshing()
         }
     }
     
@@ -51,15 +50,18 @@ class ListViewController : UITableViewController {
     }
     
     func reloadCards(_ scrollToLast: Bool = false) {
-        let list_id = self.list?.value(forKey: "list_id") as! String
-        let persistence = JakPersistence.get()
-        self.cards = persistence.getCards(list_id)
-        self.tableView.reloadData()
+        DispatchQueue.main.async(execute: {
+            let list_id = self.list?.value(forKey: "list_id") as! String
+            let persistence = JakPersistence.get()
+            self.cards = persistence.getCards(list_id)
+            self.tableView.reloadData()
+            self.refreshControl?.endRefreshing()
+        })
     }
     
     func deleteCard(_ card_id: String) {
         JakCard.deleteCard(card_id, token: token) { (response) in
-            JakPersistence.get().cleanupCards(self.getListId())
+            JakPersistence.get().deleteCard(card_id)
             self.reloadCards()
         }
     }

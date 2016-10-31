@@ -19,6 +19,8 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     
     var oldBarButtonItems:[UIBarButtonItem]?
     
+    var currentIndex: Int = 0
+    
     override func viewDidLoad() {
         self.dataSource = self
         self.delegate = self
@@ -59,25 +61,24 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         listControllers.removeAll()
     }
     
-    func loadAllLists() {
+    func loadAllLists(direction: UIPageViewControllerNavigationDirection = .forward) {
         let persistence = JakPersistence.get()
         self.lists = persistence.getLists(self.boardId)
-        self.finishedLoading()
+        self.finishedLoading(direction: direction)
     }
     
-    func finishedLoading() {
+    func finishedLoading(direction: UIPageViewControllerNavigationDirection) {
         DispatchQueue.main.async(execute: {
             if self.lists != nil && self.lists!.count > 0 {
                 self.cleanUp()
                 let list = self.lists![0]
                 self.title = list.value(forKey: "name") as? String
                 self.selectedlist = list
-                print("Selectedlist has been set: \(self.selectedlist?.value(forKey: "name"))")
                 let listController = self.getListController(list, index: 0)
                 listController.reloadCards()
                 self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
             } else {
-                self.setViewControllers([(self.storyboard?.instantiateViewController(withIdentifier: "nolistscontroller"))!], direction: .forward, animated: true, completion: nil)
+                self.setViewControllers([(self.storyboard?.instantiateViewController(withIdentifier: "nolistscontroller"))!], direction: direction, animated: true, completion: nil)
             }
         })
 
@@ -137,11 +138,15 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         }
     }
     
-    func selectList(_ list: NSManagedObject) {
+    func selectList(_ list: NSManagedObject, index: Int) {
         self.selectedlist = list
-        let listController = getListController(list, index: 0)
+        let listController = getSelectedListController()!
+        listController.reloadCards()
+        
+        currentIndex = index
         self.title = list.value(forKey: "name") as? String
-        self.setViewControllers([listController], direction: .forward, animated: true, completion: nil)
+        
+        self.setViewControllers([listController], direction: .reverse, animated: true, completion: nil)
     }
     
     func finishButtonClicked() {
@@ -206,7 +211,6 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             DispatchQueue.main.async(execute: {
                 let card = JakPersistence.get().newCard(title: title, desc: desc, card_id: card_id, owner: owner, list_id: list_id)
                 if card != nil {
-                    print("Saved successfully your new card")
                     self.reloadCards()
                 }
             })
@@ -216,11 +220,15 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func deleteList() {
         if selectedlist != nil {
             let list_id = selectedlist?.value(forKey: "list_id") as! String
+            let board_id = selectedlist?.value(forKey: "board_id") as! String
             JakCard.deleteCards(list_id, token: token, handler: { (response) in
                 if response.statusCode == 200 {
                     JakList.deleteList(list_id, token: self.token, handler: { (response) in
-                        self.loadAllLists()
-                        self.selectedlist = nil
+                        JakPersistence.get().deleteList(list_id: list_id, board_id: board_id)
+                        DispatchQueue.main.async(execute: {
+                            self.currentIndex = 0
+                            self.loadAllLists(direction: .reverse)
+                        })
                     })
                 }
             })
@@ -254,10 +262,28 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
                 let id = list.value(forKey: "list_id") as! String
                 let board_id = list.value(forKey: "board_id") as! String
                 let owner = list.value(forKey: "owner") as! String
-                let _ = JakPersistence.get().newList(name: name, list_id: id, board_id: board_id, owner: owner)
+                let list = JakPersistence.get().newList(name: name, list_id: id, board_id: board_id, owner: owner)
                 self.loadAllLists()
+                
+                let vc = self.getListController(list!, index: self.lists!.count-1)
+                DispatchQueue.main.async(execute: {
+                    self.currentIndex = self.lists!.count-1
+                    self.setViewControllers([vc], direction: .forward, animated: true, completion: nil)
+                    self.title = list?.value(forKey: "name") as? String
+                })
             }
         }
+    }
+    
+    func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        if !completed {
+            return
+        }
+        
+        let lvc = pageViewController.viewControllers![0] as! ListViewController
+        self.selectedlist = lvc.getList()
+        let name = lvc.getList().value(forKey: "name") as! String
+        self.title = name
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
@@ -269,12 +295,12 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             
             let prevIndex = index-1
             let list = lists![prevIndex]
-            self.title = list.value(forKey: "name") as? String
-            
-            selectedlist = list
             
             let prevController = getListController(list, index: prevIndex)
             prevController.reloadCards()
+            
+            currentIndex = index
+            
             return prevController
         }
         
@@ -287,16 +313,15 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             if index == lists!.count - 1 {
                 return nil
             }
-
             
             let nextIndex = index+1
             let list = lists![nextIndex]
-            self.title = list.value(forKey: "name") as? String
-            
-            selectedlist = list
             
             let nextController = getListController(list, index: nextIndex)
             nextController.reloadCards()
+            
+            currentIndex = index
+            
             return nextController
         }
         
@@ -311,6 +336,6 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     }
     
     func presentationIndex(for pageViewController: UIPageViewController) -> Int {
-        return 0
+        return currentIndex
     }
 }

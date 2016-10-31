@@ -35,7 +35,7 @@ class AvailableListsController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let list = lists![(indexPath as NSIndexPath).row]
-        pageViewController!.selectList(list)
+        pageViewController!.selectList(list, index: indexPath.row)
         self.dismiss(animated: true, completion: nil)
     }
     

@@ -24,9 +24,13 @@ class HomeTableViewController: UITableViewController {
     }
     
     func refresh(sender:AnyObject) {
-        JakPersistence.get().cleanupBoards()
-        Prefetcher.get().prefetchBoards {
-            self.loadBoards(false)
+        if ReachabilityObserver.isConnected() {
+            JakPersistence.get().cleanupBoards()
+            Prefetcher.get().prefetchBoards {
+                self.loadBoards(false)
+            }
+        } else {
+            self.refreshControl?.endRefreshing()
         }
     }
     
