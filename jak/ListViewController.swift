@@ -66,6 +66,12 @@ class ListViewController : UITableViewController {
         }
     }
     
+    func reloadView() {
+        self.tableView.beginUpdates()
+        self.tableView.reloadData()
+        self.tableView.endUpdates()
+    }
+    
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let card = self.cards![(indexPath as NSIndexPath).row]
         UserData.setSelectedCardId(card_id: card.value(forKey: "card_id") as! String)
@@ -90,6 +96,16 @@ class ListViewController : UITableViewController {
         }
         
         cell.accessoryType = .disclosureIndicator
+        
+        let fontName = cell.title.font.fontName
+        if UserData.isLargeView() {
+            cell.title.font = UIFont(name: fontName, size: 25)
+            cell.desc.font = UIFont(name: fontName, size: 20)
+        } else {
+            cell.title.font = UIFont(name: fontName, size: 18)
+            cell.desc.font = UIFont(name: fontName, size: 16)
+        }
+        
         return cell
     }
     
@@ -101,7 +117,11 @@ class ListViewController : UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 75
+        if UserData.isLargeView() {
+            return 150
+        } else {
+            return 65
+        }
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

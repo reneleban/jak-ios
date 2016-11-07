@@ -93,8 +93,17 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         if lists != nil && lists!.count != 0 {
             let listName = selectedlist?.value(forKey: "name") as! String
             
+            actionSheet.addAction(UIAlertAction(title: "Add card with description", style: .default, handler: { (UIAlertAction) in
+                self.addCardPrompt(true)
+            }))
+            
             actionSheet.addAction(UIAlertAction(title: "Edit mode", style: .default, handler: { (UIAlertAction) in
                 self.switchEditMode()
+            }))
+            
+            let largeview = UserData.isLargeView()
+            actionSheet.addAction(UIAlertAction(title: largeview ? "Small view" : "Large view", style: .default, handler: { (UIAlertAction) in
+                self.switchViewMode()
             }))
             
             actionSheet.addAction(UIAlertAction(title: "Show all available lists", style: .default, handler: { (UIAlertAction) in
@@ -113,6 +122,15 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         self.present(actionSheet, animated: true, completion: nil)
+    }
+    
+    fileprivate func switchViewMode() {
+        let controller = getSelectedListController()
+        if controller != nil {
+            UserData.setLargeView(largeview: !UserData.isLargeView())
+            
+            controller!.reloadView()
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -180,20 +198,33 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         }
     }
     
-    func addCardPrompt() {
+    func addCardPrompt(_ withDescription: Bool = false) {
         if ReachabilityObserver.isConnected() {
             var titleTextField: UITextField?
+            var descriptionTextField: UITextField?
             
             let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
             listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-                self.addCard(titleTextField!.text!, desc: "")
+                var desc = "";
+                if descriptionTextField != nil {
+                    desc = descriptionTextField!.text!
+                }
+                
+                self.addCard(titleTextField!.text!, desc: desc)
             }))
             
             listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
                 textField.placeholder = "Card name ..."
                 titleTextField = textField
             })
+            
+            if withDescription {
+                listPrompt.addTextField(configurationHandler: { (textField: UITextField!) in
+                    textField.placeholder = "Description ..."
+                    descriptionTextField = textField
+                })
+            }
             
             self.present(listPrompt, animated: true, completion: nil)
         } else {

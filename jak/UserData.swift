@@ -6,6 +6,7 @@ class UserData {
     fileprivate static var token:String? = nil
     fileprivate static var selectedBoardId:String? = nil
     fileprivate static var selectedCardId:String? = nil
+    fileprivate static var largeview:Bool = true
     
     static func setToken(_ token: String) {
         if self.token == nil {
@@ -31,5 +32,14 @@ class UserData {
     
     static func getSelectedCardId() -> String? {
         return selectedCardId
+    }
+    
+    static func setLargeView(largeview: Bool) {
+        self.largeview = largeview
+        JakKeychainHelper.setLargeView(largeview)
+    }
+    
+    static func isLargeView() -> Bool {
+        return largeview
     }
 }

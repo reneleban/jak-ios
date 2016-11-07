@@ -16,6 +16,13 @@ class LoginController : UIViewController, UITextFieldDelegate {
         password.delegate = self
         
         let keychain = KeychainSwift()
+        
+        var largeview = keychain.getBool(JakKeychain.LARGE_VIEW.rawValue)
+        if largeview == nil {
+            largeview = true
+        }
+        UserData.setLargeView(largeview: largeview!)
+        
         let token = keychain.get(JakKeychain.SERVICE_TOKEN.rawValue)
         if token != nil {
             let touchIdEnabled = keychain.getBool(JakKeychain.TOUCH_ID_ENABLED.rawValue)
