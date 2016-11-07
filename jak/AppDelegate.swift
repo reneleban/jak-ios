@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  jak
-//
-//  Created by Jens Sproede (OEV) on 23.08.16.
-//  Copyright © 2016 de. All rights reserved.
-//
-
 import UIKit
 import CoreData
 

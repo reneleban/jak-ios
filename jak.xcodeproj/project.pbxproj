@@ -11,6 +11,7 @@
 		B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */; };
 		B46F49671D721AFB002C61D6 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F49661D721AFB002C61D6 /* Card.swift */; };
 		B46F49691D721EC0002C61D6 /* CardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */; };
+		B482D7BE1DD0B8CB00020F51 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B482D7BD1DD0B8CB00020F51 /* ImageViewController.swift */; };
 		B4C0D7091DC5F9B000DE293A /* Prefetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4C0D7081DC5F9B000DE293A /* Prefetcher.swift */; };
 		F724F5451D6EB7BC00E0B3BB /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */; };
 		F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F724F5471D6EBD7D00E0B3BB /* UserData.swift */; };
@@ -61,6 +62,7 @@
 		B42C4E5A1D91A7D800F98CE9 /* KeychainHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainHelper.swift; sourceTree = "<group>"; };
 		B46F49661D721AFB002C61D6 /* Card.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		B46F49681D721EC0002C61D6 /* CardTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardTableViewCell.swift; sourceTree = "<group>"; };
+		B482D7BD1DD0B8CB00020F51 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		B4C0D7081DC5F9B000DE293A /* Prefetcher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prefetcher.swift; sourceTree = "<group>"; };
 		F724F5441D6EB7BC00E0B3BB /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
 		F724F5471D6EBD7D00E0B3BB /* UserData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				F7ABF6DC1D7448B500187FB6 /* CardViewController.swift */,
+				B482D7BD1DD0B8CB00020F51 /* ImageViewController.swift */,
 			);
 			name = card;
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				F7B908BD1D6F0C79006E8267 /* ListViewController.swift in Sources */,
 				F724F5481D6EBD7D00E0B3BB /* UserData.swift in Sources */,
 				B42C4E5B1D91A7D800F98CE9 /* KeychainHelper.swift in Sources */,
+				B482D7BE1DD0B8CB00020F51 /* ImageViewController.swift in Sources */,
 				F7CA2D221D953B2F0080773D /* PersistenceLayer.swift in Sources */,
 				F75AA2A61D6EFA5700175563 /* BoardTableCell.swift in Sources */,
 				F7F899521D7845BF007F0479 /* JsonHelper.swift in Sources */,
