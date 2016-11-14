@@ -61,7 +61,6 @@ class HomeTableViewController: UITableViewController {
             let boardPrompt = UIAlertController(title: nil, message: "Enter a board name", preferredStyle: .alert)
             boardPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
             boardPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-                print("Adding board \(inputTextField?.text)")
                 self.newBoard(inputTextField!.text!)
             }))
             

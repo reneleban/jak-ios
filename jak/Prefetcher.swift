@@ -52,6 +52,10 @@ class Prefetcher {
                     self.prefetchLists() {
                         handler()
                     }
+                    
+                    if boards.count == 0 {
+                        self.showBoardViewController()
+                    }
                 }
             })
         }
@@ -64,25 +68,34 @@ class Prefetcher {
     func prefetchLists(handler: @escaping () -> ()) {
         if isConnected() {
             let boards = persistence.getBoards()
-            for board in boards! {
-                let id = asString(board, key: "board_id")
-                
-                JakList.loadLists(id, token: token, handler: { (response: JakResponse) in
-                    if let lists = response.object as? [[String:Any]] {
-                        for list in lists {
-                            let list_id = self.asString(list, key: "list_id")
-                            let name = self.asString(list, key: "name")
-                            let board_id = self.asString(list, key: "board_id")
-                            let owner = self.asString(list, key: "owner")
+            
+            if boards!.count > 0 {
+                for board in boards! {
+                    let id = asString(board, key: "board_id")
+                    
+                    JakList.loadLists(id, token: token, handler: { (response: JakResponse) in
+                        if let lists = response.object as? [[String:Any]] {
+                            for list in lists {
+                                let list_id = self.asString(list, key: "list_id")
+                                let name = self.asString(list, key: "name")
+                                let board_id = self.asString(list, key: "board_id")
+                                let owner = self.asString(list, key: "owner")
+                                
+                                let _ = self.persistence.newList(name: name, list_id: list_id, board_id: board_id, owner: owner)
+                                
+                                self.prefetchCards(list_id) {
+                                    handler()
+                                }
+                            }
                             
-                            let _ = self.persistence.newList(name: name, list_id: list_id, board_id: board_id, owner: owner)
-                            
-                            self.prefetchCards(list_id) {
-                                handler()
+                            if lists.count == 0 {
+                                self.showBoardViewController()
                             }
                         }
-                    }
-                })
+                    })
+                }
+            } else {
+                self.showBoardViewController()
             }
         }
     }
@@ -107,12 +120,16 @@ class Prefetcher {
                     
                     handler()
                     
-                    if (!self.showBoardControllerCalled) {
-                        self.showBoardControllerCalled = true
-                        self.loginController?.showBoardViewController()
-                    }
+                    self.showBoardViewController()
                 }
             })
+        }
+    }
+    
+    func showBoardViewController() {
+        if (!self.showBoardControllerCalled) {
+            self.showBoardControllerCalled = true
+            self.loginController?.showBoardViewController()
         }
     }
     

@@ -148,7 +148,7 @@ class LoginController : UIViewController, UITextFieldDelegate {
     
     func showBoardViewController() {
         DispatchQueue.main.async(execute: {
-            print("Show view controller called")
+            print("SYS > Presenting view controller containing boards ...")
             self.performSegue(withIdentifier: "home", sender: self)
         })
     }

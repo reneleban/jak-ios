@@ -93,7 +93,7 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         if lists != nil && lists!.count != 0 {
             let listName = selectedlist?.value(forKey: "name") as! String
             
-            actionSheet.addAction(UIAlertAction(title: "Add card with description", style: .default, handler: { (UIAlertAction) in
+            actionSheet.addAction(UIAlertAction(title: "Add detailed card", style: .default, handler: { (UIAlertAction) in
                 self.addCardPrompt(true)
             }))
             
@@ -198,49 +198,40 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         }
     }
     
-    func addCardPrompt(_ withDescription: Bool = false) {
+    func addCardPrompt(_ detailed: Bool = false) {
         if ReachabilityObserver.isConnected() {
-            var titleTextField: UITextField?
-            var descriptionTextField: UITextField?
-            
-            let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
-            listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-            listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
-                var desc = "";
-                if descriptionTextField != nil {
-                    desc = descriptionTextField!.text!
-                }
+            if detailed {
                 
-                self.addCard(titleTextField!.text!, desc: desc)
-            }))
-            
-            listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
-                textField.placeholder = "Card name ..."
-                titleTextField = textField
-            })
-            
-            if withDescription {
-                listPrompt.addTextField(configurationHandler: { (textField: UITextField!) in
-                    textField.placeholder = "Description ..."
-                    descriptionTextField = textField
+            } else {
+                var titleTextField: UITextField?
+                
+                let listPrompt = UIAlertController(title: nil, message: "Create new card", preferredStyle: .alert)
+                listPrompt.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+                listPrompt.addAction(UIAlertAction(title: "Add", style: .default, handler: { (action) -> Void in
+                    self.addCard(titleTextField!.text!)
+                }))
+                
+                listPrompt.addTextField(configurationHandler: {(textField: UITextField!) in
+                    textField.placeholder = "Card name ..."
+                    titleTextField = textField
                 })
+                
+                self.present(listPrompt, animated: true, completion: nil)
             }
-            
-            self.present(listPrompt, animated: true, completion: nil)
         } else {
             ReachabilityObserver.showNoConnectionAlert(self)
         }
     }
     
-    func addCard(_ title: String, desc: String) {
-        JakCard.addCard(title, description: desc, list_id: selectedlist?.value(forKey: "list_id") as! String, token: token) { (response) in
+    func addCard(_ title: String) {
+        JakCard.addCard(title, description: "", list_id: selectedlist?.value(forKey: "list_id") as! String, token: token) { (response) in
             let dict = response.object as! NSDictionary
             let card_id = dict.value(forKey: "card_id") as! String
             let owner = dict.value(forKey: "owner") as! String
             let list_id = dict.value(forKey: "list_id") as! String
             
             DispatchQueue.main.async(execute: {
-                let card = JakPersistence.get().newCard(title: title, desc: desc, card_id: card_id, owner: owner, list_id: list_id)
+                let card = JakPersistence.get().newCard(title: title, desc: "", card_id: card_id, owner: owner, list_id: list_id)
                 if card != nil {
                     self.reloadCards()
                 }

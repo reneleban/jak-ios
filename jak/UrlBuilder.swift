@@ -9,7 +9,7 @@ class UrlBuilder {
         self.host = host
     }
     
-    init(service: Services) {
+    init(_ service: Services) {
         self.host = service.rawValue
     }
     
