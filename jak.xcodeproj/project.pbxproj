@@ -607,7 +607,7 @@
 				DEVELOPMENT_TEAM = XH8GS4V77E;
 				INFOPLIST_FILE = jak/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jak.jak;
 				PRODUCT_NAME = jak;
 				PROVISIONING_PROFILE = "";
@@ -625,7 +625,7 @@
 				DEVELOPMENT_TEAM = XH8GS4V77E;
 				INFOPLIST_FILE = jak/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				OTHER_SWIFT_FLAGS = "-D DEBUG";
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = de.jak.jak;
 				PRODUCT_NAME = jak;
 				PROVISIONING_PROFILE = "";
