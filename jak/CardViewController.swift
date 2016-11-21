@@ -3,6 +3,9 @@ import UIKit
 
 class CardViewController : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    @IBOutlet weak var backButton: UIBarButtonItem!
+    @IBOutlet weak var doneButton: UIBarButtonItem!
+    
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var descriptionField: UITextView!
     @IBOutlet weak var imageView: UIImageView!
@@ -10,12 +13,21 @@ class CardViewController : UIViewController, UIImagePickerControllerDelegate, UI
     let imagePicker = UIImagePickerController()
     
     var pickedImage:UIImage? = nil
+    var listId:String? = nil
+    
+    var updateCard = true
     
     override func viewDidLoad() {
         imagePicker.delegate = self
         imageView.isUserInteractionEnabled = true
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CardViewController.imageTapped))
         imageView.addGestureRecognizer(tapRecognizer)
+        
+        let cards = JakPersistence.get().getCards(listId!)
+        for card in cards! {
+            
+        }
+        
 //        if UserData.selectedCard != nil {
 //            let card = UserData.selectedCard!
 //            titleField.text = card.title
@@ -32,7 +44,13 @@ class CardViewController : UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     @IBAction func saveButton(_ sender: AnyObject) {
-        // Save here
+        if updateCard {
+            // Update data
+            
+        } else {
+            // Save new card
+            
+        }
         
         dismiss()
     }

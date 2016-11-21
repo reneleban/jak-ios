@@ -201,7 +201,15 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func addCardPrompt(_ detailed: Bool = false) {
         if ReachabilityObserver.isConnected() {
             if detailed {
+                let navigationCardController = self.storyboard!.instantiateViewController(withIdentifier: "carddetail") as! UINavigationController
+                let cardController = navigationCardController.topViewController as! CardViewController
                 
+                cardController.title = "Add new card"
+                cardController.backButton.title = "Abort"
+                cardController.updateCard = false
+                //cardController.listId = selectedlist!.value(forKey: "list_id") as! String
+                
+                self.present(navigationCardController, animated: true, completion: nil)
             } else {
                 var titleTextField: UITextField?
                 

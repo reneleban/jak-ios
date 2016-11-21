@@ -553,15 +553,17 @@ Create a new one by tapping the action-icon!</string>
                                 <action selector="backButton:" destination="9s8-T6-6R4" id="ybX-D6-KPX"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="zSV-GG-HNa">
+                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="zSV-GG-HNa">
                             <connections>
-                                <action selector="saveButton:" destination="9s8-T6-6R4" id="LXh-Mp-gi6"/>
+                                <action selector="saveButton:" destination="9s8-T6-6R4" id="vJj-qZ-H5Z"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="backButton" destination="eUo-3R-R6B" id="Dj7-E9-NGP"/>
                         <outlet property="descriptionField" destination="s60-5d-bTR" id="QQO-jZ-Wox"/>
+                        <outlet property="doneButton" destination="zSV-GG-HNa" id="qXo-LN-MAC"/>
                         <outlet property="imageView" destination="hHU-g0-Nk3" id="QsI-Gz-Vav"/>
                         <outlet property="titleField" destination="Pby-4I-cwJ" id="5lj-dU-LVt"/>
                         <segue destination="qGw-eg-AWb" kind="show" identifier="showimage" id="zv3-Rm-8hi"/>
