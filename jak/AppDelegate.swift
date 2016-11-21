@@ -28,6 +28,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UITableViewCell.appearance().backgroundColor = blueWOAlpha
         
+        UITabBar.appearance().barTintColor = blue
+        UITabBar.appearance().tintColor = yellow
+        
+        let tabBarItemApperance = UITabBarItem.appearance()
+        tabBarItemApperance.setTitleTextAttributes([NSForegroundColorAttributeName:UIColor.black], for: UIControlState.normal)
+        tabBarItemApperance.setTitleTextAttributes([NSForegroundColorAttributeName:yellow], for: UIControlState.selected)
+        
         return true
     }
 

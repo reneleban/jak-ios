@@ -34,26 +34,6 @@ class HomeTableViewController: UITableViewController {
         }
     }
     
-    @IBAction func actions(_ sender: AnyObject) {
-        let actionMenu = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        
-        let settingsAction = UIAlertAction(title: "Settings", style: .default) { (alert: UIAlertAction) in
-            self.settings()
-        }
-        
-        let logoutAction = UIAlertAction(title: "Logout", style: .destructive) { (alert: UIAlertAction) in
-            self.logout()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        
-        actionMenu.addAction(settingsAction)
-        actionMenu.addAction(logoutAction)
-        actionMenu.addAction(cancelAction)
-        
-        self.present(actionMenu, animated: true, completion: nil)
-    }
-    
     @IBAction func addBoard(_ sender: AnyObject) {
         if ReachabilityObserver.isConnected() {
             var inputTextField: UITextField?
@@ -95,24 +75,6 @@ class HomeTableViewController: UITableViewController {
                 }
             }
         })
-    }
-    
-    fileprivate func settings() {
-        self.performSegue(withIdentifier: "settingssegue", sender: self)
-    }
-    
-    func logout() {
-        let alert = UIAlertController(title: "Warning", message: "While not having an active internet connection you can't login again without an active connection.", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { (action) in
-            let keychain = KeychainSwift()
-            keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
-            keychain.delete(JakKeychain.TOUCH_ID_ENABLED.rawValue)
-            self.dismiss(animated: true, completion: nil)
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Abort", style: .default, handler: nil))
-        
-        self.present(alert, animated: true, completion: nil)
     }
     
     fileprivate func newBoard(_ title: String) {

@@ -104,6 +104,21 @@ class JakPersistence {
         return nil
     }
     
+    func getCard(_ card_id: String) -> NSManagedObject? {
+        let fetchRequest:NSFetchRequest<NSFetchRequestResult> = NSFetchRequest(entityName: "Card")
+        let predicateCardID = NSPredicate(format: "card_id = %@", card_id)
+        fetchRequest.predicate = predicateCardID
+        
+        do {
+            let result = try managedContext.fetch(fetchRequest)
+            return result.first as? NSManagedObject
+        } catch let error as NSError {
+            print(error)
+        }
+        
+        return nil
+    }
+    
     func cleanupBoards() {
         delete("Board")
     }

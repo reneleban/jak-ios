@@ -28,6 +28,10 @@ class SettingsViewController : UIViewController {
         }
     }
     
+    @IBAction func logout(_ sender: Any) {
+        self.logout()
+    }
+    
     @IBAction func defaultBoard(_ sender: UIButton) {
         if ReachabilityObserver.isConnected() {
             if boards != nil {
@@ -54,6 +58,20 @@ class SettingsViewController : UIViewController {
         } else {
             ReachabilityObserver.showNoConnectionAlert(self)
         }
+    }
+    
+    func logout() {
+        let alert = UIAlertController(title: "Warning", message: "While not having an active internet connection you can't login again without an active connection.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { (action) in
+            let keychain = KeychainSwift()
+            keychain.delete(JakKeychain.SERVICE_TOKEN.rawValue)
+            keychain.delete(JakKeychain.TOUCH_ID_ENABLED.rawValue)
+            self.dismiss(animated: true, completion: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Abort", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil)
     }
     
     fileprivate func setDefaultBoard(_ board_id: String?) {

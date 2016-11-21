@@ -13,7 +13,6 @@ class CardViewController : UIViewController, UIImagePickerControllerDelegate, UI
     let imagePicker = UIImagePickerController()
     
     var pickedImage:UIImage? = nil
-    var listId:String? = nil
     
     var updateCard = true
     
@@ -23,16 +22,12 @@ class CardViewController : UIViewController, UIImagePickerControllerDelegate, UI
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CardViewController.imageTapped))
         imageView.addGestureRecognizer(tapRecognizer)
         
-        let cards = JakPersistence.get().getCards(listId!)
-        for card in cards! {
-            
-        }
+        let card = JakPersistence.get().getCard(UserData.getSelectedCardId()!)
         
-//        if UserData.selectedCard != nil {
-//            let card = UserData.selectedCard!
-//            titleField.text = card.title
-//            descriptionField.text = card.desc
-//        }
+        if card != nil {
+            titleField.text = card?.value(forKey: "title") as? String
+            descriptionField.text = card?.value(forKey: "desc") as? String
+        }
     }
     
     fileprivate func dismiss() {
