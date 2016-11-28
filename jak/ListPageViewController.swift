@@ -27,6 +27,8 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
         
         self.oldBarButtonItems = self.navigationItem.rightBarButtonItems
         
+        self.view.backgroundColor = UIColor(red: 120.0/255.0, green: 144.0/255.0, blue: 156.0/255.0, alpha: 1)
+        
         loadAllLists()
     }
     
@@ -38,10 +40,12 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
             }
         }
         
-        let newController = self.storyboard?.instantiateViewController(withIdentifier: "listviewcontroller") as! ListViewController
+        self.cleanUp()
+        let newController = self.storyboard!.instantiateViewController(withIdentifier: "listviewcontroller") as! ListViewController
         newController.list = list
         newController.index = index
-        newController.useStoryboard = self.storyboard
+        newController.useStoryboard = self.storyboard!
+        newController.navController = self.navigationController
         listControllers.append(newController)
         
         return newController
@@ -201,15 +205,13 @@ class ListPageViewController : UIPageViewController, UIPageViewControllerDataSou
     func addCardPrompt(_ detailed: Bool = false) {
         if ReachabilityObserver.isConnected() {
             if detailed {
-                let navigationCardController = self.storyboard!.instantiateViewController(withIdentifier: "carddetail") as! UINavigationController
-                let cardController = navigationCardController.topViewController as! CardViewController
+                let cardController = self.storyboard!.instantiateViewController(withIdentifier: "carddetail") as! CardViewController
                 
-                cardController.title = "Add new card"
-                cardController.backButton.title = "Abort"
                 cardController.updateCard = false
-                //cardController.listId = selectedlist!.value(forKey: "list_id") as! String
+                cardController.selectedList = self.getSelectedListController()?.getListId()
+                cardController.listViewController = getSelectedListController()
                 
-                self.present(navigationCardController, animated: true, completion: nil)
+                self.navigationController!.pushViewController(cardController, animated: true)
             } else {
                 var titleTextField: UITextField?
                 

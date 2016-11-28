@@ -26,7 +26,7 @@ class UserData {
         selectedBoardId = board_id
     }
     
-    static func setSelectedCardId(card_id: String) {
+    static func setSelectedCardId(card_id: String?) {
         selectedCardId = card_id
     }
     

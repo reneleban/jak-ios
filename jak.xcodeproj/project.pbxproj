@@ -24,6 +24,7 @@
 		F73B67B81D6DAE4F00EBD7C2 /* JsonConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73B67B71D6DAE4F00EBD7C2 /* JsonConnection.swift */; };
 		F73B67BA1D6DCA1100EBD7C2 /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = F73B67B91D6DCA1100EBD7C2 /* Services.swift */; };
 		F75AA2A61D6EFA5700175563 /* BoardTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F75AA2A51D6EFA5700175563 /* BoardTableCell.swift */; };
+		F78833161DEC17E000BE822D /* LockScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = F78833151DEC17E000BE822D /* LockScreen.swift */; };
 		F7ABF6D61D741AE200187FB6 /* KeychainSwiftDistrib.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ABF6D51D741AE200187FB6 /* KeychainSwiftDistrib.swift */; };
 		F7ABF6D91D7420EB00187FB6 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F7ABF6D81D7420EB00187FB6 /* LocalAuthentication.framework */; };
 		F7ABF6DD1D7448B500187FB6 /* CardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F7ABF6DC1D7448B500187FB6 /* CardViewController.swift */; };
@@ -80,6 +81,7 @@
 		F73B67B71D6DAE4F00EBD7C2 /* JsonConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonConnection.swift; sourceTree = "<group>"; };
 		F73B67B91D6DCA1100EBD7C2 /* Services.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		F75AA2A51D6EFA5700175563 /* BoardTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoardTableCell.swift; sourceTree = "<group>"; };
+		F78833151DEC17E000BE822D /* LockScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockScreen.swift; sourceTree = "<group>"; };
 		F7ABF6D51D741AE200187FB6 /* KeychainSwiftDistrib.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainSwiftDistrib.swift; sourceTree = "<group>"; };
 		F7ABF6D81D7420EB00187FB6 /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
 		F7ABF6DC1D7448B500187FB6 /* CardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardViewController.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 			isa = PBXGroup;
 			children = (
 				B42C4E581D91A29800F98CE9 /* SettingsViewController.swift */,
+				F78833151DEC17E000BE822D /* LockScreen.swift */,
 			);
 			name = settings;
 			sourceTree = "<group>";
@@ -456,6 +459,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F73B67B81D6DAE4F00EBD7C2 /* JsonConnection.swift in Sources */,
+				F78833161DEC17E000BE822D /* LockScreen.swift in Sources */,
 				B4CD53A31DE3225100753D57 /* TabBarController.swift in Sources */,
 				F73B67BA1D6DCA1100EBD7C2 /* Services.swift in Sources */,
 				B42C4E591D91A29800F98CE9 /* SettingsViewController.swift in Sources */,

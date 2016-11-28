@@ -9,8 +9,12 @@ class LoginController : UIViewController, UITextFieldDelegate {
     @IBOutlet weak var password: UITextField!
     @IBOutlet weak var touchId: UISwitch!
     
+    var alert:UIAlertController?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        AppDelegate.navController = self.navigationController
         
         emailAddress.delegate = self
         password.delegate = self
@@ -56,12 +60,14 @@ class LoginController : UIViewController, UITextFieldDelegate {
         if textField == emailAddress {
             password.becomeFirstResponder()
         } else if textField == password {
+            password.resignFirstResponder()
             performLogin()
         }
         return true
     }
     
     fileprivate func validateToken(_ token: String) {
+        self.alert = JakBase.waiting("Validating token")
         if ReachabilityObserver.isConnected() {
             JakLogin.validate(token, handler: { (response: JakResponse) in
                 let statusCode = response.statusCode
@@ -149,19 +155,29 @@ class LoginController : UIViewController, UITextFieldDelegate {
     func showBoardViewController() {
         DispatchQueue.main.async(execute: {
             print("SYS > Presenting view controller containing boards ...")
-            self.performSegue(withIdentifier: "home", sender: self)
+            if self.alert != nil {
+                self.alert?.dismiss(animated: true, completion: { 
+                    self.performSegue(withIdentifier: "home", sender: self)
+                })
+                
+                self.alert = nil
+            }
         })
     }
     
     fileprivate func performLogin() {
+        AppDelegate.navController = self.navigationController
         if ReachabilityObserver.isConnected() {
+            self.alert = JakBase.waiting("Validating credentials")
             JakLogin.login(self.emailAddress.text!, password: self.password.text!, handler: { (response: JakResponse) in
                 let statusCode = response.statusCode
                 DispatchQueue.main.async(execute: {
                     if statusCode != 200 {
-                        let alert:UIAlertController = UIAlertController(title: "Error logging in", message: "Your credentials were incorrect. Please try again!", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-                        self.present(alert, animated: true, completion: nil)
+                        self.alert!.dismiss(animated: true, completion: {
+                            let alert:UIAlertController = UIAlertController(title: "Error logging in", message: "Your credentials were incorrect. Please try again!", preferredStyle: .alert)
+                            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+                            self.present(alert, animated: true, completion: nil)
+                        })
                     } else {
                         self.password.text = ""
                         let token = (response.object as! NSDictionary)["token"] as! String

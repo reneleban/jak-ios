@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 enum JakMethod: String {
     
@@ -47,6 +48,22 @@ class JakBase {
     
     static func isReachable() -> Bool {
         return ReachabilityObserver.isConnected()
+    }
+    
+    static func waiting(_ message: String) -> UIAlertController {
+        let loadingAlertController = UIAlertController(title: message, message: nil, preferredStyle: .alert)
+        let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        loadingAlertController.view.addSubview(activityIndicator)
+        let xConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerX, relatedBy: .equal, toItem: loadingAlertController.view, attribute: .centerX, multiplier: 1, constant: 0)
+        let yConstraint = NSLayoutConstraint(item: activityIndicator, attribute: .centerY, relatedBy: .equal, toItem: loadingAlertController.view, attribute: .centerY, multiplier: 1.4, constant: 0)
+        NSLayoutConstraint.activate([ xConstraint, yConstraint])
+        activityIndicator.isUserInteractionEnabled = false
+        activityIndicator.startAnimating()
+        let height: NSLayoutConstraint = NSLayoutConstraint(item: loadingAlertController.view, attribute: NSLayoutAttribute.height, relatedBy: NSLayoutRelation.equal, toItem: nil, attribute: NSLayoutAttribute.notAnAttribute, multiplier: 1, constant: 80)
+        loadingAlertController.view.addConstraint(height);
+        AppDelegate.navController!.present(loadingAlertController, animated: true, completion: nil)
+        return loadingAlertController
     }
 }
 

@@ -133,6 +133,10 @@ class Prefetcher {
         }
     }
     
+    func resetShowBoardViewController() {
+        self.showBoardControllerCalled = false
+    }
+    
     func prefetchCards(_ list_id: String) {
         prefetchCards(list_id, handler: {})
     }

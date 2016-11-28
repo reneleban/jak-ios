@@ -8,21 +8,11 @@ class ListViewController : UITableViewController {
     
     var index:Int?
     var list:NSManagedObject?
-    var useStoryboard: UIStoryboard?
+    var useStoryboard:UIStoryboard?
+    var navController:UINavigationController?
     
     fileprivate var cards:[NSManagedObject]?
-    
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-    
-    init(list: NSManagedObject?, index: Int, useStoryboard: UIStoryboard) {
-        super.init(style: UITableViewStyle.plain)
-        self.index = index
-        self.list = list
-        self.useStoryboard = useStoryboard
-    }
-    
+        
     override func viewDidLoad() {
         self.tableView.contentInset = UIEdgeInsetsMake(65,0,0,0)
         
@@ -74,10 +64,11 @@ class ListViewController : UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let card = self.cards![(indexPath as NSIndexPath).row]
-        UserData.setSelectedCardId(card_id: card.value(forKey: "card_id") as! String)
+        UserData.setSelectedCardId(card_id: card.value(forKey: "card_id") as? String)
         
-        let cardController = self.useStoryboard!.instantiateViewController(withIdentifier: "carddetail")
-        self.present(cardController, animated: true, completion: nil)
+        let cardController = self.useStoryboard!.instantiateViewController(withIdentifier: "carddetail") as! CardViewController
+        self.navController!.pushViewController(cardController, animated: true)
+        //self.present(cardController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

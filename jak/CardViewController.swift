@@ -3,9 +3,6 @@ import UIKit
 
 class CardViewController : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    @IBOutlet weak var backButton: UIBarButtonItem!
-    @IBOutlet weak var doneButton: UIBarButtonItem!
-    
     @IBOutlet weak var titleField: UITextField!
     @IBOutlet weak var descriptionField: UITextView!
     @IBOutlet weak var imageView: UIImageView!
@@ -15,6 +12,8 @@ class CardViewController : UIViewController, UIImagePickerControllerDelegate, UI
     var pickedImage:UIImage? = nil
     
     var updateCard = true
+    var selectedList:String?
+    var listViewController:ListViewController?
     
     override func viewDidLoad() {
         imagePicker.delegate = self
@@ -22,32 +21,48 @@ class CardViewController : UIViewController, UIImagePickerControllerDelegate, UI
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(CardViewController.imageTapped))
         imageView.addGestureRecognizer(tapRecognizer)
         
-        let card = JakPersistence.get().getCard(UserData.getSelectedCardId()!)
-        
-        if card != nil {
-            titleField.text = card?.value(forKey: "title") as? String
-            descriptionField.text = card?.value(forKey: "desc") as? String
+        if UserData.getSelectedCardId() != nil {
+            let card = JakPersistence.get().getCard(UserData.getSelectedCardId()!)
+            
+            if card != nil {
+                titleField.text = card?.value(forKey: "title") as? String
+                descriptionField.text = card?.value(forKey: "desc") as? String
+            }
+        } else {
+            self.title = "Add new card"
+            self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Abort", style: .plain, target: self, action: #selector(abort))
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        UserData.setSelectedCardId(card_id: nil)
     }
     
     fileprivate func dismiss() {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @IBAction func backButton(_ sender: AnyObject) {
-        dismiss()
+    @IBAction func saveButton(_ sender: Any) {
+        saveChanges()
     }
     
-    @IBAction func saveButton(_ sender: AnyObject) {
-        if updateCard {
-            // Update data
-            
-        } else {
-            // Save new card
-            
+    func abort() {
+        self.navigationController!.popViewController(animated: true)
+    }
+    
+    func saveChanges() {
+        if !updateCard {
+            JakCard.addCard(self.titleField.text!, description: self.descriptionField.text!, list_id: selectedList!, token: UserData.getToken()!, handler: { (response) in
+                if response.statusCode == 200 {
+                    let card = response.object as! NSDictionary
+                    let _ = JakPersistence.get().newCard(title: self.titleField.text!, desc: self.descriptionField.text!, card_id: card.value(forKey: "card_id") as! String, owner: card.value(forKey: "owner") as! String, list_id: self.selectedList!)
+                    DispatchQueue.main.async(execute: {
+                        self.listViewController!.reloadCards()
+                        AppDelegate.navController!.popViewController(animated: true)
+                    })
+                }
+            })
         }
-        
-        dismiss()
     }
     
     func imageTapped(sender: AnyObject) {

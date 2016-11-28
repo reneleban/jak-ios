@@ -4,24 +4,28 @@ import CoreData
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+    static var navController:UINavigationController?
+    static var storyboard:UIStoryboard?
+    static var boardViewController: HomeTableViewController?
+    
     var window: UIWindow?
-
-
+   
+    var lockscreen:LockScreen?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
         let blue = UIColor(red: 120.0/255.0, green: 144.0/255.0, blue: 156.0/255.0, alpha: 0.8)
         let yellow = UIColor(red: 255.0/255.0, green: 213.0/255.0, blue: 79.0/255.0, alpha: 0.8)
+        let blueWOAlpha = UIColor(red: 120.0/255.0, green: 144.0/255.0, blue: 156.0/255.0, alpha: 1)
         
         UINavigationBar.appearance().barTintColor = blue
         UINavigationBar.appearance().tintColor = yellow
         UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.white]
         
-        UIPageControl.appearance().backgroundColor = blue
+        UIPageControl.appearance().backgroundColor = blueWOAlpha
         UIPageControl.appearance().currentPageIndicatorTintColor = yellow
         UIPageControl.appearance().pageIndicatorTintColor = UIColor.black
-        
-        let blueWOAlpha = UIColor(red: 120.0/255.0, green: 144.0/255.0, blue: 156.0/255.0, alpha: 1)
         
         UITableView.appearance().backgroundColor = blueWOAlpha
         UITableView.appearance().backgroundView?.backgroundColor = blueWOAlpha
@@ -46,10 +50,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+        
+        let keychain = KeychainSwift()
+        let touchIdEnabled = keychain.getBool(JakKeychain.TOUCH_ID_ENABLED.rawValue)
+        if touchIdEnabled != nil && touchIdEnabled! {
+            if lockscreen == nil {
+                lockscreen = AppDelegate.storyboard?.instantiateViewController(withIdentifier: "lockscreen") as? LockScreen
+            }
+            
+            AppDelegate.navController?.present(lockscreen!, animated: false, completion: nil)
+        }
     }
 
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
+        if lockscreen != nil {
+            lockscreen!.auth()
+        }
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

@@ -208,9 +208,9 @@ connection to the internet. You won't be able to make changes to your boards, li
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdX-0N-UPP">
-                                <rect key="frame" x="16" y="114" width="141" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fdX-0N-UPP">
+                                <rect key="frame" x="218" y="81" width="141" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="No default board set">
                                     <color key="titleColor" red="0.92941176470588238" green="0.74901960784313726" blue="0.17254901960784313" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -218,25 +218,45 @@ connection to the internet. You won't be able to make changes to your boards, li
                                     <action selector="defaultBoard:" destination="69F-a1-t7z" eventType="touchUpInside" id="1Vc-K3-SC3"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wS8-w9-axX">
-                                <rect key="frame" x="153.5" y="580" width="68" height="30"/>
-                                <state key="normal" title="Full reset!">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Touch ID" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="liB-mp-nye">
+                                <rect key="frame" x="16" y="129" width="343" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JzX-wS-4G4">
+                                <rect key="frame" x="310" y="124" width="51" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="touchIdSwitch:" destination="69F-a1-t7z" eventType="valueChanged" id="z8M-02-dZw"/>
+                                </connections>
+                            </switch>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wS8-w9-axX">
+                                <rect key="frame" x="303" y="573" width="56" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Perform">
                                     <color key="titleColor" red="1" green="0.84066039323806763" blue="0.24792006611824036" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="reset:" destination="69F-a1-t7z" eventType="touchUpInside" id="kd4-cr-taS"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VcK-bf-xGG">
+                                <rect key="frame" x="16" y="567" width="274" height="43"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">Full reset
+(Will delete your whole user data!)</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.32549019610000002" green="0.41568627450000001" blue="0.47058823529999999" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="wS8-w9-axX" firstAttribute="centerX" secondItem="2EK-Oo-tn6" secondAttribute="centerX" id="HMS-02-upM"/>
-                            <constraint firstItem="X5Q-1X-VFi" firstAttribute="top" secondItem="wS8-w9-axX" secondAttribute="bottom" constant="8" id="TSI-ZU-akV"/>
-                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="vy9-RR-TkI">
                         <barButtonItem key="leftBarButtonItem" title="Logout" id="dNU-cI-xqa">
-                            <color key="tintColor" red="1" green="0.47558739410917816" blue="0.42168603439862162" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="tintColor" red="1" green="0.32586994679242443" blue="0.34399042465362295" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <connections>
                                 <action selector="logout:" destination="69F-a1-t7z" id="QBc-nU-n5x"/>
                             </connections>
@@ -244,11 +264,12 @@ connection to the internet. You won't be able to make changes to your boards, li
                     </navigationItem>
                     <connections>
                         <outlet property="defaultBoardButton" destination="fdX-0N-UPP" id="h3d-gD-GLb"/>
+                        <outlet property="touchIdSwitch" destination="JzX-wS-4G4" id="RTI-9E-atI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IJx-K7-Khf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4393" y="-402"/>
+            <point key="canvasLocation" x="4392.8000000000002" y="-402.54872563718146"/>
         </scene>
         <!--Home-->
         <scene sceneID="RkL-QZ-cAB">
@@ -332,6 +353,7 @@ connection to the internet. You won't be able to make changes to your boards, li
         <scene sceneID="RYC-dv-Quh">
             <objects>
                 <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="vlY-K7-0rk" customClass="ListPageViewController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout" top="YES"/>
                     <navigationItem key="navigationItem" id="mEd-or-tDh">
                         <rightBarButtonItems>
                             <barButtonItem systemItem="action" id="Q3k-x8-5qD">
@@ -451,7 +473,7 @@ Create a new one by tapping the action-icon!</string>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VFP-MP-q2I">
-                                            <rect key="frame" x="18" y="36" width="324" height="21"/>
+                                            <rect key="frame" x="18" y="38" width="324" height="21"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -492,7 +514,7 @@ Create a new one by tapping the action-icon!</string>
         <!--Card-->
         <scene sceneID="uUv-Gf-eUW">
             <objects>
-                <viewController id="9s8-T6-6R4" customClass="CardViewController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="carddetail" id="9s8-T6-6R4" customClass="CardViewController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="R37-t6-dEU"/>
                         <viewControllerLayoutGuide type="bottom" id="7Ca-lJ-Hvi"/>
@@ -552,22 +574,15 @@ Create a new one by tapping the action-icon!</string>
                         <color key="backgroundColor" red="0.39444756507873535" green="0.49125096201896667" blue="0.54493671655654907" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Card" id="1Ro-kn-Eal">
-                        <barButtonItem key="leftBarButtonItem" title="Back" id="eUo-3R-R6B">
+                        <barButtonItem key="rightBarButtonItem" title="Save" id="zSV-GG-HNa">
                             <connections>
-                                <action selector="backButton:" destination="9s8-T6-6R4" id="ybX-D6-KPX"/>
-                            </connections>
-                        </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="done" id="zSV-GG-HNa">
-                            <connections>
-                                <action selector="saveButton:" destination="9s8-T6-6R4" id="vJj-qZ-H5Z"/>
+                                <action selector="saveButton:" destination="9s8-T6-6R4" id="wRK-xl-D5h"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="backButton" destination="eUo-3R-R6B" id="Dj7-E9-NGP"/>
                         <outlet property="descriptionField" destination="s60-5d-bTR" id="QQO-jZ-Wox"/>
-                        <outlet property="doneButton" destination="zSV-GG-HNa" id="qXo-LN-MAC"/>
                         <outlet property="imageView" destination="hHU-g0-Nk3" id="QsI-Gz-Vav"/>
                         <outlet property="titleField" destination="Pby-4I-cwJ" id="5lj-dU-LVt"/>
                         <segue destination="qGw-eg-AWb" kind="show" identifier="showimage" id="zv3-Rm-8hi"/>
@@ -575,7 +590,7 @@ Create a new one by tapping the action-icon!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UyQ-Cg-Nnq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4042" y="1003"/>
+            <point key="canvasLocation" x="4607" y="1003"/>
         </scene>
         <!--Image View Controller-->
         <scene sceneID="4jZ-yL-Mlt">
@@ -609,7 +624,7 @@ Create a new one by tapping the action-icon!</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fMO-gd-6fY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5481" y="1003"/>
+            <point key="canvasLocation" x="5329" y="1003"/>
         </scene>
         <!--Item-->
         <scene sceneID="i7C-fE-pij">
@@ -647,7 +662,8 @@ Create a new one by tapping the action-icon!</string>
         <!--Navigation Controller-->
         <scene sceneID="EFm-3u-WoO">
             <objects>
-                <navigationController storyboardIdentifier="carddetail" automaticallyAdjustsScrollViewInsets="NO" id="Q0b-c9-pKO" sceneMemberID="viewController">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dzX-XB-zIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="carddetailnavcontroller" automaticallyAdjustsScrollViewInsets="NO" hidesBottomBarWhenPushed="YES" id="Q0b-c9-pKO" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="32o-98-Fki">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -658,9 +674,8 @@ Create a new one by tapping the action-icon!</string>
                         <segue destination="9s8-T6-6R4" kind="relationship" relationship="rootViewController" id="t0d-u3-6ak"/>
                     </connections>
                 </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dzX-XB-zIO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4831" y="1003"/>
+            <point key="canvasLocation" x="3903" y="1003"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="SBL-nU-P4l">
@@ -686,6 +701,7 @@ Create a new one by tapping the action-icon!</string>
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="k4e-Nd-3G7" customClass="TabBarController" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="Bed-Zz-J7h">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                     </tabBar>
@@ -697,6 +713,47 @@ Create a new one by tapping the action-icon!</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FFS-te-fDf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2792.8000000000002" y="286.50674662668666"/>
+        </scene>
+        <!--Lock Screen-->
+        <scene sceneID="xXh-w9-ZMB">
+            <objects>
+                <viewController storyboardIdentifier="lockscreen" id="Ydm-1M-fVq" customClass="LockScreen" customModule="jak" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="HBB-zU-R93"/>
+                        <viewControllerLayoutGuide type="bottom" id="XKr-pR-uEC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0yR-aW-k8u">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="d2b-3X-9Bf">
+                                <rect key="frame" x="16" y="80" width="343" height="77"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <string key="text">JAK is secured with
+Touch ID!</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2MV-T7-67n">
+                                <rect key="frame" x="118" y="217" width="139" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <state key="normal" title="Authenticate">
+                                    <color key="titleColor" red="1" green="0.84066039319999997" blue="0.2479200661" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="authenticate:" destination="Ydm-1M-fVq" eventType="touchUpInside" id="Cgd-iD-4eF"/>
+                                    <action selector="reset:" destination="69F-a1-t7z" eventType="touchUpInside" id="aKt-Hg-LeJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.46750110387802124" green="0.56415927410125732" blue="0.61442160606384277" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vba-aQ-IFZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2773.5999999999999" y="-400.74962518740631"/>
         </scene>
         <!--Item-->
         <scene sceneID="RZm-fO-DvA">

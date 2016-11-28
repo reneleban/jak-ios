@@ -18,8 +18,11 @@ class HomeTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadBoards(true)
+        AppDelegate.navController = self.navigationController
+        AppDelegate.storyboard = self.storyboard
+        AppDelegate.boardViewController = self
         
+        loadBoards(true)
         self.refreshControl?.addTarget(self, action: #selector(HomeTableViewController.refresh(sender:)), for: .valueChanged)
     }
     

@@ -1,10 +1,12 @@
 import Foundation
 import UIKit
 import CoreData
+import LocalAuthentication
 
 class SettingsViewController : UIViewController {
     
     @IBOutlet weak var defaultBoardButton: UIButton!
+    @IBOutlet weak var touchIdSwitch: UISwitch!
     
     private var boards:[NSManagedObject]? = nil
     
@@ -26,6 +28,13 @@ class SettingsViewController : UIViewController {
                 }
             }
         }
+        
+        let touchIdEnabled = keychain.getBool(JakKeychain.TOUCH_ID_ENABLED.rawValue)
+        touchIdSwitch.isOn = touchIdEnabled != nil ? touchIdEnabled! : false
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        Prefetcher.get().resetShowBoardViewController()
     }
     
     @IBAction func logout(_ sender: Any) {
@@ -74,6 +83,36 @@ class SettingsViewController : UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func touchIdSwitch(_ sender: UISwitch) {
+        if sender.isOn {
+            touchId(true, reason: "Enabling Touch ID ...")
+        } else {
+            touchId(false, reason: "Disabling Touch ID ...")
+        }
+    }
+    
+    fileprivate func touchId(_ state: Bool, reason: String) {
+        let context = LAContext()
+        var error: NSError?
+        
+        if context.canEvaluatePolicy(LAPolicy.deviceOwnerAuthenticationWithBiometrics, error: &error) {
+            context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason, reply: { (success, error) in
+                if success {
+                    let keychain = KeychainSwift()
+                    if state {
+                        keychain.set(true, forKey: JakKeychain.TOUCH_ID_ENABLED.rawValue)
+                    } else {
+                        keychain.delete(JakKeychain.TOUCH_ID_ENABLED.rawValue)
+                    }
+                } else {
+                    DispatchQueue.main.async(execute: {
+                        self.touchIdSwitch.setOn(!state, animated: true)
+                    })
+                }
+            })
+        }
+    }
+    
     fileprivate func setDefaultBoard(_ board_id: String?) {
         let keychain = KeychainSwift()
         if board_id != nil {
@@ -84,13 +123,20 @@ class SettingsViewController : UIViewController {
     }
     
     @IBAction func reset(_ sender: AnyObject) {
-        JakPersistence.get().reset()
-        JakKeychainHelper.deleteAllKeychainProperties()
+        let alert = UIAlertController(title: "WARNING", message: "This will reset everything in JAK!", preferredStyle: .alert)
         
-        let alert = UIAlertController(title: "Reset successful", message: "Your settings and user data has been wiped. You'll be logged out now!", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
-            self.dismiss(animated: true)
+        alert.addAction(UIAlertAction(title: "Abort", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Proceed", style: .destructive, handler: { (action) in
+            JakPersistence.get().reset()
+            JakKeychainHelper.deleteAllKeychainProperties()
+            
+            let alert = UIAlertController(title: "Reset successful", message: "Your settings and user data has been wiped. You'll be logged out now!", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (UIAlertAction) in
+                self.dismiss(animated: true)
+            }))
+            self.present(alert, animated: true, completion: nil)
         }))
+                
         self.present(alert, animated: true, completion: nil)
     }
 }
